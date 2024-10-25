@@ -10,8 +10,8 @@ import '@/styles/globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'The Truth Web App',
-  description: 'SaaS base app for Next.js',
+  title: 'Textfully — SMS & iMessage for Developers',
+  description: 'Textfully makes it easy for developers to send SMS and iMessage. Perfect for transactional and marketing messages at scale. Get started for free today.',
 };
 
 export default function RootLayout({
