@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --black: #1c1c1d;
+    --black: #141415;
     --almost-black: #242425;
     --dark-ink: #39393d;
     --base-ink: #50555c;
@@ -20,7 +20,7 @@
     --lighter-orange: #ffcdb9;
     --lightest-orange: #ffe9db;
     --light-blue: #52b9e3;
-    --base-yellow: #ffb323;
+    --yellow: #ffb323;
     --blue: #3388ee;
     --dark-blue: #3b6bb3;
     --deep-blue: #161e39;

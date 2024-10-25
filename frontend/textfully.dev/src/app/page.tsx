@@ -30,15 +30,24 @@ export default function HomePage() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6 mb-16">
-        <div className="bg-gray-900 rounded-lg p-6 font-mono text-sm">
+        <div className="bg-[#2e2e2e] rounded-lg p-6 font-mono text-sm">
           <div className="flex items-center space-x-2 mb-4">
-            {['bg-red-500', 'bg-yellow-500', 'bg-green-500'].map((color) => (
+            {['bg-red', 'bg-yellow', 'bg-green'].map((color) => (
               <div key={color} className={`w-3 h-3 rounded-full ${color}`} />
             ))}
           </div>
-          <div className="text-gray-300">
-            <span className="text-gray-500"># That&apos;s it. Just one line.</span><br />
-            <span className="text-blue-400">textfully</span>.send(<span className="text-green-400">"+14155555555"</span>, <span className="text-orange-300">`Thanks for ordering! Your Acme order #12345 ships tomorrow.`</span>)
+
+          <div className="text-gray-300 space-y-2">
+            <div>
+              <span className="text-[#797979]"># That&apos;s it. Just one line.</span>
+            </div>
+
+            <div>
+              <span className="text-blue-400">textfully</span>.<span className="text-[#f6c87b]">send</span><span className="text-[#f9d849]">(</span>
+                <span className="text-[#b8c87d]">"+16178856037"</span><span className="text-[#f6c87b]">,</span>
+                <span className="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
+              <span className="text-[#f9d849]">)</span>
+            </div>
           </div>
         </div>
       </div>
