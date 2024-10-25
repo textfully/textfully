@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --black: #1c1c1d;
+    --almost-black: #242425;
+    --dark-ink: #39393d;
+    --base-ink: #50555c;
+    --lighter-ink: #78818c;
+    --dark-sky: #95959b;
+    --base-sky: #d1d1d6;
+    --light-sky: #eeeeee;
+    --lighter-sky: #f0f0f0;
+    --lightest-sky: #f5f5f5;
+    --white: #fdfdfe;
+    --orange: #f3592a;
+    --light-orange: #ff9c77;
+    --lighter-orange: #ffcdb9;
+    --lightest-orange: #ffe9db;
+    --light-blue: #52b9e3;
+    --base-yellow: #ffb323;
+    --blue: #3388ee;
+    --dark-blue: #3b6bb3;
+    --deep-blue: #161e39;
+    --light-green: #99d6b3;
+    --green: #00ac5c;
+    --dark-green: #035b49;
+    --red: #dd0300;
+    --pink: #ff5b77;
+    --light-silver: #fdfdfd;
+    --mid-silver: #949494;
+    --transparent: #ffffff00;
+    --radius: 0.5rem;
+
+    --background: var(--light-silver);
+    --foreground: #08080a;
+    --card: #ffffff;
+    --card-accent: #f9f9f9;
+    --card-foreground: #08080a;
+    --card-border: #72728c;
+    --popover: #ffffff;
+    --popover-foreground: #08080a;
+    --primary: #f3592a;
+    --primary-hover: #f56c41;
+    --primary-foreground: #f9f9f9;
+    --tertiary: #27272a;
+    --tertiary-hover: #3a3a3a;
+    --tertiary-foreground: #f9f9f9;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --accent: #f4f4f5;
+    --accent-foreground: #17171b;
+    --destructive: #ee4444;
+    --destructive-foreground: #f9f9f9;
+    --border: #e3e3e7;
+    --border-hover: #b3b3b8;
+    --input: #e3e3e7;
+    --ring: #3a3a3a;
+
+    --secondary: var(--lightest-orange);
+    --surface: var(--light-sky);
+    --surface-hover: var(--lighter-sky);
+    --tint: var(--dark-sky);
+    --mid: var(--lighter-ink);
+    --highlight: var(--base-sky);
+    --backdrop: var(--lightest-sky);
+    --material: var(--dark-sky);
+  }
+
+  .dark {
+    --background: var(--almost-black);
+    --foreground: #f9f9f9;
+    --card: #111115;
+    --card-accent: #1c1c1d;
+    --card-foreground: #f9f9f9;
+    --card-border: #7f7f7f;
+    --popover: #08080a;
+    --popover-foreground: #f9f9f9;
+    --primary: #f3592a;
+    --primary-hover: #f56c41;
+    --primary-foreground: #17171b;
+    --tertiary: #f4f4f5;
+    --tertiary-hover: #f9f9f9;
+    --tertiary-foreground: #17171b;
+    --muted: #27272a;
+    --muted-foreground: #a1a1a9;
+    --accent: #27272a;
+    --accent-foreground: #f9f9f9;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #f9f9f9;
+    --border: #27272a;
+    --border-hover: #5a5a5a;
+    --input: #27272a;
+    --ring: #d3d3d7;
+
+    --secondary: var(--lighter-orange);
+    --surface: var(--dark-ink);
+    --surface-hover: var(--almost-black);
+    --tint: var(--base-sky);
+    --mid: var(--dark-sky);
+    --highlight: var(--dark-sky);
+    --backdrop: var(--black);
+    --material: var(--lighter-ink);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  html {
+    height: -webkit-fill-available;
+  }
+
+  body {
+    height: -webkit-fill-available;
+  }
+
+  #root {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+div::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/** Hide scrollbar for IE, Edge and Firefox */
+div,
+body,
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
