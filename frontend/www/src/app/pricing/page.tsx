@@ -24,61 +24,53 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Free",
-      price: "$0",
+      price: "$0 / mo",
       messages: "3,000 messages / mo",
       features: [
-        { name: "Ticket Support", included: true },
-        { name: "1-day Data Retention", included: true },
+        { name: "SMS/MMS Only", included: true },
         { name: "1 Phone Number", included: true },
         { name: "100 messages a day", included: false },
-        { name: "Multi-Region", included: false },
-        { name: "Single Sign-On", included: false },
-        { name: "Dedicated IPs", included: false },
+        { name: "No Message History", included: false },
       ],
       cta: "Get started",
     },
     {
-      name: "Pro",
-      price: "$20",
+      name: "Pro", 
+      price: "$20 / mo",
       messages: "50,000 messages / mo",
       features: [
-        { name: "Ticket Support", included: true },
-        { name: "3-day Data Retention", included: true },
-        { name: "10 Phone Numbers", included: true },
+        { name: "SMS/MMS & iMessage", included: true },
+        { name: "Up to 10 Phone Numbers", included: true },
         { name: "No daily limit", included: true },
-        { name: "Multi-Region", included: true },
-        { name: "Single Sign-On", included: false },
-        { name: "Dedicated IPs", included: false },
+        { name: "7-day Message History", included: true },
       ],
       cta: "Get started",
     },
     {
       name: "Scale",
-      price: "$90",
+      price: "$49 / mo",
       messages: "100,000 messages / mo",
       features: [
-        { name: "Slack & Ticket Support", included: true },
-        { name: "7-day Data Retention", included: true },
-        { name: "1,000 Phone Numbers", included: true },
+        { name: "SMS/MMS & iMessage", included: true },
+        { name: "Up to 1,000 Phone Numbers", included: true },
         { name: "No daily limit", included: true },
-        { name: "Multi-Region", included: true },
-        { name: "Single Sign-On", included: true },
-        { name: "Dedicated IP with Add-on", included: true },
+        { name: "30-day Message History", included: true },
+        { name: "Priority Message Routing", included: true },
+        { name: "Dedicated Short Code Available", included: true },
       ],
       cta: "Get started",
     },
     {
       name: "Enterprise",
       price: "Custom",
-      messages: "A plan based on your specific needs",
+      messages: "Custom volume based on your needs",
       features: [
-        { name: "Priority Support", included: true },
-        { name: "Flexible Data Retention", included: true },
-        { name: "Flexible Phone Numbers", included: true },
+        { name: "SMS/MMS & iMessage", included: true },
+        { name: "Unlimited Phone Numbers", included: true },
         { name: "No daily limit", included: true },
-        { name: "Multi-Region", included: true },
-        { name: "Single Sign-On", included: true },
-        { name: "Dedicated IPs with Add-on", included: true },
+        { name: "Priority Message Routing", included: true },
+        { name: "Advanced Analytics & API", included: true },
+        { name: "Dedicated Short Codes Included", included: true },
       ],
       cta: "Contact us",
     },
@@ -140,30 +132,32 @@ export default function PricingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan) => (
-              <div key={plan.name} className="bg-gray-900 rounded-xl p-6">
-                <div className="mb-8">
-                  <h3 className="text-xl mb-4">{plan.name}</h3>
-                  <div className="text-3xl font-bold mb-2">{plan.price} / mo</div>
-                  <div className="text-gray-400 text-sm">{plan.messages}</div>
-                </div>
+              <div key={plan.name} className="flex flex-col justify-between bg-gray-900 rounded-xl p-6">
+                <div>
+                  <div className="mb-8">
+                    <h3 className="text-xl mb-4">{plan.name}</h3>
+                    <div className="text-3xl font-bold mb-2">{plan.price}</div>
+                    <div className="text-gray-400 text-sm">{plan.messages}</div>
+                  </div>
 
-                <div className="space-y-4 mb-8">
-                  {plan.features.map((feature) => (
-                    <div key={feature.name} className="flex items-center">
-                      {feature.included ? (
-                        <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
-                      ) : (
-                        <X className="w-5 h-5 text-gray-600 mr-2 flex-shrink-0" />
-                      )}
-                      <span
-                        className={
-                          feature.included ? "text-gray-300" : "text-gray-600"
-                        }
-                      >
-                        {feature.name}
-                      </span>
-                    </div>
-                  ))}
+                  <div className="space-y-4 mb-8">
+                    {plan.features.map((feature) => (
+                      <div key={feature.name} className="flex items-center text-sm">
+                        {feature.included ? (
+                          <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
+                        ) : (
+                          <X className="w-5 h-5 text-gray-600 mr-2 flex-shrink-0" />
+                        )}
+                        <span
+                          className={
+                            feature.included ? "text-gray-300" : "text-gray-600"
+                          }
+                        >
+                          {feature.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <button className="w-full bg-white text-black rounded-full py-3 font-medium hover:bg-gray-200 transition-colors">
