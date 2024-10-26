@@ -1,166 +1,240 @@
-'use client';
+"use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { NavBar } from "@/components/NavBar";
+import clsx from "clsx";
+import { Separator } from "@/components/ui/separator";
 
 export default function PricingPage() {
   const [messageType, setMessageType] = useState("transactional");
-  const [volume, setVolume] = useState(0);
+  const [sliderValue, setSliderValue] = useState(0);
 
-  const volumeMarks = [
-    { value: 0, label: "3,000" },
-    { value: 12.5, label: "50,000" },
-    { value: 25, label: "100,000" },
-    { value: 37.5, label: "200,000" },
-    { value: 50, label: "500,000" },
-    { value: 62.5, label: "1,000,000" },
-    { value: 75, label: "1,500,000" },
-    { value: 87.5, label: "2,500,000" },
-    { value: 100, label: "3,000,000+" },
+  const stepRef = useRef(5);
+
+  interface VolumeMark {
+    value: number;
+    label: string;
+    price: string;
+  }
+
+  const volumeMarks: Array<VolumeMark> = [
+    { value: 0, label: "Up to 1,000 contacts", price: "$25" }, // $25
+    { value: 2.5, label: "Up to 1,250 contacts", price: "$49" },
+    { value: 5, label: "Up to 1,500 contacts", price: "$49" },
+    { value: 7.5, label: "Up to 1,750 contacts", price: "$49" },
+    { value: 10, label: "Up to 2,000 contacts", price: "$49" },
+    { value: 12.5, label: "Up to 2,250 contacts", price: "$49" },
+    { value: 15, label: "Up to 2,500 contacts", price: "$49" },
+    { value: 17.5, label: "Up to 2,750 contacts", price: "$49" },
+    { value: 20, label: "Up to 3,000 contacts", price: "$49" }, // $49
+    { value: 22.5, label: "Up to 3,500 contacts", price: "$99" },
+    { value: 25, label: "Up to 4,000 contacts", price: "$99" },
+    { value: 27.5, label: "Up to 5,000 contacts", price: "$99" },
+    { value: 30, label: "Up to 6,000 contacts", price: "$99" },
+    { value: 32.5, label: "Up to 7,000 contacts", price: "$99" },
+    { value: 35, label: "Up to 8,000 contacts", price: "$99" },
+    { value: 37.5, label: "Up to 9,000 contacts", price: "$99" },
+    { value: 40, label: "Up to 10,000 contacts", price: "$99" }, // $99
+    { value: 42.5, label: "Up to 12,500 contacts", price: "$199" },
+    { value: 45, label: "Up to 15,000 contacts", price: "$199" },
+    { value: 47.5, label: "Up to 17,500 contacts", price: "$199" },
+    { value: 50, label: "Up to 20,000 contacts", price: "$199" },
+    { value: 52.5, label: "Up to 22,500 contacts", price: "$199" },
+    { value: 55, label: "Up to 25,000 contacts", price: "$299" }, // $199
+    { value: 57.5, label: "Up to 27,500 contacts", price: "$299" },
+    { value: 60, label: "Up to 30,000 contacts", price: "$299" },
+    { value: 62.5, label: "Up to 35,000 contacts", price: "$299" },
+    { value: 65, label: "Up to 40,000 contacts", price: "$299" },
+    { value: 67.5, label: "Up to 45,000 contacts", price: "$299" },
+    { value: 70, label: "Up to 50,000 contacts", price: "$299" }, // $299
+    { value: 72.5, label: "Up to 55,000 contacts", price: "$399" },
+    { value: 75, label: "Up to 60,000 contacts", price: "$399" },
+    { value: 77.5, label: "Up to 65,000 contacts", price: "$399" },
+    { value: 80, label: "Up to 70,000 contacts", price: "$399" },
+    { value: 82.5, label: "Up to 75,000 contacts", price: "$399" },
+    { value: 85, label: "Up to 80,000 contacts", price: "$399" },
+    { value: 87.5, label: "Up to 85,000 contacts", price: "$399" },
+    { value: 90, label: "Up to 90,000 contacts", price: "$399" },
+    { value: 92.5, label: "Up to 95,000 contacts", price: "$399" },
+    { value: 95, label: "Up to 100,000 contacts", price: "$399" }, // $399
   ];
 
-  const plans = [
+  interface Plan {
+    name: string;
+    price: string;
+    priceSuffix: string;
+    features: { name: string; included: boolean }[];
+    cta: string;
+    type: "highlighted" | "primary" | "surface";
+  }
+
+  const plans: Array<Plan> = [
     {
       name: "Free",
-      price: "$0 / mo",
-      messages: "3,000 messages / mo",
+      price: "$0",
+      priceSuffix: "per month",
       features: [
-        { name: "SMS/MMS Only", included: true },
-        { name: "1 Phone Number", included: true },
-        { name: "100 messages a day", included: false },
-        { name: "No Message History", included: false },
+        { name: "1 contact only", included: true },
+        { name: "SMS/MMS only", included: true },
+        { name: "100 messages per day", included: true },
+        { name: "Textfully phone number", included: true },
+        { name: "Community support", included: true },
+        { name: "No data retention", included: false },
       ],
-      cta: "Get started",
+      cta: "Start for free",
+      type: "surface",
     },
     {
-      name: "Pro", 
-      price: "$20 / mo",
-      messages: "50,000 messages / mo",
+      name: "Basic",
+      price: "$10",
+      priceSuffix: "per month",
       features: [
-        { name: "SMS/MMS & iMessage", included: true },
-        { name: "Up to 10 Phone Numbers", included: true },
-        { name: "No daily limit", included: true },
-        { name: "7-day Message History", included: true },
+        { name: "Up to 100 contacts", included: true },
+        { name: "SMS/MMS only", included: true },
+        { name: "Unlimited messages", included: true },
+        { name: "Custom phone numbers", included: true },
+        { name: "Basic email support", included: true },
+        { name: "3-day data retention", included: true },
       ],
       cta: "Get started",
+      type: "primary",
     },
     {
-      name: "Scale",
-      price: "$49 / mo",
-      messages: "100,000 messages / mo",
+      name: "Pro",
+      price: "$25",
+      priceSuffix: "per month",
       features: [
+        { name: "Up to 1,000 contacts", included: true },
         { name: "SMS/MMS & iMessage", included: true },
-        { name: "Up to 1,000 Phone Numbers", included: true },
-        { name: "No daily limit", included: true },
-        { name: "30-day Message History", included: true },
-        { name: "Priority Message Routing", included: true },
-        { name: "Dedicated Short Code Available", included: true },
+        { name: "Unlimited messages", included: true },
+        { name: "Custom phone numbers", included: true },
+        { name: "Priority email support", included: true },
+        { name: "7-day data retention", included: true },
       ],
       cta: "Get started",
+      type: "highlighted",
     },
     {
       name: "Enterprise",
       price: "Custom",
-      messages: "Custom volume based on your needs",
+      priceSuffix: "",
       features: [
+        { name: "Unlimited contacts", included: true },
         { name: "SMS/MMS & iMessage", included: true },
-        { name: "Unlimited Phone Numbers", included: true },
-        { name: "No daily limit", included: true },
-        { name: "Priority Message Routing", included: true },
-        { name: "Advanced Analytics & API", included: true },
-        { name: "Dedicated Short Codes Included", included: true },
+        { name: "Unlimited messages", included: true },
+        { name: "Custom phone numbers", included: true },
+        { name: "24/7 premium support", included: true },
+        { name: "Custom data retention", included: true },
       ],
       cta: "Contact us",
+      type: "surface",
     },
   ];
+
+  const getCurrentVolumeLabel = () => {
+    const mark = volumeMarks.find((mark) => mark.value === sliderValue);
+    return mark ? mark.label : volumeMarks[0].label;
+  };
+
+  const getCurrentVolumePrice = () => {
+    const mark = volumeMarks.find((mark) => mark.value === sliderValue);
+    return mark ? mark.price : volumeMarks[0].price;
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
       <NavBar />
       <div className="p-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mt-16 mb-12">
             <h1 className="text-6xl font-bold mb-4">Pricing</h1>
             <p className="text-xl text-gray-400">
               Start for free and scale as you grow.
             </p>
           </div>
 
-          <div className="mb-16">
-            <div className="flex justify-center gap-4 mb-8">
-              <button
-                className={`px-4 py-2 rounded-lg ${
-                  messageType === "transactional"
-                    ? "bg-gray-800"
-                    : "bg-transparent text-gray-400"
-                }`}
-                onClick={() => setMessageType("transactional")}
-              >
-                Transactional Messages
-              </button>
-              <button
-                className={`px-4 py-2 rounded-lg ${
-                  messageType === "marketing"
-                    ? "bg-gray-800"
-                    : "bg-transparent text-gray-400"
-                }`}
-                onClick={() => setMessageType("marketing")}
-              >
-                Marketing Messages
-              </button>
-            </div>
-
-            <div className="w-full px-8">
-              <Slider
-                value={[volume]}
-                onValueChange={([val]) => setVolume(val)}
-                max={100}
-                step={12.5}
-                className="w-full"
-              />
-              <div className="flex justify-between mt-4 text-sm text-gray-400">
-                {volumeMarks.map((mark) => (
-                  <div key={mark.value} className="text-center">
-                    <div>{mark.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan) => (
-              <div key={plan.name} className="flex flex-col justify-between bg-gray-900 rounded-xl p-6">
+              <div
+                key={plan.name}
+                className={clsx(
+                  "flex flex-col justify-between border rounded-xl px-4 py-6 bg-[#1e1e1e]",
+                  plan.type === "highlighted"
+                    ? "border-primary"
+                    : "border-transparent mt-4"
+                )}
+              >
                 <div>
-                  <div className="mb-8">
+                  <div className="mb-6">
                     <h3 className="text-xl mb-4">{plan.name}</h3>
-                    <div className="text-3xl font-bold mb-2">{plan.price}</div>
-                    <div className="text-gray-400 text-sm">{plan.messages}</div>
+                    <div className="text-4xl font-bold mb-2">
+                      {plan.type === "highlighted"
+                        ? getCurrentVolumePrice()
+                        : plan.price}
+                      {plan.priceSuffix && (
+                        <span className="text-sm font-normal ml-2 text-[#8a8a8a]">
+                          {plan.priceSuffix}
+                        </span>
+                      )}
+                    </div>
+                    {plan.type === "highlighted" && (
+                      <div className="pt-4">
+                        <Slider
+                          value={[sliderValue]}
+                          onValueChange={([val]) => {
+                            const closest = volumeMarks.reduce((prev, curr) =>
+                              Math.abs(curr.value - val) <
+                              Math.abs(prev.value - val)
+                                ? curr
+                                : prev
+                            );
+                            setSliderValue(closest.value);
+                          }}
+                          max={95}
+                          step={2.5}
+                          className="w-full"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-4 mb-8">
-                    {plan.features.map((feature) => (
-                      <div key={feature.name} className="flex items-center text-sm">
+                    {plan.features.map((feature, index) => (
+                      <div
+                        key={feature.name}
+                        className="flex items-center text-sm"
+                      >
                         {feature.included ? (
-                          <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
+                          <Check className="w-5 h-5 text-white mr-2 flex-shrink-0" />
                         ) : (
-                          <X className="w-5 h-5 text-gray-600 mr-2 flex-shrink-0" />
+                          <X className="w-5 h-5 text-[#8a8a8a] mr-2 flex-shrink-0" />
                         )}
                         <span
                           className={
-                            feature.included ? "text-gray-300" : "text-gray-600"
+                            feature.included ? "text-white" : "text-[#8a8a8a]"
                           }
                         >
-                          {feature.name}
+                          {index === 0 && plan.type === "highlighted"
+                            ? getCurrentVolumeLabel()
+                            : feature.name}
                         </span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <button className="w-full bg-white text-black rounded-full py-3 font-medium hover:bg-gray-200 transition-colors">
+                <button
+                  className={clsx(
+                    "w-full rounded-full py-3 font-medium transition-colors",
+                    plan.type === "highlighted"
+                      ? "bg-primary hover:bg-primary-hover text-white shadow-sm"
+                      : plan.type === "primary"
+                        ? "bg-white text-black hover:bg-white/80"
+                        : "bg-[#3a3a3a] text-white hover:bg-[#3e3e3e] shadow-sm"
+                  )}
+                >
                   {plan.cta}
                 </button>
               </div>

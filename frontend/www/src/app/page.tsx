@@ -313,7 +313,7 @@ export default function HomePage() {
       <div className="max-w-4xl mx-auto px-6 py-16 text-center">
         <h2 className="text-4xl font-bold mb-8">Ready to Start?</h2>
         <p className="text-xl text-gray-400 mb-8">
-          Send your first text message in under 5 minutes.
+          Send your first text message in 30 seconds.
         </p>
         <div className="flex justify-center space-x-4">
           {ctas.map((cta, index) => (

@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={clsx('font-inter min-h-screen antialiased', inter.variable)}>
+      <body className={clsx('font-inter min-h-screen antialiased bg-black text-white', inter.variable)}>
         <ContextProvider>{children}</ContextProvider>
       </body>
     </html>
