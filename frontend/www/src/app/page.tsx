@@ -28,39 +28,39 @@ interface CodeSnippet {
 const codeSnippets: Record<string, CodeSnippet> = {
   python: {
     comment: "# That's it. Just one line.",
-    code: `<pre>
+    code: `<pre class="whitespace-pre-wrap">
 <span class="text-blue-400">textfully</span>.<span class="text-[#f6c87b]">send</span><span class="text-[#f9d849]">(</span>
   <span class="text-[#b8c87d]">"+16178856037"</span><span class="text-[#f6c87b]">,</span>
-  <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
+  <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #</span><span class="text-[#7698b8]">{{</span><span class="text-[#b8c87d]">order_id</span><span class="text-[#7698b8]">}}</span><span class="text-[#b8c87d]"> ships tomorrow."</span>
 <span class="text-[#f9d849]">)</span></pre>`,
   },
   nodejs: {
     comment: "// That's it. Just one line.",
-    code: `<pre>
-<span class="text-[#c586c0]">await</span> <span class="text-blue-400">textfully</span>.<span class="text-[#f6c87b]">send</span><span class="text-[#f9d849]">(</span>
+    code: `<pre class="whitespace-pre-wrap">
+<span class="text-[#c586c0]">await</span> <span class="text-[#cbcbf1]">textfully</span>.<span class="text-[#f6c87b]">send</span><span class="text-[#f9d849]">(</span>
   <span class="text-[#b8c87d]">"+16178856037"</span><span>,</span>
-  <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
+  <span class="text-[#b8c87d]">\`Your verification code is $\{</span><span class="text-[#cbcbf1]">code</span><span class="text-[#b8c87d]">\}. It will expire in 10 minutes.\`</span>
 <span class="text-[#f9d849]">)</span></pre>`,
   },
   go: {
     comment: "// That's it. Just one line.",
-    code: `<pre>
+    code: `<pre class="whitespace-pre-wrap">
 <span class="text-[#9cdcfe]">err</span> := <span class="text-[#cbcbf1]">textfully</span>.<span class="text-[#f6c87b]">Send</span><span class="text-[#c586c0]">(</span>
   <span class="text-[#b8c87d]">"+16178856037"</span><span>,</span>
-  <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
+  <span class="text-[#b8c87d]">"Reminder: Your appointment is scheduled for tomorrow at 10 AM."</span>
 <span class="text-[#c586c0]">)</span></pre>`,
   },
   elixir: {
     comment: "# That's it. Just one line.",
-    code: `<pre>
+    code: `<pre class="whitespace-pre-wrap">
 <span class="text-blue-400">Textfully</span>.<span class="text-[#f6c87b]">send</span><span class="text-[#c586c0]">(</span>
   <span class="text-[#b8c87d]">"+16178856037"</span><span>,</span>
-  <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
+  <span class="text-[#b8c87d]">"🎉 You're confirmed for SF Tech Mixer! Join us at 7 PM tomorrow."</span>
 <span class="text-[#c586c0]">)</span></pre>`,
   },
   rust: {
     comment: "// That's it. Just one line.",
-    code: `<pre>
+    code: `<pre class="whitespace-pre-wrap">
 <span>textfully</span><span class="text-[#ff8c00]">::</span><span class="text-[#f6c87b]">send</span><span class="text-[#f9d849]">(</span>
   <span class="text-[#b8c87d]">"+16178856037"</span><span>,</span>
   <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
@@ -185,7 +185,8 @@ export default function HomePage() {
           SMS & iMessage API for Developers
         </h1>
         <p className="text-lg sm:text-xl text-gray-400 mb-4 leading-relaxed">
-          Textfully is an open source Twilio alternative. Send text messages with 1 line of code.
+          Textfully is an open source Twilio alternative. Send text messages
+          with 1 line of code.
         </p>
       </div>
 
@@ -202,7 +203,7 @@ export default function HomePage() {
               <div className="flex items-center p-4">
                 <Link
                   href="/dashboard"
-                  className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#0f5f2d] text-white rounded-md transition-colors flex items-center"
+                  className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#16a34a] text-white rounded-md transition-colors flex items-center"
                 >
                   <Play className="w-4 h-4 mr-1 fill-white" />
                   {/* TODO: "Run" and show output in corresponding language */}
@@ -212,13 +213,13 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-end space-x-1">
+              <div className="flex items-end space-x-1 overflow-x-auto whitespace-nowrap pr-1">
                 {languages.map((lang) => (
                   <button
                     key={lang.id}
                     onClick={() => setActiveLanguage(lang.id)}
                     className={clsx(
-                      "relative flex items-center px-4 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg",
+                      "relative flex items-center px-4 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg flex-shrink-0",
                       activeLanguage === lang.id
                         ? "bg-[#3a3a3a] text-white z-10 rounded-b-none"
                         : "bg-[#2a2a2a] text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300"
@@ -234,12 +235,11 @@ export default function HomePage() {
                 ))}
                 <a
                   href="https://github.com/gtfol/textfully"
-                  className="relative flex items-center px-2 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300"
+                  className="relative flex items-center px-2 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300 flex-shrink-0"
                 >
                   <Plus className="w-4 h-4" />
                 </a>
               </div>
-
               {/* Code Content */}
               <div className="p-4 space-y-2 bg-[#3a3a3a]">
                 <div className="text-[#797979]">

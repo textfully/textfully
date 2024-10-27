@@ -3,12 +3,19 @@ import { GitHubLogo } from "@/assets/github-logo";
 import { XLogo } from "@/assets/x-logo";
 
 export const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="border-t border-[#252525]">
       <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-row justify-between sm:space-y-8 sm:justify-start items-center sm:flex-col sm:items-start">
-            <div className="flex flex-row space-x-2 items-center">
+            <div 
+              className="flex flex-row space-x-2 items-center cursor-pointer" 
+              onClick={scrollToTop}
+            >
               <img src="/logo.png" alt="Logo" className="h-8" />
               <span className="font-bold text-lg sm:text-xl">Textfully</span>
             </div>
