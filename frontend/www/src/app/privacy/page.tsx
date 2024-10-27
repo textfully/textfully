@@ -44,7 +44,14 @@ export default function Privacy() {
               making decisions about how your personal information is processed.
               If you do not agree with our policies and practices, please do not
               use our Services. If you still have any questions or concerns,
-              please contact us at textfully@gtfol.inc.
+              please contact us at{" "}
+              <a
+                href="mailto:textfully@gtfol.inc"
+                className="text-[#0A93F6] hover:brightness-110"
+              >
+                textfully@gtfol.inc
+              </a>
+              .
             </p>
           </section>
 
@@ -810,7 +817,7 @@ export default function Privacy() {
                   <p className="text-zinc-300">
                     We provide the AI Products through third-party service
                     providers ("AI Service Providers"), including OpenAI and
-                    Anthropic. As outlined in this Privacy Notice, your input,
+                    Anthropic. As outlined in this Privacy Policy, your input,
                     output, and personal information will be shared with and
                     processed by these AI Service Providers to enable your use
                     of our AI Products for purposes outlined in "WHAT LEGAL
@@ -1267,7 +1274,15 @@ export default function Privacy() {
                         https://gtfol.inc/contact
                       </a>
                     </li>
-                    <li>Email us at textfully@gtfol.inc</li>
+                    <li>
+                      Email us at{" "}
+                      <a
+                        href="mailto:textfully@gtfol.inc"
+                        className="text-[#0A93F6] hover:brightness-110"
+                      >
+                        textfully@gtfol.inc
+                      </a>
+                    </li>
                     <li>
                       Refer to the contact details at the bottom of this
                       document
@@ -1301,11 +1316,18 @@ export default function Privacy() {
                     <p className="text-zinc-300">
                       Under certain US state data protection laws, if we decline
                       to take action regarding your request, you may appeal our
-                      decision by emailing us at textfully@gtfol.inc. We will
-                      inform you in writing of any action taken or not taken in
-                      response to the appeal, including a written explanation of
-                      the reasons for the decisions. If your appeal is denied,
-                      you may submit a complaint to your state attorney general.
+                      decision by emailing us at{" "}
+                      <a
+                        href="mailto:textfully@gtfol.inc"
+                        className="text-[#0A93F6] hover:brightness-110"
+                      >
+                        textfully@gtfol.inc
+                      </a>
+                      . We will inform you in writing of any action taken or not
+                      taken in response to the appeal, including a written
+                      explanation of the reasons for the decisions. If your
+                      appeal is denied, you may submit a complaint to your state
+                      attorney general.
                     </p>
                   </div>
                 </div>
@@ -1326,7 +1348,7 @@ export default function Privacy() {
                     California resident and would like to make such a request,
                     please submit your request in writing to us using the
                     contact details provided in the section "HOW CAN YOU CONTACT
-                    US ABOUT THIS NOTICE?"
+                    US ABOUT THIS PRIVACY POLICY?"
                   </p>
                 </div>
               </div>
@@ -1357,14 +1379,14 @@ export default function Privacy() {
                     1988 and New Zealand's Privacy Act 2020 (Privacy Act).
                   </p>
                   <p className="text-zinc-300 mb-4">
-                    This Privacy Notice satisfies the notice requirements
+                    This Privacy Policy satisfies the notice requirements
                     defined in both Privacy Acts, in particular: what personal
                     information we collect from you, from which sources, for
                     which purposes, and other recipients of your personal
                     information.
                   </p>
                   <div className="bg-zinc-800 p-6 rounded-lg">
-                    <p className="text-zinc-300 mb-4">
+                    <p className="text-zinc-300">
                       If you believe we are unlawfully processing your personal
                       information, you have the right to submit a complaint
                       about a breach of the Australian Privacy Principles to the
@@ -1407,26 +1429,26 @@ export default function Privacy() {
           </section>
           <section id="section15" className="mb-16">
             <h2 className="text-2xl font-bold mb-6">
-              15. DO WE MAKE UPDATES TO THIS NOTICE?
+              15. DO WE MAKE UPDATES TO THIS PRIVACY POLICY?
             </h2>
 
             <div className="mb-8">
               <p className="text-zinc-300 mb-4">
                 <em>
-                  In Short: Yes, we will update this notice as necessary to stay
-                  compliant with relevant laws.
+                  In Short: Yes, we will update this privacy policy as necessary
+                  to stay compliant with relevant laws.
                 </em>
               </p>
 
               <div className="bg-zinc-800 p-6 rounded-lg">
                 <p className="text-zinc-300">
-                  We may update this Privacy Notice from time to time. The
+                  We may update this Privacy Policy from time to time. The
                   updated version will be indicated by an updated "Revised" date
-                  at the top of this Privacy Notice. If we make material changes
-                  to this Privacy Notice, we may notify you either by
+                  at the top of this Privacy Policy. If we make material changes
+                  to this Privacy Policy, we may notify you either by
                   prominently posting a notice of such changes or by directly
                   sending you a notification. We encourage you to review this
-                  Privacy Notice frequently to be informed of how we are
+                  Privacy Policy frequently to be informed of how we are
                   protecting your information.
                 </p>
               </div>
@@ -1435,31 +1457,29 @@ export default function Privacy() {
 
           <section id="section16" className="mb-16">
             <h2 className="text-2xl font-bold mb-6">
-              16. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
+              16. HOW CAN YOU CONTACT US ABOUT THIS PRIVACY POLICY?
             </h2>
 
             <div className="mb-8">
               <p className="text-zinc-300 mb-6">
-                If you have questions or comments about this notice, you may
-                contact us by:
+                If you have questions or comments about this privacy policy, you
+                may contact us at:
               </p>
 
-              <div className="space-y-4 text-zinc-300">
+              <address className="text-zinc-300 not-italic">
+                <p className="mb-1">gtfol, LLC</p>
+                <p className="mb-1">1950 Washington St. Apt. 3A</p>
+                <p className="mb-1">Boston, MA 02118</p>
+                <p className="mb-1">United States</p>
                 <p>
-                  <strong>Email:</strong> textfully@gtfol.inc
+                  <a
+                    href="mailto:textfully@gtfol.inc"
+                    className="text-[#0A93F6] hover:brightness-110"
+                  >
+                    textfully@gtfol.inc
+                  </a>
                 </p>
-                <p>
-                  <strong>Mail:</strong>
-                  <br />
-                  gtfol, LLC
-                  <br />
-                  1950 Washington St. Apt. 3A
-                  <br />
-                  Boston, MA 02118
-                  <br />
-                  United States
-                </p>
-              </div>
+              </address>
             </div>
           </section>
 
