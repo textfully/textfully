@@ -25,7 +25,7 @@ export function NavBar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className="flex items-center justify-between p-4 pl-8"
+      className="flex items-center justify-between p-4 px-8"
     >
       <div className="flex items-center gap-x-8">
         <Link href="/">
