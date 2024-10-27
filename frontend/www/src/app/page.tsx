@@ -121,7 +121,7 @@ const features: Feature[] = [
   {
     title: "All Your Messaging Needs",
     description:
-      "Explore more products including Phone Numbers, Conversations, AI Agents, and more.",
+      "Explore other products including Phone Numbers, Conversations, AI Agents, and more.",
     cta: "Learn more",
     link: "/products",
   },
