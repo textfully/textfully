@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Check, X } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
 import { Footer } from "@/components/Footer";
-import { useAppContext } from "@/contexts/useAppContext";
-import { motion } from "framer-motion";
+import { motion as m } from "framer-motion";
 
 export default function PricingPage() {
-  const { shouldLoadAnimation } = useAppContext();
-
   const [sliderValue, setSliderValue] = useState(0);
 
   interface VolumeMark {
@@ -20,7 +17,7 @@ export default function PricingPage() {
     price: string;
   }
 
-  const volumeMarks: Array<VolumeMark> = [
+  const volumeMarks: VolumeMark[] = [
     { value: 0, label: "Up to 1,000 contacts", price: "$25" }, // $25
     { value: 2.5, label: "Up to 1,250 contacts", price: "$49" },
     { value: 5, label: "Up to 1,500 contacts", price: "$49" },
@@ -71,7 +68,7 @@ export default function PricingPage() {
     type: "highlighted" | "primary" | "surface";
   }
 
-  const plans: Array<Plan> = [
+  const plans: Plan[] = [
     {
       name: "Free",
       price: "$0",
@@ -145,38 +142,38 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
       <div className="p-8 mb-32">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <m.div
             className="text-center mt-16 mb-12"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <h1 className="text-6xl font-bold mb-4">Pricing</h1>
-            <p className="text-xl text-gray-400">
+            <h1 className="text-4xl mb-4 font-general font-[550]">Pricing</h1>
+            <p className="text-base text-zinc-400">
               Start for free and scale as you grow.
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div 
+          <m.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             {plans.map((plan, index) => (
-              <motion.div
+              <m.div
                 key={plan.name}
-                initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-                animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-                transition={{ duration: 0.3, delay: 0.1 + (index * 0.05) }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
                 className={clsx(
                   "flex flex-col justify-between border rounded-xl px-4 py-6 bg-[#1e1e1e]",
                   plan.type === "highlighted"
-                    ? "border-primary"
+                    ? "border-[#0A93F6]"
                     : "border-transparent mt-4"
                 )}
               >
@@ -243,7 +240,7 @@ export default function PricingPage() {
                   className={clsx(
                     "w-full rounded-full py-3 font-medium transition-colors",
                     plan.type === "highlighted"
-                      ? "bg-primary hover:bg-primary-hover text-white shadow-sm"
+                      ? "bg-[#0A93F6] text-white shadow-sm"
                       : plan.type === "primary"
                         ? "bg-white text-black hover:bg-white/80"
                         : "bg-[#3a3a3a] text-white hover:bg-[#3e3e3e] shadow-sm"
@@ -251,9 +248,9 @@ export default function PricingPage() {
                 >
                   {plan.cta}
                 </button>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
