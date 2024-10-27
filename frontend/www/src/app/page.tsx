@@ -64,7 +64,7 @@ const codeSnippets: Record<string, CodeSnippet> = {
     code: `<pre class="whitespace-pre-wrap">
 <span>textfully</span><span class="text-[#ff8c00]">::</span><span class="text-[#f6c87b]">send</span><span class="text-[#f9d849]">(</span>
   <span class="text-[#b8c87d]">"+16178856037"</span><span>,</span>
-  <span class="text-[#b8c87d]">"Thanks for ordering! Your Acme order #12345 ships tomorrow."</span>
+  <span class="text-[#b8c87d]">"Your table is ready! See the host within 5 minutes or you'll lose your spot."</span>
 <span class="text-[#f9d849]">)</span>;</pre>`,
   },
 };
@@ -93,7 +93,8 @@ interface Feature {
 const features: Array<Feature> = [
   {
     title: "Quick Setup",
-    description: "Get an API key and send your first text message in 30 seconds.",
+    description:
+      "Get an API key and send your first text message in 30 seconds.",
     cta: "Try now",
     link: "/dashboard",
   },
@@ -186,13 +187,13 @@ export default function HomePage() {
       {/* Adjusted to take full height and center content */}
       <div className="h-[calc(100vh-4rem)] flex items-center">
         <div className="w-full">
-          <motion.div 
+          <motion.div
             className="max-w-4xl mx-auto px-6 pb-8 sm:pb-12 text-center"
             initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
             animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
             transition={{ duration: 0.3 }} // Reduced from 0.5
           >
-            <motion.h1 
+            <motion.h1
               className="text-4xl sm:text-5xl font-bold mb-8 sm:mb-12"
               initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
               animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
@@ -200,7 +201,7 @@ export default function HomePage() {
             >
               SMS & iMessage API for Developers
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-lg sm:text-xl text-gray-400 mb-4 leading-relaxed"
               initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
               animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
@@ -210,7 +211,7 @@ export default function HomePage() {
               with 1 line of code.
             </motion.p>
           </motion.div>
-          <motion.div 
+          <motion.div
             className="max-w-4xl mx-auto px-6"
             initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
             animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
@@ -283,7 +284,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <motion.div 
+      <motion.div
         className="max-w-4xl mx-auto px-6 mb-16"
         initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
         animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
