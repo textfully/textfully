@@ -6,6 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
 import { Separator } from "@/components/ui/separator";
+import { Footer } from "@/components/Footer";
 
 export default function PricingPage() {
   const [messageType, setMessageType] = useState("transactional");
@@ -146,7 +147,7 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <NavBar />
-      <div className="p-8">
+      <div className="p-8 mb-32">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mt-16 mb-12">
             <h1 className="text-6xl font-bold mb-4">Pricing</h1>
@@ -242,6 +243,8 @@ export default function PricingPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

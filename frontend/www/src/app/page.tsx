@@ -1,9 +1,10 @@
 "use client";
 
+import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Play, Plus } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -102,8 +103,9 @@ const features: Array<Feature> = [
     link: "/docs",
   },
   {
-    title: "Budget-friendly",
-    description: "Start for free now and pay as you grow.",
+    title: "Budget-Friendly",
+    description:
+      "Start for free and scale with simple, affordable monthly pricing.",
     cta: "Get started",
     link: "/dashboard",
   },
@@ -178,14 +180,12 @@ export default function HomePage() {
     <div className="min-h-screen bg-black text-white">
       <NavBar />
 
-      <div className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
-        <h1 className="text-5xl font-bold mb-4">
-          SMS & iMessage for Developers
+      <div className="max-w-4xl mx-auto px-6 pt-20 pb-8 sm:pb-12 text-center">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-8 sm:mb-12">
+          SMS & iMessage API for Developers
         </h1>
-        <p className="text-xl text-gray-400 mb-8">
-          Textfully is an open source Twilio alternative. Send and receive text
-          messages with a few lines of code. Ideal for transactional and
-          marketing messages at scale.
+        <p className="text-lg sm:text-xl text-gray-400 mb-4 leading-relaxed">
+          Textfully is an open source Twilio alternative. Send text messages with 1 line of code.
         </p>
       </div>
 
@@ -193,10 +193,22 @@ export default function HomePage() {
         <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm">
           <div className="flex flex-col">
             {/* Window Controls */}
-            <div className="flex items-center space-x-2 p-4">
-              <div className="w-3 h-3 rounded-full bg-red" />
-              <div className="w-3 h-3 rounded-full bg-yellow" />
-              <div className="w-3 h-3 rounded-full bg-green" />
+            <div className="flex flex-row justify-between">
+              <div className="flex items-center space-x-2 p-4">
+                <div className="w-3 h-3 rounded-full bg-red" />
+                <div className="w-3 h-3 rounded-full bg-yellow" />
+                <div className="w-3 h-3 rounded-full bg-green" />
+              </div>
+              <div className="flex items-center p-4">
+                <Link
+                  href="/dashboard"
+                  className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#0f5f2d] text-white rounded-md transition-colors flex items-center"
+                >
+                  <Play className="w-4 h-4 mr-1 fill-white" />
+                  {/* TODO: "Run" and show output in corresponding language */}
+                  <span>Try it Yourself</span>
+                </Link>
+              </div>
             </div>
 
             <div className="flex flex-col">
@@ -220,6 +232,12 @@ export default function HomePage() {
                     <span className="truncate">{lang.name}</span>
                   </button>
                 ))}
+                <a
+                  href="https://github.com/gtfol/textfully"
+                  className="relative flex items-center px-2 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300"
+                >
+                  <Plus className="w-4 h-4" />
+                </a>
               </div>
 
               {/* Code Content */}
@@ -310,17 +328,19 @@ export default function HomePage() {
         </div>
       </div> */}
 
-      <div className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <h2 className="text-4xl font-bold mb-8">Ready to Start?</h2>
-        <p className="text-xl text-gray-400 mb-8">
-          Send your first text message in 30 seconds.
+      <div className="max-w-4xl mx-auto px-6 pt-16 pb-32 text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">
+          Ready to Start?
+        </h2>
+        <p className="text-lg sm:text-xl text-gray-400 mb-8">
+          We're cheaper, better, and faster than Twilio.
         </p>
         <div className="flex justify-center space-x-4">
           {ctas.map((cta, index) => (
             <a
               key={cta.name}
               href={cta.link}
-              className={`px-6 py-3 rounded-full font-medium ${
+              className={`px-6 py-2 rounded-full font-medium ${
                 index === 0 ? "bg-white text-black" : "border border-gray-700"
               }`}
             >
@@ -329,6 +349,8 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

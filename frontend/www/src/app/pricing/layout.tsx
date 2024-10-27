@@ -1,21 +1,12 @@
-import clsx from "clsx";
-import { Inter } from "next/font/google";
-
-import { ContextProvider } from "@/providers/ContextProvider";
-
 import type { Metadata } from "next";
 
-import "@/styles/globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-
 export const metadata: Metadata = {
-  title: "Textfully — The Open Source Twilio Alternative",
+  title: "Pricing | Textfully",
   description:
     "Textfully makes it easy for developers to send SMS & iMessage in one line of code. Ideal for sending transactional and marketing messages at scale. Get started today for free.",
   icons: ["/favicon.ico"],
   openGraph: {
-    title: "Textfully — The Open Source Twilio Alternative",
+    title: "Pricing | Textfully",
     description:
       "Textfully makes it easy for developers to send SMS & iMessage in one line of code. Ideal for sending transactional and marketing messages at scale. Get started today for free.",
     type: "website",
@@ -32,21 +23,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function PricingLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={clsx(
-          "font-inter min-h-screen antialiased bg-black text-white",
-          inter.variable
-        )}
-      >
-        <ContextProvider>{children}</ContextProvider>
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }
