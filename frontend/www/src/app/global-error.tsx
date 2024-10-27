@@ -25,7 +25,7 @@ export default function GlobalError({
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    logError(error);
+    logError("Unknown error:", error);
   }, [error]);
 
   useEffect(() => {
