@@ -14,7 +14,7 @@ const navItems = [
 ];
 
 export function NavBar() {
-  const { shouldAnimateNav } = useAppContext();
+  const { shouldLoadAnimation: shouldAnimateNav } = useAppContext();
 
   const pathname = usePathname();
 
@@ -22,7 +22,7 @@ export function NavBar() {
     <motion.nav
       initial={shouldAnimateNav ? { opacity: 0, y: -20 } : false}
       animate={shouldAnimateNav ? { opacity: 1, y: 0 } : false}
-      transition={shouldAnimateNav ? { duration: 0.5 } : undefined}
+      transition={shouldAnimateNav ? { duration: 0.2 } : undefined}
       className="flex items-center justify-between p-6"
     >
       <div className="flex items-center space-x-8">

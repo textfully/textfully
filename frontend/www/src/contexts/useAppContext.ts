@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 import constate from "constate";
 
 const useApp = () => {
-  const [shouldAnimateNav, setShouldAnimateNav] = useState(true);
+  const [shouldLoadAnimation, setShouldLoadAnimation] = useState(true);
 
   useEffect(() => {
     // Only animate on first render
-    setShouldAnimateNav(false);
+    setShouldLoadAnimation(false);
   }, []);
 
   return {
-    shouldAnimateNav,
+    shouldLoadAnimation,
   };
 };
 

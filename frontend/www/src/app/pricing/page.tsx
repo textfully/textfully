@@ -7,12 +7,13 @@ import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
 import { Separator } from "@/components/ui/separator";
 import { Footer } from "@/components/Footer";
+import { useAppContext } from "@/contexts/useAppContext";
+import { motion } from "framer-motion";
 
 export default function PricingPage() {
-  const [messageType, setMessageType] = useState("transactional");
-  const [sliderValue, setSliderValue] = useState(0);
+  const { shouldLoadAnimation } = useAppContext();
 
-  const stepRef = useRef(5);
+  const [sliderValue, setSliderValue] = useState(0);
 
   interface VolumeMark {
     value: number;
@@ -149,17 +150,30 @@ export default function PricingPage() {
       <NavBar />
       <div className="p-8 mb-32">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mt-16 mb-12">
+          <motion.div 
+            className="text-center mt-16 mb-12"
+            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
+            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+            transition={{ duration: 0.3 }}
+          >
             <h1 className="text-6xl font-bold mb-4">Pricing</h1>
             <p className="text-xl text-gray-400">
               Start for free and scale as you grow.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {plans.map((plan) => (
-              <div
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
+            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            {plans.map((plan, index) => (
+              <motion.div
                 key={plan.name}
+                initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
+                animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+                transition={{ duration: 0.3, delay: 0.1 + (index * 0.05) }}
                 className={clsx(
                   "flex flex-col justify-between border rounded-xl px-4 py-6 bg-[#1e1e1e]",
                   plan.type === "highlighted"
@@ -238,9 +252,9 @@ export default function PricingPage() {
                 >
                   {plan.cta}
                 </button>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
 
