@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={clsx(
-          "font-inter min-h-screen antialiased bg-black text-white",
+          "font-inter min-h-screen antialiased",
           inter.variable
         )}
       >

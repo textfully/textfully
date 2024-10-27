@@ -5,7 +5,6 @@ import { Check, X } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
-import { Separator } from "@/components/ui/separator";
 import { Footer } from "@/components/Footer";
 import { useAppContext } from "@/contexts/useAppContext";
 import { motion } from "framer-motion";

@@ -222,9 +222,9 @@ export default function HomePage() {
                 {/* Window Controls */}
                 <div className="flex flex-row justify-between">
                   <div className="flex items-center space-x-2 p-4">
-                    <div className="w-3 h-3 rounded-full bg-red" />
-                    <div className="w-3 h-3 rounded-full bg-yellow" />
-                    <div className="w-3 h-3 rounded-full bg-green" />
+                    <div className="w-3 h-3 rounded-full bg-[#dd0300]" />
+                    <div className="w-3 h-3 rounded-full bg-[#ffb323]" />
+                    <div className="w-3 h-3 rounded-full bg-[#00ac5c]" />
                   </div>
                   <div className="flex items-center p-4">
                     <Link
@@ -322,44 +322,6 @@ export default function HomePage() {
           ))}
         </div>
       </motion.div>
-
-      {/* <div className="max-w-4xl mx-auto px-6 mb-16">
-        <h2 className="text-2xl font-bold mb-8">Built for Modern Use Cases</h2>
-        <div className="bg-gray-900 rounded-lg p-6 font-mono text-sm">
-          <div className="text-gray-300 space-y-6">
-            <div>
-              <span className="text-gray-500"># Transactional Messages</span>
-              <br />
-              <span className="text-blue-400">textfully</span>.send(
-              order.phone,
-              <span className="text-orange-300">
-                `Thanks for ordering! Your ${"{product}"} ships tomorrow. Here's
-                your tracking number: ${"{tracking_number}"}.`
-              </span>
-              )
-            </div>
-            <div>
-              <span className="text-gray-500"># Marketing Campaigns</span>
-              <br />
-              <span className="text-blue-400">textfully</span>.campaign.send(
-              {"{"}
-              <br />
-              &nbsp;&nbsp;template:{" "}
-              <span className="text-orange-300">`spring-sale`</span>,<br />
-              &nbsp;&nbsp;audience:{" "}
-              <span className="text-orange-300">`active-customers`</span>,<br />
-              &nbsp;&nbsp;variables: {"{"}
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;discount:{" "}
-              <span className="text-orange-300">`20%`</span>
-              <br />
-              &nbsp;&nbsp;{"}"}
-              <br />
-              {"})"}
-            </div>
-          </div>
-        </div>
-      </div> */}
 
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-32 text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">
