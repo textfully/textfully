@@ -17,7 +17,7 @@ export default function PricingPage() {
     price: string;
   }
 
-  const volumeMarks: Array<VolumeMark> = [
+  const volumeMarks: VolumeMark[] = [
     { value: 0, label: "Up to 1,000 contacts", price: "$25" }, // $25
     { value: 2.5, label: "Up to 1,250 contacts", price: "$49" },
     { value: 5, label: "Up to 1,500 contacts", price: "$49" },
@@ -68,7 +68,7 @@ export default function PricingPage() {
     type: "highlighted" | "primary" | "surface";
   }
 
-  const plans: Array<Plan> = [
+  const plans: Plan[] = [
     {
       name: "Free",
       price: "$0",

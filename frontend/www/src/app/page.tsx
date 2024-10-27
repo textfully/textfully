@@ -82,7 +82,7 @@ interface Language {
   icon: React.ReactNode;
 }
 
-const languages: Array<Language> = [
+const languages: Language[] = [
   { id: "python", name: "Python", icon: <Python /> },
   { id: "nodejs", name: "Node.js", icon: <NodeJS /> },
   { id: "go", name: "Go", icon: <Go /> },
@@ -97,7 +97,7 @@ interface Feature {
   link: string;
 }
 
-const features: Array<Feature> = [
+const features: Feature[] = [
   {
     title: "Quick Setup",
     description:
@@ -132,6 +132,13 @@ const features: Array<Feature> = [
     cta: "Sign up",
     link: "/dashboard",
   },
+  {
+    title: "All Your Messaging Needs",
+    description:
+      "Explore more products including Phone Numbers, Conversations, AI Agents, and more.",
+    cta: "Learn more",
+    link: "/products",
+  },
 ];
 
 interface CTA {
@@ -139,38 +146,10 @@ interface CTA {
   link: string;
 }
 
-const ctas: Array<CTA> = [
+const ctas: CTA[] = [
   { name: "View Docs", link: "/docs" },
   { name: "Get Started", link: "/dashboard" },
 ];
-
-const cardArrowVariants = {
-  initial: { x: 0 },
-  hover: {
-    x: 4,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-};
-
-const cardButtonVariants = {
-  initial: { opacity: 0.9 },
-  hover: {
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-  tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};
 
 export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
@@ -196,7 +175,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
 
-      {/* Adjusted to take full height and center content */}
       <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
         <div className="w-full px-6 lg:px-4">
           <m.div
@@ -305,7 +283,7 @@ export default function HomePage() {
         className="max-w-3xl mx-auto px-6 mb-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.25 }} // Reduced duration and delay
+        transition={{ duration: 0.3, delay: 0.25 }}
       >
         <div className="flex flex-col gap-6 message-list w-full">
           {features.map((card, index) => {
@@ -314,7 +292,7 @@ export default function HomePage() {
               <div
                 className={cn(
                   "w-full max-w-md flex flex-col relative",
-                  isEven ? "ml-auto" : "mr-auto"
+                  isEven ? "mr-auto" : "ml-auto"
                 )}
               >
                 <div
@@ -327,7 +305,7 @@ export default function HomePage() {
                   <div
                     className={cn(
                       "inset-0 absolute element !rounded-[24px]",
-                      isEven ? "opacity-100" : "opacity-40"
+                      isEven ? "opacity-40" : "opacity-100"
                     )}
                   ></div>
                 </div>
@@ -335,7 +313,7 @@ export default function HomePage() {
                   key={card.title}
                   className={cn(
                     "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5",
-                    isEven ? "sent" : "received"
+                    isEven ? "received" : "sent"
                   )}
                 >
                   <h3 className="text-[16px] text-white font-semibold mb-1">
@@ -348,7 +326,7 @@ export default function HomePage() {
                     <p
                       className={cn(
                         "font-semibold text-sm hover:brightness-110",
-                        isEven ? "text-sky-200" : "text-[#0A93F6]"
+                        isEven ? "text-[#0A93F6]" : "text-sky-200"
                       )}
                     >
                       {card.cta}
@@ -359,7 +337,7 @@ export default function HomePage() {
                   <p
                     className={cn(
                       "text-xs text-white/50",
-                      isEven ? "" : "hidden"
+                      isEven || index !== features.length - 1 ? "hidden" : ""
                     )}
                   >
                     <span className="font-semibold">Read&nbsp;</span>
