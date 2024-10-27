@@ -43,47 +43,55 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
       <div className="w-full max-w-3xl">
-        <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm">
+        <div className="w-full bg-[#212126] rounded-xl relative">
+          <div className="inset-0 absolute element-dark !rounded-xl">
+            <div className="inset-0 absolute element opacity-10 !rounded-[11px]"></div>
+          </div>
           {/* Window Controls */}
-          <div className="flex justify-between items-center p-4 border-b border-[#2a2a2a] h-12">
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-[#dd0300]" />
-              <div className="w-3 h-3 rounded-full bg-[#ffb323]" />
-              <div className="w-3 h-3 rounded-full bg-[#00ac5c]" />
+          <div className="w-full flex justify-between items-center h-10 px-4">
+            <div className="flex gap-x-1.5 items-center">
+              <div className="w-2 h-2 rounded-full bg-red-500" />
+              <div className="w-2 h-2 rounded-full bg-yellow-500" />
+              <div className="w-2 h-2 rounded-full bg-green-500" />
             </div>
           </div>
 
-          {/* Terminal Content */}
-          <div className="p-6 bg-[#1e1e1e] space-y-2">
-            <div className="space-y-1 text-gray-300">
-              {/* Header lines */}
-              <p className="select-none">HTTP/1.1 404 Not Found</p>
-              <p className="select-none">Content-Type: application/json</p>
-              <p className="select-none">Content-Length: 67</p>
-              <p className="select-none">Connection: keep-alive</p>
+          <div className="w-full h-px bg-zinc-900 z-30 relative"></div>
+          <div className="w-full flex px-0.5">
+            <div className="w-full h-px bg-white/5"></div>
+          </div>
 
-              {/* JSON content */}
-              <pre className="text-yellow-300 select-none">
-                {`{
+          {/* Error Response */}
+          <div className="p-4 pb-2">
+            <pre className="text-zinc-400 select-none text-sm">
+              {`{
     "error": "Not Found",
     "message": "This page could not be found"
 }`}
-              </pre>
+            </pre>
+          </div>
 
-              <p className="select-none">&nbsp;</p>
-              <div className="whitespace-pre-wrap break-all">
-                <span className="text-green-400 select-none">
-                  textfully@gtfol.inc
-                </span>
-                <span className="text-white mx-1 select-none">:</span>
-                <span className="text-blue-400 select-none">~</span>
-                <span className="text-white mx-1 select-none">$</span>
-                <span className="text-gray-300 ml-1">{typedText}</span>
-                {isLoaded && (
-                  <div className="text-gray-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
-                    ▋
-                  </div>
-                )}
+          {/* Terminal Content */}
+          <div className="p-4 pt-2 w-full">
+            <div className="w-full bg-[#2F3037] relative p-4 rounded-[8px]">
+              <div className="inset-0 absolute element-dark">
+                <div className="inset-0 absolute element opacity-30"></div>
+              </div>
+              <div className="relative z-10">
+                <div className="whitespace-pre-wrap break-all text-sm font-mono">
+                  <span className="text-green-400 select-none">
+                    textfully@gtfol.inc
+                  </span>
+                  <span className="text-white mx-1 select-none">:</span>
+                  <span className="text-blue-400 select-none">~</span>
+                  <span className="text-yellow-500 mx-1 select-none">$</span>
+                  <span className="text-gray-300 ml-1">{typedText}</span>
+                  {isLoaded && (
+                    <div className="text-gray-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
+                      ▋
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

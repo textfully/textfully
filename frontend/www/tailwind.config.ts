@@ -27,14 +27,6 @@ const config: Config = {
         inter: ["var(--font-inter)", ...fontFamily.sans],
       },
       colors: {
-        primary: {
-          DEFAULT:
-            "color-mix(in srgb, var(--primary) calc(100% * <alpha-value>), transparent)",
-          foreground:
-            "color-mix(in srgb, var(--primary-foreground) calc(100% * <alpha-value>), transparent)",
-          hover:
-            "color-mix(in srgb, var(--primary-hover) calc(100% * <alpha-value>), transparent)",
-        },
         black:
           "color-mix(in srgb, var(--black) calc(100% * <alpha-value>), transparent)",
         white:

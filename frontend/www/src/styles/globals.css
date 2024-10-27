@@ -5,10 +5,8 @@
 @layer base {
   :root {
     --transparent: #ffffff00;
-    --black: #141415;
+    --black: #09090b;
     --white: #fdfdfe;
-    --primary: #f3592a;
-    --primary-hover: #f56c41;
 
     --radius: 0.5rem;
   }

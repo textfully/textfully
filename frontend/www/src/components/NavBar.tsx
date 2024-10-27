@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion as m } from "framer-motion";
 import clsx from "clsx";
 import Logo from "@/assets/logo";
+import { useAppContext } from "@/contexts/useAppContext";
 
 interface NavItem {
   name: string;
@@ -18,12 +19,14 @@ const navItems: NavItem[] = [
 ];
 
 export function NavBar() {
+  const { shouldLoadAnimation } = useAppContext();
+
   const pathname = usePathname();
 
   return (
     <m.nav
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={shouldLoadAnimation ? { opacity: 0, y: -20 } : false}
+      animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
       transition={{ duration: 0.2 }}
       className="flex items-center justify-between p-4 px-8"
     >

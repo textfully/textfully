@@ -187,7 +187,7 @@ export default function HomePage() {
               iMessage & SMS API for Developers
             </m.h1>
             <m.p
-              className="text-sm sm:text-base text-zinc-400  mt-6 max-w-lg mx-auto"
+              className="text-sm sm:text-base text-zinc-400 mt-6 max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, delay: 0.25 }}
@@ -213,7 +213,7 @@ export default function HomePage() {
                   <div className="w-2 h-2 rounded-full bg-green-500" />
                 </div>
                 <Link href="/docs">
-                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-2 items-center">
+                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-1.5 items-center">
                     <Play className="w-3 h-3 fill-[#838284] stroke-[#838284]" />
                     <span className="text-xs font-medium">Try it Out</span>
                   </button>
