@@ -7,7 +7,7 @@ import Python from "@/assets/icons/languages/python";
 import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/footer";
 import { NavBar } from "@/components/nav-bar";
-import { PhoneNotifications } from "@/components/PhoneNotifications";
+import { PhoneNotifications } from "@/components/phone-notifications";
 import { cn } from "@/utils/helper";
 import { motion as m } from "framer-motion";
 import { Play } from "lucide-react";
