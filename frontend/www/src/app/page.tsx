@@ -334,7 +334,7 @@ export default function HomePage() {
                 <div
                   key={card.title}
                   className={cn(
-                    "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5",
+                    "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5 pt-[18px]",
                     isEven ? "sent" : "received"
                   )}
                 >
