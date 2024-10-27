@@ -1,10 +1,11 @@
 import { DiscordLogo } from "@/assets/discord-logo";
 import { GitHubLogo } from "@/assets/github-logo";
+import Logo from "@/assets/logo";
 import { XLogo } from "@/assets/x-logo";
 
 export const Footer = () => {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -12,32 +13,33 @@ export const Footer = () => {
       <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-row justify-between sm:space-y-8 sm:justify-start items-center sm:flex-col sm:items-start">
-            <div 
-              className="flex flex-row space-x-2 items-center cursor-pointer" 
-              onClick={scrollToTop}
-            >
-              <img src="/logo.png" alt="Logo" className="h-8" />
-              <span className="font-bold text-lg sm:text-xl">Textfully</span>
-            </div>
-            <div className="flex space-x-6">
+            <button className="flex gap-x-2 items-center" onClick={scrollToTop}>
+              <div className="w-5 h-5 text-[#0A93F6]">
+                <Logo />
+              </div>
+              <p className="text-base font-semibold text-white font-general">
+                Textfully
+              </p>
+            </button>
+            <div className="flex gap-x-6">
               <a href="https://twitter.com/textfully_dev">
-                <XLogo className="h-5 w-5 fill-gray-400 hover:fill-gray-200 transition-colors" />
+                <XLogo className="h-4 w-4 fill-gray-400 hover:fill-gray-200 transition-colors" />
               </a>
               <a href="https://github.com/gtfol/textfully">
-                <GitHubLogo className="h-5 w-5 fill-gray-400 hover:fill-gray-200 transition-colors" />
+                <GitHubLogo className="h-4 w-4 fill-gray-400 hover:fill-gray-200 transition-colors" />
               </a>
               <a href="https://discord.gg/textfully">
-                <DiscordLogo className="h-5 w-5 fill-gray-400 hover:fill-gray-200 transition-colors" />
+                <DiscordLogo className="h-4 w-4 fill-gray-400 hover:fill-gray-200 transition-colors" />
               </a>
             </div>
           </div>
           <div>
-            <h3 className="font-semibold mb-4">Documentation</h3>
+            <h3 className="font-[550] mb-4 font-general">Documentation</h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="/changelog"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Changelog
                 </a>
@@ -45,7 +47,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/docs/getting-started"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Getting Started
                 </a>
@@ -53,7 +55,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/docs/api-reference"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   API Reference
                 </a>
@@ -61,7 +63,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/docs/examples"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Examples
                 </a>
@@ -69,7 +71,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/docs/sdks"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   SDKs
                 </a>
@@ -78,12 +80,12 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Product</h3>
+            <h3 className="font-[550] mb-4 font-general">Product</h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="/pricing"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Pricing
                 </a>
@@ -91,7 +93,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/products/messages"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Messages
                 </a>
@@ -99,7 +101,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/products/phone-numbers"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Phone Numbers
                 </a>
@@ -107,7 +109,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/products/conversations"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Conversations
                 </a>
@@ -115,7 +117,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/products/ai-agents"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   AI Agents
                 </a>
@@ -124,12 +126,12 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Company</h3>
+            <h3 className="font-[550] mb-4 font-general">Company</h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="/blog"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Blog
                 </a>
@@ -137,7 +139,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/careers"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Careers
                 </a>
@@ -145,7 +147,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="/contact"
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
+                  className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
                 >
                   Contact
                 </a>

@@ -5,8 +5,10 @@ import { ContextProvider } from "@/providers/ContextProvider";
 
 import type { Metadata } from "next";
 
-import "@/styles/masks.css";
 import "@/styles/globals.css";
+import "@/styles/bubbles.css";
+import "@/styles/masks.css";
+import "@/styles/fonts.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 

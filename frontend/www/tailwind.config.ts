@@ -23,6 +23,7 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
+        general: ["General Sans", "sans-serif"],
         inter: ["var(--font-inter)", ...fontFamily.sans],
       },
       colors: {

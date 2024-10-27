@@ -146,23 +146,23 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
       <div className="p-8 mb-32">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             className="text-center mt-16 mb-12"
             initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
             animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
             transition={{ duration: 0.3 }}
           >
-            <h1 className="text-6xl font-bold mb-4">Pricing</h1>
-            <p className="text-xl text-gray-400">
+            <h1 className="text-4xl mb-4 font-general font-[550]">Pricing</h1>
+            <p className="text-base text-zinc-400">
               Start for free and scale as you grow.
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
             animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
@@ -173,11 +173,11 @@ export default function PricingPage() {
                 key={plan.name}
                 initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
                 animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-                transition={{ duration: 0.3, delay: 0.1 + (index * 0.05) }}
+                transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
                 className={clsx(
                   "flex flex-col justify-between border rounded-xl px-4 py-6 bg-[#1e1e1e]",
                   plan.type === "highlighted"
-                    ? "border-primary"
+                    ? "border-[#0A93F6]"
                     : "border-transparent mt-4"
                 )}
               >
@@ -244,7 +244,7 @@ export default function PricingPage() {
                   className={clsx(
                     "w-full rounded-full py-3 font-medium transition-colors",
                     plan.type === "highlighted"
-                      ? "bg-primary hover:bg-primary-hover text-white shadow-sm"
+                      ? "bg-[#0A93F6] text-white shadow-sm"
                       : plan.type === "primary"
                         ? "bg-white text-black hover:bg-white/80"
                         : "bg-[#3a3a3a] text-white hover:bg-[#3e3e3e] shadow-sm"

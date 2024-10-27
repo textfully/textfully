@@ -139,8 +139,8 @@ interface CTA {
 }
 
 const ctas: Array<CTA> = [
-  { name: "Get Started", link: "/dashboard" },
   { name: "View Docs", link: "/docs" },
+  { name: "Get Started", link: "/dashboard" },
 ];
 
 const cardArrowVariants = {
@@ -186,6 +186,15 @@ export default function HomePage() {
     }
   }, [activeLanguage]);
 
+  const time = new Date().getTime();
+
+  console.log(time);
+
+  const formattedTime = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(time);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
@@ -200,15 +209,15 @@ export default function HomePage() {
             transition={{ duration: 0.7 }}
           >
             <m.h1
-              className="text-4xl sm:text-5xl font-medium text-balance"
+              className="text-4xl sm:text-5xl font-[550] text-balance font-general"
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, delay: 0.15 }}
             >
-              SMS & iMessage API for Developers
+              iMessage & SMS API for Developers
             </m.h1>
             <m.p
-              className="text-sm sm:text-base text-zinc-400 leading-relaxed mt-6 max-w-lg mx-auto"
+              className="text-sm sm:text-base text-zinc-400  mt-6 max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, delay: 0.25 }}
@@ -227,12 +236,18 @@ export default function HomePage() {
               <div className="inset-0 absolute element-dark !rounded-xl">
                 <div className="inset-0 absolute element opacity-10 !rounded-[11px]"></div>
               </div>
-              <div className="w-full flex justify-between items-center h-9 px-4">
+              <div className="w-full flex justify-between items-center h-10 px-4 pr-1.5">
                 <div className="flex gap-x-1.5 items-center">
                   <div className="w-2 h-2 rounded-full bg-rose-500" />
                   <div className="w-2 h-2 rounded-full bg-amber-500" />
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
                 </div>
+                <Link href="/docs">
+                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-2 items-center">
+                    <Play className="w-3 h-3 fill-[#838284] stroke-[#838284]" />
+                    <span className="text-xs font-medium">Try it Out</span>
+                  </button>
+                </Link>
               </div>
               <div className="w-full h-px bg-zinc-900 z-30 relative"></div>
               <div className="w-full flex px-0.5">
@@ -276,69 +291,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm mt-6">
-              <div className="flex flex-col">
-                {/* Window Controls */}
-                <div className="flex flex-row justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 rounded-full bg-rose-500" />
-                    <div className="w-2 h-2 rounded-full bg-amber-500" />
-                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                  </div>
-                  <div className="flex items-center">
-                    <Link
-                      href="/dashboard"
-                      className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#16a34a] text-white rounded-md transition-colors flex items-center"
-                    >
-                      <Play className="w-4 h-4 mr-1 fill-white" />
-                      {/* TODO: "Run" and show output in corresponding language */}
-                      <span>Try it Yourself</span>
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="flex flex-col">
-                  <div className="flex items-end space-x-1 overflow-x-auto whitespace-nowrap pr-1">
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.id}
-                        onClick={() => setActiveLanguage(lang.id)}
-                        className={clsx(
-                          "relative flex items-center px-4 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg flex-shrink-0",
-                          activeLanguage === lang.id
-                            ? "bg-[#3a3a3a] text-white z-10 rounded-b-none"
-                            : "bg-[#2a2a2a] text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300"
-                        )}
-                      >
-                        {/* <img
-                          src={lang.icon}
-                          alt={`${lang.name} icon`}
-                          className="w-4 h-4 mr-2"
-                        /> */}
-                        <span className="truncate">{lang.name}</span>
-                      </button>
-                    ))}
-                    <a
-                      href="https://github.com/gtfol/textfully"
-                      className="relative flex items-center px-2 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300 flex-shrink-0"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </a>
-                  </div>
-                  {/* Code Content */}
-                  <div className="p-4 space-y-2 bg-[#3a3a3a]">
-                    <div className="text-[#797979]">
-                      {codeSnippets[activeLanguage].comment}
-                    </div>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: codeSnippets[activeLanguage].code,
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
           </m.div>
         </div>
       </div>
@@ -349,94 +301,88 @@ export default function HomePage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.25 }} // Reduced duration and delay
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {features.map((card) => (
-            <div
-              key={card.title}
-              className="bg-white/5 flex flex-col justify-between backdrop-blur-sm rounded-xl p-6"
-            >
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
-                <p className="text-gray-400">{card.description}</p>
-              </div>
-              <div>
-                <m.a
-                  href={card.link}
-                  className="group text-white hover:text-gray-300 inline-flex items-center text-sm"
-                  variants={cardButtonVariants}
-                  initial="initial"
-                  whileHover="hover"
-                  whileTap="tap"
+        <div className="flex flex-col gap-6 message-list w-full">
+          {features.map((card, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <div
+                className={cn(
+                  "w-full max-w-md flex flex-col relative",
+                  isEven ? "ml-auto" : "mr-auto"
+                )}
+              >
+                <div
+                  style={{
+                    WebkitMaskImage:
+                      "linear-gradient(to bottom, black 20%, transparent 70%)",
+                  }}
+                  className="inset-0 absolute element-dark z-10 !rounded-[25px]"
                 >
-                  {card.cta}
-                  <m.span
-                    className="inline-block ml-1"
-                    variants={cardArrowVariants}
+                  <div
+                    className={cn(
+                      "inset-0 absolute element !rounded-[24px]",
+                      isEven ? "opacity-100" : "opacity-40"
+                    )}
+                  ></div>
+                </div>
+                <div
+                  key={card.title}
+                  className={cn(
+                    "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5",
+                    isEven ? "sent" : "received"
+                  )}
+                >
+                  <h3 className="text-[16px] text-white font-semibold mb-1">
+                    {card.title}
+                  </h3>
+                  <p className="text-white text-[15px] mb-2 opacity-80">
+                    {card.description}
+                  </p>
+                  <Link href={card.link} className="w-fit">
+                    <p
+                      className={cn(
+                        "font-semibold text-sm hover:brightness-110",
+                        isEven ? "text-sky-200" : "text-[#0A93F6]"
+                      )}
+                    >
+                      {card.cta}
+                    </p>
+                  </Link>
+                </div>
+                <div className="w-full h-4 flex justify-end items-center mt-2">
+                  <p
+                    className={cn(
+                      "text-xs text-white/50",
+                      isEven ? "" : "hidden"
+                    )}
                   >
-                    <ChevronRight className="w-4 h-4" />
-                  </m.span>
-                </m.a>
+                    <span className="font-semibold">Read&nbsp;</span>
+                    {formattedTime}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </m.div>
 
-      {/* <div className="max-w-4xl mx-auto px-6 mb-16">
-        <h2 className="text-2xl font-bold mb-8">Built for Modern Use Cases</h2>
-        <div className="bg-gray-900 rounded-lg p-6 font-mono text-sm">
-          <div className="text-gray-300 space-y-6">
-            <div>
-              <span className="text-gray-500"># Transactional Messages</span>
-              <br />
-              <span className="text-blue-400">textfully</span>.send(
-              order.phone,
-              <span className="text-orange-300">
-                `Thanks for ordering! Your ${"{product}"} ships tomorrow. Here's
-                your tracking number: ${"{tracking_number}"}.`
-              </span>
-              )
-            </div>
-            <div>
-              <span className="text-gray-500"># Marketing Campaigns</span>
-              <br />
-              <span className="text-blue-400">textfully</span>.campaign.send(
-              {"{"}
-              <br />
-              &nbsp;&nbsp;template:{" "}
-              <span className="text-orange-300">`spring-sale`</span>,<br />
-              &nbsp;&nbsp;audience:{" "}
-              <span className="text-orange-300">`active-customers`</span>,<br />
-              &nbsp;&nbsp;variables: {"{"}
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;discount:{" "}
-              <span className="text-orange-300">`20%`</span>
-              <br />
-              &nbsp;&nbsp;{"}"}
-              <br />
-              {"})"}
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-32 text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">
-          Cheaper, better, and faster.
+        <h2 className="text-3xl sm:text-4xl font-[550] font-general mb-4">
+          Texting doesn't have to be hard.
         </h2>
-        <p className="text-lg sm:text-xl text-gray-400 mb-8">
-          That's right. You can build faster with Textfully.
+        <p className="text-sm sm:text-base text-zinc-400 mb-6">
+          Ditch Twilio and build faster with Textfully.
         </p>
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center gap-x-4 message-list">
           {ctas.map((cta, index) => (
             <a
               key={cta.name}
               href={cta.link}
-              className={`px-6 py-2 rounded-full font-medium ${
-                index === 0 ? "bg-white text-black" : "border border-gray-700"
+              className={`px-4 py-2.5 small shared rounded-full !text-white font-medium text-sm leading-none ${
+                index === 0 ? "bg-white received" : "sent"
               }`}
             >
-              {cta.name}
+              <p>{cta.name}</p>
             </a>
           ))}
         </div>

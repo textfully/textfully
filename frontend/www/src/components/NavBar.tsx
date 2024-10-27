@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 import { useAppContext } from "@/contexts/useAppContext";
+import Logo from "@/assets/logo";
 
 const navItems = [
   { name: "Pricing", link: "/pricing" },
@@ -20,27 +21,31 @@ export function NavBar() {
 
   return (
     <motion.nav
-      initial={shouldAnimateNav ? { opacity: 0, y: -20 } : false}
-      animate={shouldAnimateNav ? { opacity: 1, y: 0 } : false}
-      transition={shouldAnimateNav ? { duration: 0.2 } : undefined}
-      className="flex items-center justify-between p-6"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="flex items-center justify-between p-4 pl-8"
     >
-      <div className="flex items-center space-x-8">
-        <Link
-          href="/"
-          className="flex items-center text-2xl font-bold transition-colors"
-        >
-          <img src="/logo.png" alt="Textfully Logo" className="h-8 w-8 mr-2" />
-          Textfully
+      <div className="flex items-center gap-x-8">
+        <Link href="/">
+          <div className="flex gap-x-2 items-center">
+            <div className="w-5 h-5 text-[#0A93F6]">
+              <Logo />
+            </div>
+            <p className="text-base font-semibold text-white font-general">
+              Textfully
+            </p>
+          </div>
         </Link>
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center gap-x-4">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.link}
               className={clsx(
+                "text-sm transition font-medium",
                 pathname === item.link
-                  ? "text-white font-medium"
+                  ? "text-white"
                   : "text-gray-400 hover:text-gray-200"
               )}
             >
@@ -49,15 +54,27 @@ export function NavBar() {
           ))}
         </div>
       </div>
-      <div className="flex items-center space-x-6">
-        <Link href="/sign-in" className="text-gray-400 hover:text-gray-200">
+      <div className="flex items-center gap-x-4 message-list">
+        <Link
+          href="/sign-in"
+          className="text-sm  font-medium transition text-gray-400 hover:text-gray-200"
+        >
           Sign in
         </Link>
-        <Link
-          href="/dashboard"
-          className="bg-white hover:bg-gray-300 transition-colors text-black px-4 py-2 rounded-full flex items-center font-medium"
-        >
-          Get Started <ChevronRight className="ml-1 w-4 h-4" />
+
+        <Link href="/dashboard">
+          <p className="shared small sent px-3 py-1.5 flex gap-x-1.5 items-center">
+            <div
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 20%, transparent 55%)",
+              }}
+              className="inset-0 absolute element-dark !rounded-[16px]"
+            >
+              <div className="inset-0 absolute element opacity-70 !rounded-[15px]"></div>
+            </div>
+            <span className="text-sm font-medium">Get Started</span>
+          </p>
         </Link>
       </div>
     </motion.nav>
