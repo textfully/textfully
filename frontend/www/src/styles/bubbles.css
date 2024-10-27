@@ -1,0 +1,71 @@
+.message-list {
+  --sentColor: #0b93f6;
+  --receiveColor: #212126;
+  --bg: #09090b;
+}
+
+.shared {
+  position: relative; /* Setup a relative container for our psuedo elements */
+  word-wrap: break-word; /* Make sure the text wraps to multiple lines if long */
+  border-radius: 25px;
+
+  &:before {
+    width: 20px;
+  }
+
+  &:after {
+    width: 26px;
+    background-color: var(--bg); /* All tails have the same bg cutout */
+  }
+
+  &:before,
+  &:after {
+    position: absolute;
+    bottom: 0;
+    height: 25px; /* height of our bubble "tail" - should match the border-radius above */
+    content: "";
+  }
+}
+
+.small {
+  border-radius: 16px;
+
+  &:before,
+  &:after {
+    height: 16px; /* height of our bubble "tail" - should match the border-radius above */
+  }
+}
+
+.sent {
+  align-self: flex-end;
+  color: white;
+  background: var(--sentColor);
+
+  &:before {
+    right: -7px;
+    background-color: var(--sentColor);
+    border-bottom-left-radius: 16px 14px;
+  }
+
+  &:after {
+    right: -26px;
+    border-bottom-left-radius: 10px;
+  }
+}
+
+.received {
+  align-self: flex-start;
+  color: black;
+  background: var(--receiveColor);
+
+  &:before {
+    left: -7px;
+    background-color: var(--receiveColor);
+    border-bottom-right-radius: 16px 14px;
+  }
+
+  &:after {
+    left: -26px;
+    border-bottom-right-radius: 10px;
+  }
+}

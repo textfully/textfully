@@ -1,25 +1,18 @@
 "use client";
 
+import Elixir from "@/assets/icons/languages/elixir";
+import Go from "@/assets/icons/languages/go";
+import NodeJS from "@/assets/icons/languages/nodejs";
+import Python from "@/assets/icons/languages/python";
+import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
-import { useAppContext } from "@/contexts/useAppContext";
-import clsx from "clsx";
-import { motion } from "framer-motion";
-import { ChevronRight, Play, Plus } from "lucide-react";
+import { PhoneNotifications } from "@/components/PhoneNotifications";
+import { cn } from "@/utils/helper";
+import { motion as m } from "framer-motion";
+import { Play } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-
-interface NavItem {
-  name: string;
-  link: string;
-}
-
-const navItems: NavItem[] = [
-  { name: "Docs", link: "/docs" },
-  { name: "Pricing", link: "/pricing" },
-  { name: "Blog", link: "/blog" },
-  { name: "Resources", link: "/resources" },
-];
 
 interface CodeSnippet {
   comment: string;
@@ -72,15 +65,15 @@ const codeSnippets: Record<string, CodeSnippet> = {
 interface Language {
   id: string;
   name: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
-const languages: Array<Language> = [
-  { id: "python", name: "Python", icon: "/python-logo.svg" },
-  { id: "nodejs", name: "Node.js", icon: "/nodejs-logo.svg" },
-  { id: "go", name: "Go", icon: "/go-logo.svg" },
-  { id: "elixir", name: "Elixir", icon: "/elixir-logo.svg" },
-  { id: "rust", name: "Rust", icon: "/rust-logo.svg" },
+const languages: Language[] = [
+  { id: "python", name: "Python", icon: <Python /> },
+  { id: "nodejs", name: "Node.js", icon: <NodeJS /> },
+  { id: "go", name: "Go", icon: <Go /> },
+  { id: "elixir", name: "Elixir", icon: <Elixir /> },
+  { id: "rust", name: "Rust", icon: <Rust /> },
 ];
 
 interface Feature {
@@ -90,7 +83,7 @@ interface Feature {
   link: string;
 }
 
-const features: Array<Feature> = [
+const features: Feature[] = [
   {
     title: "Quick Setup",
     description:
@@ -125,6 +118,13 @@ const features: Array<Feature> = [
     cta: "Sign up",
     link: "/dashboard",
   },
+  {
+    title: "All Your Messaging Needs",
+    description:
+      "Explore other products including Phone Numbers, Conversations, AI Agents, and more.",
+    cta: "Learn more",
+    link: "/products",
+  },
 ];
 
 interface CTA {
@@ -132,42 +132,12 @@ interface CTA {
   link: string;
 }
 
-const ctas: Array<CTA> = [
-  { name: "Get Started", link: "/dashboard" },
+const ctas: CTA[] = [
   { name: "View Docs", link: "/docs" },
+  { name: "Get Started", link: "/dashboard" },
 ];
 
-const cardArrowVariants = {
-  initial: { x: 0 },
-  hover: {
-    x: 4,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-};
-
-const cardButtonVariants = {
-  initial: { opacity: 0.9 },
-  hover: {
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-  tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};
-
 export default function HomePage() {
-  const { shouldLoadAnimation } = useAppContext();
-
   const [activeLanguage, setActiveLanguage] = useState("python");
   const [activeWidth, setActiveWidth] = useState(0);
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
@@ -180,166 +150,209 @@ export default function HomePage() {
     }
   }, [activeLanguage]);
 
+  const time = new Date().getTime();
+
+  const formattedTime = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(time);
+
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
 
-      {/* Adjusted to take full height and center content */}
-      <div className="h-[calc(100vh-4rem)] flex items-center">
-        <div className="w-full">
-          <motion.div
-            className="max-w-4xl mx-auto px-6 pb-8 sm:pb-12 text-center"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.3 }} // Reduced from 0.5
+      <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
+        <div className="w-full px-6 lg:px-4">
+          <m.div
+            className="max-w-4xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7 }}
           >
-            <motion.h1
-              className="text-4xl sm:text-5xl font-bold mb-8 sm:mb-12"
-              initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-              animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.3, delay: 0.1 }} // Reduced duration and delay
+            <div
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 80%, transparent 100%)",
+              }}
+              className="w-52 h-52 mx-auto overflow-hidden relative ring-2"
             >
-              SMS & iMessage API for Developers
-            </motion.h1>
-            <motion.p
-              className="text-lg sm:text-xl text-gray-400 mb-4 leading-relaxed"
-              initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-              animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.3, delay: 0.15 }} // Reduced duration and delay
+              <PhoneNotifications />
+            </div>
+            <m.h1
+              className="text-4xl sm:text-5xl font-[550] text-balance font-general"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+            >
+              iMessage & SMS API for Developers
+            </m.h1>
+            <m.p
+              className="text-sm sm:text-base text-zinc-400  mt-6 max-w-lg mx-auto"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.25 }}
             >
               Textfully is an open source Twilio alternative. Send text messages
               with 1 line of code.
-            </motion.p>
-          </motion.div>
-          <motion.div
-            className="max-w-4xl mx-auto px-6"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.3, delay: 0.2 }} // Reduced duration and delay
+            </m.p>
+          </m.div>
+          <m.div
+            className="w-full"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 0.4 }}
           >
-            <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm">
-              <div className="flex flex-col">
-                {/* Window Controls */}
-                <div className="flex flex-row justify-between">
-                  <div className="flex items-center space-x-2 p-4">
-                    <div className="w-3 h-3 rounded-full bg-[#dd0300]" />
-                    <div className="w-3 h-3 rounded-full bg-[#ffb323]" />
-                    <div className="w-3 h-3 rounded-full bg-[#00ac5c]" />
-                  </div>
-                  <div className="flex items-center p-4">
-                    <Link
-                      href="/dashboard"
-                      className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#16a34a] text-white rounded-md transition-colors flex items-center"
-                    >
-                      <Play className="w-4 h-4 mr-1 fill-white" />
-                      {/* TODO: "Run" and show output in corresponding language */}
-                      <span>Try it Yourself</span>
-                    </Link>
-                  </div>
+            <div className="w-full bg-[#212126] rounded-xl relative mt-10">
+              <div className="inset-0 absolute element-dark !rounded-xl">
+                <div className="inset-0 absolute element opacity-10 !rounded-[11px]"></div>
+              </div>
+              <div className="w-full flex justify-between items-center h-10 px-4 pr-1.5">
+                <div className="flex gap-x-1.5 items-center">
+                  <div className="w-2 h-2 rounded-full bg-rose-500" />
+                  <div className="w-2 h-2 rounded-full bg-amber-500" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
                 </div>
-
-                <div className="flex flex-col">
-                  <div className="flex items-end space-x-1 overflow-x-auto whitespace-nowrap pr-1">
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.id}
-                        onClick={() => setActiveLanguage(lang.id)}
-                        className={clsx(
-                          "relative flex items-center px-4 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg flex-shrink-0",
-                          activeLanguage === lang.id
-                            ? "bg-[#3a3a3a] text-white z-10 rounded-b-none"
-                            : "bg-[#2a2a2a] text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300"
-                        )}
-                      >
-                        <img
-                          src={lang.icon}
-                          alt={`${lang.name} icon`}
-                          className="w-4 h-4 mr-2"
-                        />
-                        <span className="truncate">{lang.name}</span>
-                      </button>
-                    ))}
-                    <a
-                      href="https://github.com/gtfol/textfully"
-                      className="relative flex items-center px-2 py-2 text-sm h-9 transition-all duration-200 rounded-t-lg text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300 flex-shrink-0"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </a>
+                <Link href="/docs">
+                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-2 items-center">
+                    <Play className="w-3 h-3 fill-[#838284] stroke-[#838284]" />
+                    <span className="text-xs font-medium">Try it Out</span>
+                  </button>
+                </Link>
+              </div>
+              <div className="w-full h-px bg-zinc-900 z-30 relative"></div>
+              <div className="w-full flex px-0.5">
+                <div className="w-full h-px bg-white/5"></div>
+              </div>
+              <div className="p-2 w-full flex gap-x-2 pb-1 overflow-x-auto">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.id}
+                    onClick={() => setActiveLanguage(lang.id)}
+                    className={cn(
+                      "text-sm font-medium px-3 py-1.5 rounded-lg flex items-center gap-x-2",
+                      activeLanguage === lang.id
+                        ? "bg-zinc-700 text-white"
+                        : "text-zinc-400 hover:text-zinc-200"
+                    )}
+                  >
+                    <div className="w-4 h-4">{lang.icon}</div>
+                    <p>{lang.name}</p>
+                  </button>
+                ))}
+              </div>
+              {/* Code Snippet */}
+              <div className="w-full p-1">
+                <div className="w-full bg-[#2F3037] relative p-4 rounded-[8px]">
+                  <div className="inset-0 absolute element-dark">
+                    <div className="inset-0 absolute element opacity-30"></div>
                   </div>
-                  {/* Code Content */}
-                  <div className="p-4 space-y-2 bg-[#3a3a3a]">
-                    <div className="text-[#797979]">
-                      {codeSnippets[activeLanguage].comment}
-                    </div>
+                  <>
                     <div
+                      className="text-sm"
                       dangerouslySetInnerHTML={{
                         __html: codeSnippets[activeLanguage].code,
                       }}
                     />
-                  </div>
+                    <br />
+                    <div className="text-[#797979] text-sm font-mono">
+                      {codeSnippets[activeLanguage].comment}
+                    </div>
+                  </>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
-      <motion.div
-        className="max-w-4xl mx-auto px-6 mb-16"
-        initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-        animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-        transition={{ duration: 0.3, delay: 0.25 }} // Reduced duration and delay
+      <m.div
+        className="max-w-3xl mx-auto px-6 mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.25 }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {features.map((card) => (
-            <div
-              key={card.title}
-              className="bg-white/5 flex flex-col justify-between backdrop-blur-sm rounded-xl p-6"
-            >
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
-                <p className="text-gray-400">{card.description}</p>
-              </div>
-              <div>
-                <motion.a
-                  href={card.link}
-                  className="group text-white hover:text-gray-300 inline-flex items-center text-sm"
-                  variants={cardButtonVariants}
-                  initial="initial"
-                  whileHover="hover"
-                  whileTap="tap"
+        <div className="flex flex-col gap-6 message-list w-full">
+          {features.map((card, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <div
+                className={cn(
+                  "w-full max-w-md flex flex-col relative",
+                  isEven ? "mr-auto" : "ml-auto"
+                )}
+              >
+                <div
+                  style={{
+                    WebkitMaskImage:
+                      "linear-gradient(to bottom, black 20%, transparent 70%)",
+                  }}
+                  className="inset-0 absolute element-dark z-10 !rounded-[25px]"
                 >
-                  {card.cta}
-                  <motion.span
-                    className="inline-block ml-1"
-                    variants={cardArrowVariants}
+                  <div
+                    className={cn(
+                      "inset-0 absolute element !rounded-[24px]",
+                      isEven ? "opacity-40" : "opacity-100"
+                    )}
+                  ></div>
+                </div>
+                <div
+                  key={card.title}
+                  className={cn(
+                    "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5",
+                    isEven ? "received" : "sent"
+                  )}
+                >
+                  <h3 className="text-[16px] text-white font-semibold mb-1">
+                    {card.title}
+                  </h3>
+                  <p className="text-white text-[15px] mb-2 opacity-80">
+                    {card.description}
+                  </p>
+                  <Link href={card.link} className="w-fit">
+                    <p
+                      className={cn(
+                        "font-semibold text-sm hover:brightness-110",
+                        isEven ? "text-[#0A93F6]" : "text-sky-200"
+                      )}
+                    >
+                      {card.cta}
+                    </p>
+                  </Link>
+                </div>
+                <div className="w-full h-4 flex justify-end items-center mt-2">
+                  <p
+                    className={cn(
+                      "text-xs text-white/50",
+                      isEven || index !== features.length - 1 ? "hidden" : ""
+                    )}
                   >
-                    <ChevronRight className="w-4 h-4" />
-                  </motion.span>
-                </motion.a>
+                    <span className="font-semibold">Read&nbsp;</span>
+                    {formattedTime}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      </motion.div>
+      </m.div>
 
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-32 text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">
-          Cheaper, better, and faster.
+        <h2 className="text-3xl sm:text-4xl font-[550] font-general mb-4">
+          Texting doesn't have to be hard.
         </h2>
-        <p className="text-lg sm:text-xl text-gray-400 mb-8">
-          That's right. You can build faster with Textfully.
+        <p className="text-sm sm:text-base text-zinc-400 mb-6">
+          Ditch Twilio and build faster with Textfully.
         </p>
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center gap-x-4 message-list">
           {ctas.map((cta, index) => (
             <a
               key={cta.name}
               href={cta.link}
-              className={`px-6 py-2 rounded-full font-medium ${
-                index === 0 ? "bg-white text-black" : "border border-gray-700"
+              className={`px-4 py-2.5 small shared rounded-full !text-white font-medium text-sm leading-none ${
+                index === 0 ? "bg-white received" : "sent"
               }`}
             >
-              {cta.name}
+              <p>{cta.name}</p>
             </a>
           ))}
         </div>
