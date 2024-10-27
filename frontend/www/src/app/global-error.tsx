@@ -80,9 +80,9 @@ export default function GlobalError({
               {/* Window Controls */}
               <div className="w-full flex justify-between items-center h-10 px-4">
                 <div className="flex gap-x-1.5 items-center">
-                  <div className="w-2 h-2 rounded-full bg-red-500" />
-                  <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
                 </div>
                 <button
                   onClick={handleReload}
@@ -102,10 +102,11 @@ export default function GlobalError({
 
               {/* Error Response */}
               <div className="p-4 pb-2">
-                <pre className="text-zinc-400 select-none text-sm">
+                <pre className="text-zinc-400 select-none text-sm whitespace-pre-wrap">
                   {`{
-    "error": "Unknown Error",
-    "message": "${error.message ?? "An unknown error occurred"}"
+    "code": 400,
+    "error_code": "unknown_error",
+    "msg": "${error.message ?? "An unknown error occurred"}"
 }`}
                 </pre>
               </div>

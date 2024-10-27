@@ -1,11 +1,11 @@
-import { DiscordLogo } from "@/assets/discord-logo";
-import { GitHubLogo } from "@/assets/github-logo";
+import Discord from "@/assets/icons/socials/discord";
+import GitHub from "@/assets/icons/socials/github";
 import Logo from "@/assets/logo";
-import { XLogo } from "@/assets/x-logo";
+import X from "@/assets/icons/socials/x";
 
 interface SocialLink {
   href: string;
-  icon: React.FC<{ className?: string }>;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
   ariaLabel: string;
 }
 
@@ -23,17 +23,17 @@ interface FooterLinks {
 const SOCIAL_LINKS: SocialLink[] = [
   {
     href: "https://twitter.com/textfully_dev",
-    icon: XLogo,
+    icon: X,
     ariaLabel: "Twitter",
   },
   {
     href: "https://github.com/gtfol/textfully",
-    icon: GitHubLogo,
+    icon: GitHub,
     ariaLabel: "GitHub",
   },
   {
     href: "https://discord.gg/textfully",
-    icon: DiscordLogo,
+    icon: Discord,
     ariaLabel: "Discord",
   },
 ];

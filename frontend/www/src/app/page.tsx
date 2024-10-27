@@ -208,9 +208,9 @@ export default function HomePage() {
               </div>
               <div className="w-full flex justify-between items-center h-10 px-4 pr-1.5">
                 <div className="flex gap-x-1.5 items-center">
-                  <div className="w-2 h-2 rounded-full bg-red-500" />
-                  <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
                 </div>
                 <Link href="/docs">
                   <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-1.5 items-center">

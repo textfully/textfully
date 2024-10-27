@@ -1,4 +1,4 @@
-export const XLogo = (props: React.SVGProps<SVGSVGElement>) => {
+const X = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       role="img"
@@ -11,3 +11,5 @@ export const XLogo = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export default X;
