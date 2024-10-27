@@ -5,6 +5,7 @@ import { ContextProvider } from "@/providers/ContextProvider";
 
 import type { Metadata } from "next";
 
+import "@/styles/masks.css";
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });

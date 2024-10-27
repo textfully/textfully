@@ -1,10 +1,16 @@
 "use client";
 
+import Elixir from "@/assets/icons/languages/elixir";
+import Go from "@/assets/icons/languages/go";
+import NodeJS from "@/assets/icons/languages/nodejs";
+import Python from "@/assets/icons/languages/python";
+import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
 import { useAppContext } from "@/contexts/useAppContext";
+import { cn } from "@/utils/helper";
 import clsx from "clsx";
-import { motion } from "framer-motion";
+import { motion as m } from "framer-motion";
 import { ChevronRight, Play, Plus } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
@@ -72,15 +78,15 @@ const codeSnippets: Record<string, CodeSnippet> = {
 interface Language {
   id: string;
   name: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 const languages: Array<Language> = [
-  { id: "python", name: "Python", icon: "/python-logo.svg" },
-  { id: "nodejs", name: "Node.js", icon: "/nodejs-logo.svg" },
-  { id: "go", name: "Go", icon: "/go-logo.svg" },
-  { id: "elixir", name: "Elixir", icon: "/elixir-logo.svg" },
-  { id: "rust", name: "Rust", icon: "/rust-logo.svg" },
+  { id: "python", name: "Python", icon: <Python /> },
+  { id: "nodejs", name: "Node.js", icon: <NodeJS /> },
+  { id: "go", name: "Go", icon: <Go /> },
+  { id: "elixir", name: "Elixir", icon: <Elixir /> },
+  { id: "rust", name: "Rust", icon: <Rust /> },
 ];
 
 interface Feature {
@@ -181,52 +187,105 @@ export default function HomePage() {
   }, [activeLanguage]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
 
       {/* Adjusted to take full height and center content */}
-      <div className="h-[calc(100vh-4rem)] flex items-center">
-        <div className="w-full">
-          <motion.div
-            className="max-w-4xl mx-auto px-6 pb-8 sm:pb-12 text-center"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.3 }} // Reduced from 0.5
+      <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
+        <div className="w-full px-6 lg:px-4">
+          <m.div
+            className="max-w-4xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7 }}
           >
-            <motion.h1
-              className="text-4xl sm:text-5xl font-bold mb-8 sm:mb-12"
-              initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-              animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.3, delay: 0.1 }} // Reduced duration and delay
+            <m.h1
+              className="text-4xl sm:text-5xl font-medium text-balance"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.15 }}
             >
               SMS & iMessage API for Developers
-            </motion.h1>
-            <motion.p
-              className="text-lg sm:text-xl text-gray-400 mb-4 leading-relaxed"
-              initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-              animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-              transition={{ duration: 0.3, delay: 0.15 }} // Reduced duration and delay
+            </m.h1>
+            <m.p
+              className="text-sm sm:text-base text-zinc-400 leading-relaxed mt-6 max-w-lg mx-auto"
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.25 }}
             >
               Textfully is an open source Twilio alternative. Send text messages
               with 1 line of code.
-            </motion.p>
-          </motion.div>
-          <motion.div
-            className="max-w-4xl mx-auto px-6"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.3, delay: 0.2 }} // Reduced duration and delay
+            </m.p>
+          </m.div>
+          <m.div
+            className="w-full"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 0.4 }}
           >
-            <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm">
+            <div className="w-full bg-[#212126] rounded-xl relative mt-10">
+              <div className="inset-0 absolute element-dark !rounded-xl">
+                <div className="inset-0 absolute element opacity-10 !rounded-[11px]"></div>
+              </div>
+              <div className="w-full flex justify-between items-center h-9 px-4">
+                <div className="flex gap-x-1.5 items-center">
+                  <div className="w-2 h-2 rounded-full bg-rose-500" />
+                  <div className="w-2 h-2 rounded-full bg-amber-500" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                </div>
+              </div>
+              <div className="w-full h-px bg-zinc-900 z-30 relative"></div>
+              <div className="w-full flex px-0.5">
+                <div className="w-full h-px bg-white/5"></div>
+              </div>
+              <div className="p-2 w-full flex gap-x-2 pb-1 overflow-x-auto">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.id}
+                    onClick={() => setActiveLanguage(lang.id)}
+                    className={cn(
+                      "text-sm font-medium px-3 py-1.5 rounded-lg flex items-center gap-x-2",
+                      activeLanguage === lang.id
+                        ? "bg-zinc-700 text-white"
+                        : "text-zinc-400 hover:text-zinc-200"
+                    )}
+                  >
+                    <div className="w-4 h-4">{lang.icon}</div>
+                    <p>{lang.name}</p>
+                  </button>
+                ))}
+              </div>
+              {/* Code Snippet */}
+              <div className="w-full p-1">
+                <div className="w-full bg-[#2F3037] relative p-4 rounded-[8px]">
+                  <div className="inset-0 absolute element-dark">
+                    <div className="inset-0 absolute element opacity-30"></div>
+                  </div>
+                  <>
+                    <div
+                      className="text-sm"
+                      dangerouslySetInnerHTML={{
+                        __html: codeSnippets[activeLanguage].code,
+                      }}
+                    />
+                    <br />
+                    <div className="text-[#797979] text-sm font-mono">
+                      {codeSnippets[activeLanguage].comment}
+                    </div>
+                  </>
+                </div>
+              </div>
+            </div>
+            <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm mt-6">
               <div className="flex flex-col">
                 {/* Window Controls */}
                 <div className="flex flex-row justify-between">
-                  <div className="flex items-center space-x-2 p-4">
-                    <div className="w-3 h-3 rounded-full bg-red" />
-                    <div className="w-3 h-3 rounded-full bg-yellow" />
-                    <div className="w-3 h-3 rounded-full bg-green" />
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 rounded-full bg-rose-500" />
+                    <div className="w-2 h-2 rounded-full bg-amber-500" />
+                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
                   </div>
-                  <div className="flex items-center p-4">
+                  <div className="flex items-center">
                     <Link
                       href="/dashboard"
                       className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#16a34a] text-white rounded-md transition-colors flex items-center"
@@ -251,11 +310,11 @@ export default function HomePage() {
                             : "bg-[#2a2a2a] text-gray-400 hover:bg-[#2e2e2e] hover:text-gray-300"
                         )}
                       >
-                        <img
+                        {/* <img
                           src={lang.icon}
                           alt={`${lang.name} icon`}
                           className="w-4 h-4 mr-2"
-                        />
+                        /> */}
                         <span className="truncate">{lang.name}</span>
                       </button>
                     ))}
@@ -280,14 +339,14 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
-      <motion.div
-        className="max-w-4xl mx-auto px-6 mb-16"
-        initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-        animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+      <m.div
+        className="max-w-3xl mx-auto px-6 mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.25 }} // Reduced duration and delay
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -301,7 +360,7 @@ export default function HomePage() {
                 <p className="text-gray-400">{card.description}</p>
               </div>
               <div>
-                <motion.a
+                <m.a
                   href={card.link}
                   className="group text-white hover:text-gray-300 inline-flex items-center text-sm"
                   variants={cardButtonVariants}
@@ -310,18 +369,18 @@ export default function HomePage() {
                   whileTap="tap"
                 >
                   {card.cta}
-                  <motion.span
+                  <m.span
                     className="inline-block ml-1"
                     variants={cardArrowVariants}
                   >
                     <ChevronRight className="w-4 h-4" />
-                  </motion.span>
-                </motion.a>
+                  </m.span>
+                </m.a>
               </div>
             </div>
           ))}
         </div>
-      </motion.div>
+      </m.div>
 
       {/* <div className="max-w-4xl mx-auto px-6 mb-16">
         <h2 className="text-2xl font-bold mb-8">Built for Modern Use Cases</h2>
