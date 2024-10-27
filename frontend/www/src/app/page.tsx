@@ -302,7 +302,7 @@ export default function HomePage() {
       </div>
 
       <m.div
-        className="max-w-3xl mx-auto px-6 mb-16"
+        className="max-w-3xl mx-auto px-6 mb-16 mt-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.25 }} // Reduced duration and delay
