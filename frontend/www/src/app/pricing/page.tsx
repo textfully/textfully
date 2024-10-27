@@ -6,7 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
 import { Footer } from "@/components/Footer";
-import { motion } from "framer-motion";
+import { motion as m } from "framer-motion";
 
 export default function PricingPage() {
   const [sliderValue, setSliderValue] = useState(0);
@@ -146,7 +146,7 @@ export default function PricingPage() {
       <NavBar />
       <div className="p-8 mb-32">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          <m.div
             className="text-center mt-16 mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -156,16 +156,16 @@ export default function PricingPage() {
             <p className="text-base text-zinc-400">
               Start for free and scale as you grow.
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             {plans.map((plan, index) => (
-              <motion.div
+              <m.div
                 key={plan.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -248,9 +248,9 @@ export default function PricingPage() {
                 >
                   {plan.cta}
                 </button>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </div>
 

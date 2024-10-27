@@ -8,25 +8,11 @@ import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
 import { PhoneNotifications } from "@/components/PhoneNotifications";
-import { useAppContext } from "@/contexts/useAppContext";
 import { cn } from "@/utils/helper";
-import clsx from "clsx";
-import { cubicBezier, motion as m } from "framer-motion";
-import { ChevronRight, Play, Plus } from "lucide-react";
+import { motion as m } from "framer-motion";
+import { Play } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-
-interface NavItem {
-  name: string;
-  link: string;
-}
-
-const navItems: NavItem[] = [
-  { name: "Docs", link: "/docs" },
-  { name: "Pricing", link: "/pricing" },
-  { name: "Blog", link: "/blog" },
-  { name: "Resources", link: "/resources" },
-];
 
 interface CodeSnippet {
   comment: string;

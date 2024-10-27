@@ -2,13 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion as m } from "framer-motion";
 import clsx from "clsx";
 import Logo from "@/assets/logo";
 
-const navItems = [
+interface NavItem {
+  name: string;
+  link: string;
+}
+
+const navItems: NavItem[] = [
   { name: "Pricing", link: "/pricing" },
-  { name: "Docs", link: "/docs" },
+  // { name: "Docs", link: "/docs" },
   // { name: "Blog", link: "/blog" },
 ];
 
@@ -16,7 +21,7 @@ export function NavBar() {
   const pathname = usePathname();
 
   return (
-    <motion.nav
+    <m.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
@@ -73,6 +78,6 @@ export function NavBar() {
           </div>
         </Link>
       </div>
-    </motion.nav>
+    </m.nav>
   );
 }
