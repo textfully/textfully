@@ -7,10 +7,11 @@ import Python from "@/assets/icons/languages/python";
 import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
+import { PhoneNotifications } from "@/components/PhoneNotifications";
 import { useAppContext } from "@/contexts/useAppContext";
 import { cn } from "@/utils/helper";
 import clsx from "clsx";
-import { motion as m } from "framer-motion";
+import { cubicBezier, motion as m } from "framer-motion";
 import { ChevronRight, Play, Plus } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
@@ -204,6 +205,15 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.7 }}
           >
+            <div
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 80%, transparent 100%)",
+              }}
+              className="w-52 h-52 mx-auto overflow-hidden relative ring-2"
+            >
+              <PhoneNotifications />
+            </div>
             <m.h1
               className="text-4xl sm:text-5xl font-[550] text-balance font-general"
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
