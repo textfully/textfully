@@ -1,8 +1,8 @@
-import { IS_DEV } from '@/constants/env';
+import { IS_DEV } from "@/constants/env";
 
-export const logError = (error: unknown) => {
+export const logError = (message: string, error: unknown) => {
   if (IS_DEV) {
-    console.error(JSON.stringify(error));
+    console.error(message, JSON.stringify(error));
   } else {
     // TODO: replace with your own data logging service
   }

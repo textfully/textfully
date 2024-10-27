@@ -9,18 +9,11 @@ import Logo from "@/assets/logo";
 import GitHub from "@/assets/icons/socials/github";
 import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(
-      /[!@#$%^&*(),.?":{}|<>_-]/,
-      "Password must contain at least one special character"
-    ),
+  password: z.string().min(1, "Password is required"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -29,14 +22,17 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
   const router = useRouter();
   const supabase = createClient();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setEmailError(null);
+    setPasswordError(null);
 
     try {
       const formData: LoginFormData = { email, password };
@@ -44,7 +40,15 @@ export default function LoginPage() {
 
       if (!result.success) {
         const errors = result.error.errors;
-        throw new Error(errors[0].message);
+        errors.forEach((error) => {
+          if (error.path[0] === 'email') {
+            setEmailError(error.message);
+          } else if (error.path[0] === 'password') {
+            setPasswordError(error.message);
+          }
+        });
+        setLoading(false);
+        return;
       }
 
       const { error } = await supabase.auth.signInWithPassword({
@@ -52,10 +56,20 @@ export default function LoginPage() {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.toLowerCase().includes("email")) {
+          setEmailError(error.message);
+        } else if (error.message.toLowerCase().includes("password")) {
+          setPasswordError(error.message);
+        } else {
+          setPasswordError(error.message);
+        }
+        return;
+      }
+
       router.push("/dashboard");
     } catch (error: any) {
-      setError(error.message);
+      setPasswordError(error.message);
     } finally {
       setLoading(false);
     }
@@ -67,8 +81,9 @@ export default function LoginPage() {
         provider: "github",
       });
       if (error) throw error;
+      router.push("/dashboard");
     } catch (error: any) {
-      setError(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -77,12 +92,13 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `https://cvmdumivffqwpeltefws.supabase.co/auth/v1/callback`,
+          redirectTo: `https://textfully.dev/auth/callback`,
         },
       });
       if (error) throw error;
+      router.push("/dashboard");
     } catch (error: any) {
-      setError(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -98,7 +114,7 @@ export default function LoginPage() {
         </Link>
       </div>
 
-      <div className="max-w-md mx-auto px-4 pt-16">
+      <div className="max-w-md mx-auto px-4 pt-16 pb-32">
         <div className="flex justify-center mb-4">
           <div className="w-10 h-10 text-[#0A93F6]">
             <Logo />
@@ -117,12 +133,6 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6 text-red-500 text-sm">
-            {error}
-          </div>
-        )}
 
         <div className="space-y-4 text-zinc-300">
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
@@ -154,7 +164,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-800"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-black text-zinc-400">OR</span>
+            <span className="px-2 bg-black text-zinc-400">or</span>
           </div>
         </div>
 
@@ -168,10 +178,16 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border border-zinc-800 focus:border-zinc-700 focus:ring-1 focus:ring-[#0A93F6] outline-none transition-colors"
+              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors ${
+                emailError
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                  : "border-zinc-800 focus:border-zinc-700 focus:ring-[#0A93F6]"
+              }`}
               placeholder="neo@matrix.com"
-              required
             />
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -191,9 +207,15 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1e1e1e] rounded-lg border border-zinc-800 focus:border-zinc-700 focus:ring-1 focus:ring-[#0A93F6] outline-none transition-colors"
-              required
+              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg border focus:ring-1 outline-none transition-colors ${
+                passwordError
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                  : "border-zinc-800 focus:border-zinc-700 focus:ring-[#0A93F6]"
+              }`}
             />
+            {passwordError && (
+              <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+            )}
           </div>
           <button
             type="submit"

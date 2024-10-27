@@ -10,6 +10,7 @@ import "@/styles/globals.css";
 import "@/styles/bubbles.css";
 import "@/styles/masks.css";
 import "@/styles/fonts.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
         )}
       >
         <ContextProvider>{children}</ContextProvider>
+        <Toaster />
       </body>
     </html>
   );

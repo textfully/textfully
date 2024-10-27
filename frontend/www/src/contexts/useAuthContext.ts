@@ -1,49 +1,43 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-
-import constate from 'constate';
-
-import type { User } from '@/types/data';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import constate from "constate";
+import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
+import { logError } from "@/utils/logger";
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null | undefined>();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const supabase = createClient();
 
   useEffect(() => {
-    fetchUser();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const fetchUser = async () => {
-    // TODO: replace this with your own authentication logic
-    try {
-      const response = await new Promise<User>((resolve) => {
-        setTimeout(() => {
-          resolve({
-            id: '1',
-            name: 'Neo',
-            emailAddress: 'neo@matrix.com',
-            phoneNumber: '+1555555555',
-          } as User);
-        }, 1000);
-      });
-      setUser(response);
-    } catch (error) {
-      console.error('Failed to fetch user:', error);
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      logError("Error signing out:", error);
+    } else {
       setUser(null);
+      router.push("/login");
     }
-  };
-
-  const signOut = () => {
-    setUser(null);
   };
 
   return {
     user,
+    loading,
     signOut,
-    fetchUser,
   };
 };
 

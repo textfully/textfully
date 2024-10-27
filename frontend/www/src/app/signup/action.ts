@@ -20,7 +20,7 @@ const authSchema = z.object({
     ),
 });
 
-export async function login(formData: FormData) {
+export async function signup(formData: FormData) {
   const supabase = await createClient();
 
   const rawData = {
@@ -35,7 +35,7 @@ export async function login(formData: FormData) {
     redirect("/error");
   }
 
-  const { error } = await supabase.auth.signInWithPassword(result.data);
+  const { error } = await supabase.auth.signUp(result.data);
 
   if (error) {
     redirect("/error");

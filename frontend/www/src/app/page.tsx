@@ -141,8 +141,6 @@ export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
   const [formattedTime, setFormattedTime] = useState("");
 
-  const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
-
   useEffect(() => {
     const time = new Date().getTime();
 
