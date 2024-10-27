@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import clsx from "clsx";
@@ -15,8 +14,6 @@ const navItems = [
 ];
 
 export function NavBar() {
-  const { shouldLoadAnimation: shouldAnimateNav } = useAppContext();
-
   const pathname = usePathname();
 
   return (
@@ -63,7 +60,7 @@ export function NavBar() {
         </Link>
 
         <Link href="/dashboard">
-          <p className="shared small sent px-3 py-1.5 flex gap-x-1.5 items-center">
+          <div className="shared small sent px-3 py-1.5 flex gap-x-1.5 items-center">
             <div
               style={{
                 WebkitMaskImage:
@@ -74,7 +71,7 @@ export function NavBar() {
               <div className="inset-0 absolute element opacity-70 !rounded-[15px]"></div>
             </div>
             <span className="text-sm font-medium">Get Started</span>
-          </p>
+          </div>
         </Link>
       </div>
     </motion.nav>

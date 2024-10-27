@@ -172,8 +172,6 @@ const cardButtonVariants = {
 };
 
 export default function HomePage() {
-  const { shouldLoadAnimation } = useAppContext();
-
   const [activeLanguage, setActiveLanguage] = useState("python");
   const [activeWidth, setActiveWidth] = useState(0);
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
@@ -187,8 +185,6 @@ export default function HomePage() {
   }, [activeLanguage]);
 
   const time = new Date().getTime();
-
-  console.log(time);
 
   const formattedTime = new Intl.DateTimeFormat("en-US", {
     hour: "numeric",

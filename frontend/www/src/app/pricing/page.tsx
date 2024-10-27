@@ -1,18 +1,14 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Check, X } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { NavBar } from "@/components/NavBar";
 import clsx from "clsx";
-import { Separator } from "@/components/ui/separator";
 import { Footer } from "@/components/Footer";
-import { useAppContext } from "@/contexts/useAppContext";
 import { motion } from "framer-motion";
 
 export default function PricingPage() {
-  const { shouldLoadAnimation } = useAppContext();
-
   const [sliderValue, setSliderValue] = useState(0);
 
   interface VolumeMark {
@@ -152,8 +148,8 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mt-16 mb-12"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
             <h1 className="text-4xl mb-4 font-general font-[550]">Pricing</h1>
@@ -164,15 +160,15 @@ export default function PricingPage() {
 
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-            animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             {plans.map((plan, index) => (
               <motion.div
                 key={plan.name}
-                initial={shouldLoadAnimation ? { opacity: 0, y: 20 } : false}
-                animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
                 className={clsx(
                   "flex flex-col justify-between border rounded-xl px-4 py-6 bg-[#1e1e1e]",
