@@ -220,13 +220,13 @@ export default function HomePage() {
             <div className="bg-[#1e1e1e] rounded-lg overflow-hidden font-mono text-sm">
               <div className="flex flex-col">
                 {/* Window Controls */}
-                <div className="flex flex-row justify-between">
-                  <div className="flex items-center space-x-2 p-4">
+                <div className="flex flex-row justify-between items-center h-12">
+                  <div className="flex items-center space-x-2 pl-4">
                     <div className="w-3 h-3 rounded-full bg-[#dd0300]" />
                     <div className="w-3 h-3 rounded-full bg-[#ffb323]" />
                     <div className="w-3 h-3 rounded-full bg-[#00ac5c]" />
                   </div>
-                  <div className="flex items-center p-4">
+                  <div className="pr-4">
                     <Link
                       href="/dashboard"
                       className="px-4 py-1 font-medium text-sm font-inter bg-[#15803d] hover:bg-[#16a34a] text-white rounded-md transition-colors flex items-center"
