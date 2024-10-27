@@ -18,15 +18,23 @@ const navItems: NavItem[] = [
   // { name: "Blog", link: "/blog" },
 ];
 
-export function NavBar() {
+interface NavBarProps {
+  shouldAnimate?: boolean;
+}
+
+export const NavBar = ({ shouldAnimate = true }: NavBarProps) => {
   const { shouldLoadAnimation } = useAppContext();
 
   const pathname = usePathname();
 
   return (
     <m.nav
-      initial={shouldLoadAnimation ? { opacity: 0, y: -20 } : false}
-      animate={shouldLoadAnimation ? { opacity: 1, y: 0 } : false}
+      initial={
+        shouldAnimate && shouldLoadAnimation ? { opacity: 0, y: -20 } : false
+      }
+      animate={
+        shouldAnimate && shouldLoadAnimation ? { opacity: 1, y: 0 } : false
+      }
       transition={{ duration: 0.2 }}
       className="flex items-center justify-between p-4 px-8"
     >
@@ -50,7 +58,7 @@ export function NavBar() {
                 "text-sm transition font-medium",
                 pathname === item.link
                   ? "text-white"
-                  : "text-gray-400 hover:text-gray-200"
+                  : "text-zinc-400 hover:text-zinc-200"
               )}
             >
               {item.name}
@@ -61,7 +69,7 @@ export function NavBar() {
       <div className="flex items-center gap-x-4 message-list">
         <Link
           href="/login"
-          className="text-sm  font-medium transition text-gray-400 hover:text-gray-200"
+          className="text-sm  font-medium transition text-zinc-400 hover:text-zinc-200"
         >
           Log in
         </Link>
@@ -83,4 +91,4 @@ export function NavBar() {
       </div>
     </m.nav>
   );
-}
+};

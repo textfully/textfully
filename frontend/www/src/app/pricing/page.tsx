@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { Check, X } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { NavBar } from "@/components/NavBar";
+import { NavBar } from "@/components/nav-bar";
 import clsx from "clsx";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/footer";
 import { motion as m } from "framer-motion";
 
 export default function PricingPage() {

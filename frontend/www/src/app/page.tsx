@@ -5,8 +5,8 @@ import Go from "@/assets/icons/languages/go";
 import NodeJS from "@/assets/icons/languages/nodejs";
 import Python from "@/assets/icons/languages/python";
 import Rust from "@/assets/icons/languages/rust";
-import { Footer } from "@/components/Footer";
-import { NavBar } from "@/components/NavBar";
+import { Footer } from "@/components/footer";
+import { NavBar } from "@/components/nav-bar";
 import { PhoneNotifications } from "@/components/PhoneNotifications";
 import { cn } from "@/utils/helper";
 import { motion as m } from "framer-motion";
@@ -139,28 +139,23 @@ const ctas: CTA[] = [
 
 export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
-  const [activeWidth, setActiveWidth] = useState(0);
+  const [formattedTime, setFormattedTime] = useState("");
+
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    const activeButton =
-      buttonsRef.current[languages.findIndex((l) => l.id === activeLanguage)];
-    if (activeButton) {
-      setActiveWidth(activeButton.offsetWidth);
-    }
-  }, [activeLanguage]);
+    const time = new Date().getTime();
 
-  const time = new Date().getTime();
-
-  const formattedTime = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(time);
+    const formattedTime = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+    }).format(time);
+    setFormattedTime(formattedTime);
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
-
       <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
         <div className="w-full px-6 lg:px-4">
           <m.div
@@ -357,7 +352,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );

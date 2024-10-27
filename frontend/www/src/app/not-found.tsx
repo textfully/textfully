@@ -90,9 +90,9 @@ export default function NotFound() {
                   <span className="text-white mx-1 select-none">:</span>
                   <span className="text-blue-400 select-none">~</span>
                   <span className="text-yellow-500 mx-1 select-none">$</span>
-                  <span className="text-gray-300 ml-1">{typedText}</span>
+                  <span className="text-zinc-300 ml-1">{typedText}</span>
                   {isLoaded && (
-                    <div className="text-gray-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
+                    <div className="text-zinc-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
                       ▋
                     </div>
                   )}

@@ -107,7 +107,7 @@ export default function LoginPage() {
 
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold mb-2">Log in to Textfully</h1>
-          <p className="text-gray-400">
+          <p className="text-zinc-400">
             Don't have an account?{" "}
             <Link
               href="/signup"
@@ -154,13 +154,13 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-800"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-black text-gray-400">OR</span>
+            <span className="px-2 bg-black text-zinc-400">OR</span>
           </div>
         </div>
 
         <form onSubmit={handleSignIn} className="space-y-6">
           <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm text-gray-400">
+            <label htmlFor="email" className="block text-sm text-zinc-400">
               Email
             </label>
             <input
@@ -176,7 +176,7 @@ export default function LoginPage() {
 
           <div className="space-y-2">
             <div className="flex justify-between">
-              <label htmlFor="password" className="block text-sm text-gray-400">
+              <label htmlFor="password" className="block text-sm text-zinc-400">
                 Password
               </label>
               <Link
@@ -198,7 +198,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full py-2 bg-white hover:bg-gray-100 text-black rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-75 disabled:cursor-not-allowed"
+            className="w-full py-2 bg-white hover:bg-zinc-100 text-black rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               "Logging in..."
@@ -213,11 +213,11 @@ export default function LoginPage() {
 
         <p className="mt-8 text-center text-xs text-zinc-400">
           By continuing, you agree to our{" "}
-          <Link href="/legal/terms" className="text-zinc-200 hover:brightness-110">
+          <Link href="/terms" className="text-zinc-200 hover:brightness-110">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/legal/privacy" className="text-zinc-200 hover:brightness-110">
+          <Link href="/privacy" className="text-zinc-200 hover:brightness-110">
             Privacy Policy
           </Link>
         </p>
