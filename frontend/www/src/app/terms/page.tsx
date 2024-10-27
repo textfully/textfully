@@ -22,7 +22,7 @@ export default function Terms() {
             </p>
             <ul className="list-disc pl-6 mt-4 mb-8 text-zinc-300 space-y-2">
               <li>
-                We operate the website{" "}
+                We operate Textfully at the website{" "}
                 <a
                   href="https://textfully.dev"
                   className="text-[#0A93F6] hover:brightness-110"
@@ -50,7 +50,6 @@ export default function Terms() {
               United States.
             </p>
           </section>
-
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6">Table of Contents</h2>
             <nav className="space-y-2 text-zinc-300">
@@ -122,83 +121,117 @@ export default function Terms() {
                 </li>
                 <li>
                   <a href="#section14" className="hover:text-white">
-                    COPYRIGHT INFRINGEMENTS
+                    OPEN-SOURCE LICENSE TERMS
                   </a>
                 </li>
                 <li>
                   <a href="#section15" className="hover:text-white">
-                    TERM AND TERMINATION
+                    CONTRIBUTIONS AND COMMUNITY INVOLVEMENT
                   </a>
                 </li>
                 <li>
                   <a href="#section16" className="hover:text-white">
-                    MODIFICATIONS AND INTERRUPTIONS
+                    API USAGE TERMS
                   </a>
                 </li>
                 <li>
                   <a href="#section17" className="hover:text-white">
-                    GOVERNING LAW
+                    SECURITY MEASURES
                   </a>
                 </li>
                 <li>
                   <a href="#section18" className="hover:text-white">
-                    DISPUTE RESOLUTION
+                    MODIFICATION AND TERMINATION
                   </a>
                 </li>
                 <li>
                   <a href="#section19" className="hover:text-white">
-                    CORRECTIONS
+                    COMPLIANCE WITH LAWS
                   </a>
                 </li>
                 <li>
                   <a href="#section20" className="hover:text-white">
-                    DISCLAIMER
+                    DOCUMENTATION AND SAMPLE CODE
                   </a>
                 </li>
                 <li>
                   <a href="#section21" className="hover:text-white">
-                    LIMITATIONS OF LIABILITY
+                    COPYRIGHT INFRINGEMENTS
                   </a>
                 </li>
                 <li>
                   <a href="#section22" className="hover:text-white">
-                    INDEMNIFICATION
+                    TERM AND TERMINATION
                   </a>
                 </li>
                 <li>
                   <a href="#section23" className="hover:text-white">
-                    USER DATA
+                    MODIFICATIONS AND INTERRUPTIONS
                   </a>
                 </li>
                 <li>
                   <a href="#section24" className="hover:text-white">
-                    ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
+                    GOVERNING LAW
                   </a>
                 </li>
                 <li>
                   <a href="#section25" className="hover:text-white">
-                    SMS TEXT MESSAGING
+                    DISPUTE RESOLUTION
                   </a>
                 </li>
                 <li>
                   <a href="#section26" className="hover:text-white">
-                    CALIFORNIA USERS AND RESIDENTS
+                    CORRECTIONS
                   </a>
                 </li>
                 <li>
                   <a href="#section27" className="hover:text-white">
-                    MISCELLANEOUS
+                    DISCLAIMER
                   </a>
                 </li>
                 <li>
                   <a href="#section28" className="hover:text-white">
+                    LIMITATIONS OF LIABILITY
+                  </a>
+                </li>
+                <li>
+                  <a href="#section29" className="hover:text-white">
+                    INDEMNIFICATION
+                  </a>
+                </li>
+                <li>
+                  <a href="#section30" className="hover:text-white">
+                    USER DATA
+                  </a>
+                </li>
+                <li>
+                  <a href="#section31" className="hover:text-white">
+                    ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
+                  </a>
+                </li>
+                <li>
+                  <a href="#section32" className="hover:text-white">
+                    SMS TEXT MESSAGING
+                  </a>
+                </li>
+                <li>
+                  <a href="#section33" className="hover:text-white">
+                    CALIFORNIA USERS AND RESIDENTS
+                  </a>
+                </li>
+                <li>
+                  <a href="#section34" className="hover:text-white">
+                    MISCELLANEOUS
+                  </a>
+                </li>
+                <li>
+                  <a href="#section35" className="hover:text-white">
                     CONTACT US
                   </a>
                 </li>
               </ol>
             </nav>
           </section>
-
           <section id="section1" className="mb-16">
             <h2 className="text-2xl font-bold mb-6">1. OUR SERVICES</h2>
             <p className="text-zinc-300 mb-4">
@@ -436,7 +469,6 @@ export default function Terms() {
               </p>
             </div>
           </section>
-
           <section id="section3" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">3. USER REPRESENTATIONS</h2>
             <p className="text-zinc-300 mb-4">
@@ -461,7 +493,6 @@ export default function Terms() {
               Services (or any portion thereof).
             </p>
           </section>
-
           <section id="section4" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">4. USER REGISTRATION</h2>
             <p className="text-zinc-300">
@@ -473,7 +504,6 @@ export default function Terms() {
               otherwise objectionable.
             </p>
           </section>
-
           <section id="section5" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
               5. PURCHASES AND PAYMENT
@@ -516,7 +546,6 @@ export default function Terms() {
               placed by dealers, resellers, or distributors.
             </p>
           </section>
-
           <section id="section6" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">6. SUBSCRIPTIONS</h2>
             <h3 className="text-xl font-semibold mt-4">Billing and Renewal</h3>
@@ -549,7 +578,6 @@ export default function Terms() {
               applicable law.
             </p>
           </section>
-
           <section id="section7" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">7. SOFTWARE</h2>
             <p className="text-zinc-300">
@@ -569,7 +597,6 @@ export default function Terms() {
               except in accordance with the EULA or these Legal Terms.
             </p>
           </section>
-
           <section id="section8" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
               8. PROHIBITED ACTIVITIES
@@ -698,7 +725,6 @@ export default function Terms() {
               </li>
             </ul>
           </section>
-
           <section id="section9" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
               9. USER GENERATED CONTRIBUTIONS
@@ -795,7 +821,6 @@ export default function Terms() {
               termination or suspension of your rights to use the Services.
             </p>
           </section>
-
           <section id="section10" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
               10. CONTRIBUTION LICENSE
@@ -845,7 +870,6 @@ export default function Terms() {
               have no obligation to monitor your Contributions.
             </p>
           </section>
-
           <section id="section11" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
               11. THIRD-PARTY WEBSITES AND CONTENT
@@ -891,7 +915,6 @@ export default function Terms() {
               with Third-Party Websites.
             </p>
           </section>
-
           <section id="section12" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">12. SERVICES MANAGEMENT</h2>
             <p className="text-zinc-300">
@@ -911,17 +934,16 @@ export default function Terms() {
               and to facilitate the proper functioning of the Services.
             </p>
           </section>
-
           <section id="section13" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">13. PRIVACY POLICY</h2>
             <p className="text-zinc-300 mb-4">
               We care about data privacy and security. Please review our Privacy
               Policy:{" "}
               <a
-                href="/legal/privacy"
+                href="/privacy"
                 className="text-[#0A93F6] hover:brightness-110"
               >
-                textfully.dev/legal/privacy
+                textfully.dev/privacy
               </a>
               . By using the Services, you agree to be bound by our Privacy
               Policy, which is incorporated into these Legal Terms. Please be
@@ -947,10 +969,177 @@ export default function Terms() {
               practical.
             </p>
           </section>
-
           <section id="section14" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
-              14. COPYRIGHT INFRINGEMENTS
+              14. OPEN-SOURCE LICENSE TERMS
+            </h2>
+            <p className="text-zinc-300 mb-4">
+              Textfully's software is distributed under the{" "}
+              <a
+                href="https://opensource.org/licenses/MIT"
+                className="text-[#0A93F6] hover:brightness-110"
+              >
+                MIT License
+              </a>
+              . By accessing or using our software, you agree to comply with the
+              terms and conditions of this license. The MIT License grants you
+              the rights to use, copy, modify, merge, publish, distribute,
+              sublicense, and/or sell copies of the software, subject to certain
+              conditions.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              You must include the original copyright notice and this permission
+              notice in all copies or substantial portions of the software. Any
+              use of the software outside the scope of this license is
+              prohibited.
+            </p>
+            <p className="text-zinc-300">
+              The software is provided "as is," without warranty of any kind,
+              express or implied. Textfully shall not be liable for any claim,
+              damages, or other liability arising from the use of the software.
+            </p>
+          </section>
+          <section id="section15" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              15. CONTRIBUTIONS AND COMMUNITY INVOLVEMENT
+            </h2>
+            <p className="text-zinc-300 mb-4">
+              We welcome contributions from the community. By submitting any
+              contributions to Textfully, including but not limited to code,
+              documentation, or feedback, you agree to grant us a perpetual,
+              worldwide, non-exclusive, royalty-free license to use, reproduce,
+              modify, and distribute your contributions as part of the software.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              You represent and warrant that you have all necessary rights to
+              grant this license and that your contributions do not infringe
+              upon any third-party intellectual property rights.
+            </p>
+            <p className="text-zinc-300">
+              Please review our Contribution Guidelines at{" "}
+              <a
+                href="/contributions"
+                className="text-[#0A93F6] hover:brightness-110"
+              >
+                textfully.dev/contributions
+              </a>{" "}
+              before making any contributions.
+            </p>
+          </section>
+          <section id="section16" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">16. API USAGE TERMS</h2>
+            <p className="text-zinc-300 mb-4">
+              Access to the Textfully API requires registration and
+              authentication. You must keep your API credentials confidential
+              and not share them with any third parties. You are responsible for
+              all activities that occur under your API credentials.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              You may use the API to develop applications that interact with our
+              services, provided that such use complies with these Terms of
+              Service and any applicable laws and regulations.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              You agree not to use the API to:
+              <ul className="list-disc list-inside">
+                <li>
+                  Engage in any activity that is illegal, fraudulent, or
+                  harmful.
+                </li>
+                <li>Exceed any rate limits or usage quotas.</li>
+                <li>
+                  Reverse engineer or attempt to extract the source code of the
+                  API.
+                </li>
+              </ul>
+            </p>
+            <p className="text-zinc-300">
+              We reserve the right to suspend or terminate your access to the
+              API if you violate these terms or if we suspect any unauthorized
+              or fraudulent use.
+            </p>
+          </section>
+          <section id="section17" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">17. SECURITY MEASURES</h2>
+            <p className="text-zinc-300 mb-4">
+              You are responsible for maintaining the security of your account
+              and API credentials. You must promptly notify us of any
+              unauthorized use or security breach of your account or the API.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              We employ reasonable measures to protect the security of the API
+              and your data, but we cannot guarantee absolute security. You
+              acknowledge that you provide your data at your own risk.
+            </p>
+            <p className="text-zinc-300">
+              If you discover any security vulnerabilities in the API, please
+              report them promptly to{" "}
+              <a
+                href="mailto:textfully@gtfol.inc"
+                className="text-[#0A93F6] hover:brightness-110"
+              >
+                textfully@gtfol.inc
+              </a>
+              .
+            </p>
+          </section>
+          <section id="section18" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              18. MODIFICATION AND TERMINATION
+            </h2>
+            <p className="text-zinc-300 mb-4">
+              We reserve the right to modify, suspend, or discontinue the API or
+              any part thereof at any time, with or without notice. We shall not
+              be liable to you or any third party for any such modification,
+              suspension, or discontinuation.
+            </p>
+            <p className="text-zinc-300">
+              We may terminate or suspend your access to the API immediately,
+              without prior notice or liability, if you breach any of the terms
+              or conditions of these Terms of Service.
+            </p>
+          </section>
+          <section id="section19" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              19. COMPLIANCE WITH LAWS
+            </h2>
+            <p className="text-zinc-300 mb-4">
+              You agree to comply with all applicable local, state, national,
+              and international laws and regulations in connection with your use
+              of the software and API, including but not limited to data privacy
+              laws and export control laws.
+            </p>
+            <p className="text-zinc-300">
+              You are solely responsible for ensuring that your use of the
+              software and API is in compliance with all applicable laws and
+              regulations.
+            </p>
+          </section>
+          <section id="section20" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              20. DOCUMENTATION AND SAMPLE CODE
+            </h2>
+            <p className="text-zinc-300 mb-4">
+              Any documentation and sample code provided by Textfully are for
+              informational purposes only. They are provided under the same
+              open-source license as the software unless otherwise specified.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              You may use, copy, and modify the sample code in accordance with
+              the applicable license terms. However, you acknowledge that the
+              sample code is provided "as is" and that we disclaim all
+              warranties and liabilities associated with it.
+            </p>
+            <p className="text-zinc-300">
+              The documentation may not be reproduced or distributed, in whole
+              or in part, without our prior written consent, except as necessary
+              for your own use of the software and API.
+            </p>
+          </section>
+
+          <section id="section21" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              21. COPYRIGHT INFRINGEMENTS
             </h2>
             <p className="text-zinc-300">
               We respect the intellectual property rights of others. If you
@@ -966,10 +1155,9 @@ export default function Terms() {
               your copyright, you should consider first contacting an attorney.
             </p>
           </section>
-
-          <section id="section15" className="mb-12">
+          <section id="section22" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
-              15. TERM AND TERMINATION
+              22. TERM AND TERMINATION
             </h2>
             <p className="text-zinc-300 mb-4">
               These Legal Terms shall remain in full force and effect while you
@@ -994,10 +1182,9 @@ export default function Terms() {
               limitation pursuing civil, criminal, and injunctive redress.
             </p>
           </section>
-
-          <section id="section16" className="mb-12">
+          <section id="section23" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
-              16. MODIFICATIONS AND INTERRUPTIONS
+              23. MODIFICATIONS AND INTERRUPTIONS
             </h2>
             <p className="text-zinc-300 mb-4">
               We reserve the right to change, modify, or remove the contents of
@@ -1022,9 +1209,8 @@ export default function Terms() {
               updates, or releases in connection therewith.
             </p>
           </section>
-
-          <section id="section17" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">17. GOVERNING LAW</h2>
+          <section id="section24" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">24. GOVERNING LAW</h2>
             <p className="text-zinc-300">
               These Legal Terms and your use of the Services are governed by and
               construed in accordance with the laws of the Commonwealth of
@@ -1033,9 +1219,8 @@ export default function Terms() {
               to its conflict of law principles.
             </p>
           </section>
-
-          <section id="section18" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">18. DISPUTE RESOLUTION</h2>
+          <section id="section25" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">25. DISPUTE RESOLUTION</h2>
             <p className="text-zinc-300">
               Any legal action of whatever nature brought by either you or us
               (collectively, the "Parties" and individually, a "Party") shall be
@@ -1052,9 +1237,8 @@ export default function Terms() {
               cause of action arose.
             </p>
           </section>
-
-          <section id="section19" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">19. CORRECTIONS</h2>
+          <section id="section26" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">26. CORRECTIONS</h2>
             <p className="text-zinc-300">
               There may be information on the Services that contains
               typographical errors, inaccuracies, or omissions, including
@@ -1064,9 +1248,8 @@ export default function Terms() {
               on the Services at any time, without prior notice.
             </p>
           </section>
-
-          <section id="section20" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">20. DISCLAIMER</h2>
+          <section id="section27" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">27. DISCLAIMER</h2>
             <p className="text-zinc-300 uppercase">
               THE SERVICES ARE PROVIDED ON AN AS-IS AND AS-AVAILABLE BASIS. YOU
               AGREE THAT YOUR USE OF THE SERVICES WILL BE AT YOUR SOLE RISK. TO
@@ -1101,10 +1284,9 @@ export default function Terms() {
               CAUTION WHERE APPROPRIATE.
             </p>
           </section>
-
-          <section id="section21" className="mb-12">
+          <section id="section28" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
-              21. LIMITATIONS OF LIABILITY
+              28. LIMITATIONS OF LIABILITY
             </h2>
             <p className="text-zinc-300 uppercase">
               IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE
@@ -1125,9 +1307,8 @@ export default function Terms() {
               HAVE ADDITIONAL RIGHTS.
             </p>
           </section>
-
-          <section id="section22" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">22. INDEMNIFICATION</h2>
+          <section id="section29" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">29. INDEMNIFICATION</h2>
             <p className="text-zinc-300">
               You agree to defend, indemnify, and hold us harmless, including
               our subsidiaries, affiliates, and all of our respective officers,
@@ -1149,9 +1330,8 @@ export default function Terms() {
               indemnification upon becoming aware of it.
             </p>
           </section>
-
-          <section id="section23" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">23. USER DATA</h2>
+          <section id="section30" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">30. USER DATA</h2>
             <p className="text-zinc-300">
               We will maintain certain data that you transmit to the Services
               for the purpose of managing the performance of the Services, as
@@ -1164,10 +1344,9 @@ export default function Terms() {
               arising from any such loss or corruption of such data.
             </p>
           </section>
-
-          <section id="section24" className="mb-12">
+          <section id="section31" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
-              24. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
+              31. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
             </h2>
             <p className="text-zinc-300">
               Visiting the Services, sending us emails, and completing online
@@ -1186,9 +1365,8 @@ export default function Terms() {
               granting of credits by any means other than electronic means.
             </p>
           </section>
-
-          <section id="section25" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">25. SMS TEXT MESSAGING</h2>
+          <section id="section32" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">32. SMS TEXT MESSAGING</h2>
 
             <h3 className="text-xl font-semibold mt-4 mb-2">Opting Out</h3>
             <p className="text-zinc-300 mb-4">
@@ -1219,10 +1397,9 @@ export default function Terms() {
               .
             </p>
           </section>
-
-          <section id="section26" className="mb-12">
+          <section id="section33" className="mb-12">
             <h2 className="text-2xl font-bold mb-6">
-              26. CALIFORNIA USERS AND RESIDENTS
+              33. CALIFORNIA USERS AND RESIDENTS
             </h2>
             <p className="text-zinc-300">
               If any complaint with us is not satisfactorily resolved, you can
@@ -1233,9 +1410,8 @@ export default function Terms() {
               445-1254.
             </p>
           </section>
-
-          <section id="section27" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">27. MISCELLANEOUS</h2>
+          <section id="section34" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">34. MISCELLANEOUS</h2>
             <p className="text-zinc-300">
               These Legal Terms and any policies or operating rules posted by us
               on the Services or in respect to the Services constitute the
@@ -1260,9 +1436,8 @@ export default function Terms() {
               execute these Legal Terms.
             </p>
           </section>
-
-          <section id="section28" className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">28. CONTACT US</h2>
+          <section id="section35" className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">35. CONTACT US</h2>
             <p className="text-zinc-300 mb-4">
               In order to resolve a complaint regarding the Services or to
               receive further information regarding use of the Services, please
