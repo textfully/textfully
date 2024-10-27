@@ -25,7 +25,7 @@ export default function GlobalError({
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    logError(error);
+    logError("Unknown error:", error);
   }, [error]);
 
   useEffect(() => {
@@ -80,9 +80,9 @@ export default function GlobalError({
               {/* Window Controls */}
               <div className="w-full flex justify-between items-center h-10 px-4">
                 <div className="flex gap-x-1.5 items-center">
-                  <div className="w-2 h-2 rounded-full bg-red-500" />
-                  <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
                 </div>
                 <button
                   onClick={handleReload}
@@ -102,16 +102,17 @@ export default function GlobalError({
 
               {/* Error Response */}
               <div className="p-4 pb-2">
-                <pre className="text-zinc-400 select-none text-sm">
+                <pre className="text-zinc-400 select-none text-sm whitespace-pre-wrap">
                   {`{
-    "error": "Unknown Error",
-    "message": "${error.message ?? "An unknown error occurred"}"
+    "code": 400,
+    "error_code": "unknown_error",
+    "msg": "${error.message ?? "An unknown error occurred"}"
 }`}
                 </pre>
               </div>
 
               {/* Terminal Content */}
-              <div className="p-4 pt-2 w-full">
+              {/* <div className="p-4 pt-2 w-full">
                 <div className="w-full bg-[#2F3037] relative p-4 rounded-[8px]">
                   <div className="inset-0 absolute element-dark">
                     <div className="inset-0 absolute element opacity-30"></div>
@@ -126,16 +127,16 @@ export default function GlobalError({
                       <span className="text-yellow-500 mx-1 select-none">
                         $
                       </span>
-                      <span className="text-gray-300 ml-1">{typedText}</span>
+                      <span className="text-zinc-300 ml-1">{typedText}</span>
                       {isLoaded && (
-                        <div className="text-gray-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
+                        <div className="text-zinc-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
                           ▋
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Home button */}

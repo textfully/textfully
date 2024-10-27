@@ -5,9 +5,9 @@ import Go from "@/assets/icons/languages/go";
 import NodeJS from "@/assets/icons/languages/nodejs";
 import Python from "@/assets/icons/languages/python";
 import Rust from "@/assets/icons/languages/rust";
-import { Footer } from "@/components/Footer";
-import { NavBar } from "@/components/NavBar";
-import { PhoneNotifications } from "@/components/PhoneNotifications";
+import { Footer } from "@/components/footer";
+import { NavBar } from "@/components/nav-bar";
+import { PhoneNotifications } from "@/components/phone-notifications";
 import { cn } from "@/utils/helper";
 import { motion as m } from "framer-motion";
 import { Play } from "lucide-react";
@@ -139,28 +139,21 @@ const ctas: CTA[] = [
 
 export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
-  const [activeWidth, setActiveWidth] = useState(0);
-  const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
-    const activeButton =
-      buttonsRef.current[languages.findIndex((l) => l.id === activeLanguage)];
-    if (activeButton) {
-      setActiveWidth(activeButton.offsetWidth);
-    }
-  }, [activeLanguage]);
+    const time = new Date().getTime();
 
-  const time = new Date().getTime();
-
-  const formattedTime = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(time);
+    const formattedTime = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+    }).format(time);
+    setFormattedTime(formattedTime);
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
-
       <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
         <div className="w-full px-6 lg:px-4">
           <m.div
@@ -187,7 +180,7 @@ export default function HomePage() {
               iMessage & SMS API for Developers
             </m.h1>
             <m.p
-              className="text-sm sm:text-base text-zinc-400  mt-6 max-w-lg mx-auto"
+              className="text-sm sm:text-base text-zinc-400 mt-6 max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, delay: 0.25 }}
@@ -208,12 +201,12 @@ export default function HomePage() {
               </div>
               <div className="w-full flex justify-between items-center h-10 px-4 pr-1.5">
                 <div className="flex gap-x-1.5 items-center">
-                  <div className="w-2 h-2 rounded-full bg-rose-500" />
-                  <div className="w-2 h-2 rounded-full bg-amber-500" />
-                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
                 </div>
                 <Link href="/docs">
-                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-2 items-center">
+                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-1.5 items-center">
                     <Play className="w-3 h-3 fill-[#838284] stroke-[#838284]" />
                     <span className="text-xs font-medium">Try it Out</span>
                   </button>
@@ -357,7 +350,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );

@@ -50,10 +50,14 @@ export default function NotFound() {
           {/* Window Controls */}
           <div className="w-full flex justify-between items-center h-10 px-4">
             <div className="flex gap-x-1.5 items-center">
-              <div className="w-2 h-2 rounded-full bg-red-500" />
-              <div className="w-2 h-2 rounded-full bg-yellow-500" />
-              <div className="w-2 h-2 rounded-full bg-green-500" />
+              <div className="w-2 h-2 rounded-full bg-red-400" />
+              <div className="w-2 h-2 rounded-full bg-yellow-400" />
+              <div className="w-2 h-2 rounded-full bg-green-400" />
             </div>
+            <div className="absolute left-1/2 -translate-x-1/2 text-sm text-zinc-400">
+              Error
+            </div>
+            <div className="w-[52px]"></div>
           </div>
 
           <div className="w-full h-px bg-zinc-900 z-30 relative"></div>
@@ -63,16 +67,17 @@ export default function NotFound() {
 
           {/* Error Response */}
           <div className="p-4 pb-2">
-            <pre className="text-zinc-400 select-none text-sm">
+            <pre className="text-zinc-400 select-none text-sm whitespace-pre-wrap">
               {`{
-    "error": "Not Found",
-    "message": "This page could not be found"
+    "code": 404,
+    "error_code": "not_found",
+    "msg": "This page could not be found"
 }`}
             </pre>
           </div>
 
           {/* Terminal Content */}
-          <div className="p-4 pt-2 w-full">
+          {/* <div className="p-4 pt-2 w-full">
             <div className="w-full bg-[#2F3037] relative p-4 rounded-[8px]">
               <div className="inset-0 absolute element-dark">
                 <div className="inset-0 absolute element opacity-30"></div>
@@ -85,16 +90,16 @@ export default function NotFound() {
                   <span className="text-white mx-1 select-none">:</span>
                   <span className="text-blue-400 select-none">~</span>
                   <span className="text-yellow-500 mx-1 select-none">$</span>
-                  <span className="text-gray-300 ml-1">{typedText}</span>
+                  <span className="text-zinc-300 ml-1">{typedText}</span>
                   {isLoaded && (
-                    <div className="text-gray-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
+                    <div className="text-zinc-300 ml-0.5 w-2.5 animate-caret-blink inline-block select-none">
                       ▋
                     </div>
                   )}
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Home button */}

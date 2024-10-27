@@ -1,11 +1,14 @@
-import { DiscordLogo } from "@/assets/discord-logo";
-import { GitHubLogo } from "@/assets/github-logo";
+"use client";
+
+import Discord from "@/assets/icons/socials/discord";
+import GitHub from "@/assets/icons/socials/github";
 import Logo from "@/assets/logo";
-import { XLogo } from "@/assets/x-logo";
+import X from "@/assets/icons/socials/x";
+import { scrollToTop } from "@/utils/helper";
 
 interface SocialLink {
   href: string;
-  icon: React.FC<{ className?: string }>;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
   ariaLabel: string;
 }
 
@@ -15,31 +18,32 @@ interface FooterLink {
 }
 
 interface FooterLinks {
-  documentation: FooterLink[];
+  developer: FooterLink[];
   product: FooterLink[];
   company: FooterLink[];
+  legal: FooterLink[];
 }
 
 const SOCIAL_LINKS: SocialLink[] = [
   {
     href: "https://twitter.com/textfully_dev",
-    icon: XLogo,
+    icon: X,
     ariaLabel: "Twitter",
   },
   {
     href: "https://github.com/gtfol/textfully",
-    icon: GitHubLogo,
+    icon: GitHub,
     ariaLabel: "GitHub",
   },
   {
     href: "https://discord.gg/textfully",
-    icon: DiscordLogo,
+    icon: Discord,
     ariaLabel: "Discord",
   },
 ];
 
 const FOOTER_LINKS: FooterLinks = {
-  documentation: [
+  developer: [
     { href: "/changelog", label: "Changelog" },
     { href: "/docs/getting-started", label: "Getting Started" },
     { href: "/docs/api-reference", label: "API Reference" },
@@ -58,18 +62,19 @@ const FOOTER_LINKS: FooterLinks = {
     { href: "/careers", label: "Careers" },
     { href: "/contact", label: "Contact" },
   ],
+  legal: [
+    { href: "/privacy", label: "Privacy Policy" },
+    { href: "/terms", label: "Terms of Service" },
+    { href: "/cookies", label: "Cookie Policy" },
+  ],
 };
 
 export const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <footer className="border-t border-[#252525]">
       <div className="max-w-5xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="flex flex-row justify-between sm:space-y-8 sm:justify-start items-center sm:flex-col sm:items-start">
+        <div className="flex flex-col gap-12 sm:gap-24 sm:flex-row sm:flex-wrap">
+          <div className="w-full sm:w-auto flex flex-row justify-between sm:justify-start items-center sm:flex-col sm:items-start sm:space-y-8">
             <button className="flex gap-x-2 items-center" onClick={scrollToTop}>
               <div className="w-5 h-5 text-[#0A93F6]">
                 <Logo />
@@ -81,50 +86,38 @@ export const Footer = () => {
             <div className="flex gap-x-6">
               {SOCIAL_LINKS.map(({ href, icon: Icon, ariaLabel }) => (
                 <a key={href} href={href} aria-label={ariaLabel}>
-                  <Icon className="h-4 w-4 fill-gray-400 hover:fill-gray-200 transition-colors" />
+                  <Icon className="h-4 w-4 fill-zinc-400 hover:fill-zinc-200 transition-colors" />
                 </a>
               ))}
             </div>
           </div>
 
-          {Object.entries(FOOTER_LINKS).map(([section, links]) => (
-            <div key={section}>
-              <h3 className="font-[550] mb-4 font-general capitalize">
-                {section}
-              </h3>
-              <ul className="space-y-2">
-                {links.map(({ href, label }: FooterLink) => (
-                  <li key={href}>
-                    <a
-                      href={href}
-                      className="text-zinc-400 text-sm hover:text-gray-200 transition-colors"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full sm:flex-1">
+            {Object.entries(FOOTER_LINKS).map(([section, links]) => (
+              <div key={section}>
+                <h3 className="font-[550] mb-4 font-general capitalize">
+                  {section}
+                </h3>
+                <ul className="space-y-2">
+                  {links.map(({ href, label }: FooterLink) => (
+                    <li key={href}>
+                      <a
+                        href={href}
+                        className="text-zinc-400 text-sm hover:text-zinc-200 transition-colors"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-[#252525] flex flex-col md:flex-row justify-between items-center">
-          <div className="text-[#50555c] text-sm mb-4 md:mb-0">
+        <div className="mt-12 pt-8 border-t border-[#252525] flex flex-col sm:flex-row justify-between items-center">
+          <div className="text-[#50555c] text-sm mb-4 sm:mb-0">
             © 2024 gtfol, LLC. All rights reserved.
-          </div>
-          <div className="flex space-x-6">
-            <a
-              href="/privacy"
-              className="text-[#50555c] hover:text-[#9CA3AF] text-sm transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="/terms"
-              className="text-[#50555c] hover:text-[#9CA3AF] text-sm transition-colors"
-            >
-              Terms of Service
-            </a>
           </div>
         </div>
       </div>

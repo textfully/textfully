@@ -5,10 +5,8 @@
 @layer base {
   :root {
     --transparent: #ffffff00;
-    --black: #141415;
+    --black: #09090b;
     --white: #fdfdfe;
-    --primary: #f3592a;
-    --primary-hover: #f56c41;
 
     --radius: 0.5rem;
   }
@@ -16,10 +14,7 @@
 
 @layer base {
   * {
-    @apply border-[#e3e3e7];
-  }
-  body {
-    @apply bg-black text-white;
+    @apply border-[#e5e7eb];
   }
 }
 

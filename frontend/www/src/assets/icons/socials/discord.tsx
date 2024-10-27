@@ -1,4 +1,4 @@
-export const DiscordLogo = (props: React.SVGProps<SVGSVGElement>) => {
+const Discord = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       role="img"
@@ -11,3 +11,5 @@ export const DiscordLogo = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
+export default Discord;
