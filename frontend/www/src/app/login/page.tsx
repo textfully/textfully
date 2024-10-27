@@ -4,10 +4,26 @@ import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Lock } from "lucide-react";
+import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
 import Logo from "@/assets/logo";
 import GitHub from "@/assets/icons/socials/github";
 import Google from "@/assets/icons/socials/google";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(
+      /[!@#$%^&*(),.?":{}|<>_-]/,
+      "Password must contain at least one special character"
+    ),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -23,6 +39,14 @@ export default function LoginPage() {
     setError(null);
 
     try {
+      const formData: LoginFormData = { email, password };
+      const result = loginSchema.safeParse(formData);
+
+      if (!result.success) {
+        const errors = result.error.errors;
+        throw new Error(errors[0].message);
+      }
+
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -52,6 +76,9 @@ export default function LoginPage() {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
+        options: {
+          redirectTo: `https://cvmdumivffqwpeltefws.supabase.co/auth/v1/callback`,
+        },
       });
       if (error) throw error;
     } catch (error: any) {
@@ -61,11 +88,10 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Back to home link */}
-      <div className="p-4">
+      <div className="px-8 py-4 my-auto">
         <Link
           href="/"
-          className="inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors"
+          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
           Home
@@ -73,35 +99,31 @@ export default function LoginPage() {
       </div>
 
       <div className="max-w-md mx-auto px-4 pt-16">
-        {/* Logo/Icon */}
         <div className="flex justify-center mb-4">
           <div className="w-10 h-10 text-[#0A93F6]">
             <Logo />
           </div>
         </div>
 
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold mb-2">Log in to Textfully</h1>
           <p className="text-gray-400">
             Don't have an account?{" "}
             <Link
               href="/signup"
-              className="underline text-zinc-400 hover:brightness-110"
+              className="underline text-white hover:text-zinc-200"
             >
               Sign up
             </Link>
           </p>
         </div>
 
-        {/* Error message */}
         {error && (
           <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6 text-red-500 text-sm">
             {error}
           </div>
         )}
 
-        {/* OAuth buttons */}
         <div className="space-y-4 text-zinc-300">
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
             <button
@@ -127,7 +149,6 @@ export default function LoginPage() {
           </button>
         </div>
 
-        {/* Divider */}
         <div className="relative my-8">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-zinc-800"></div>
@@ -137,7 +158,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Sign in form */}
         <form onSubmit={handleSignIn} className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm text-gray-400">
@@ -148,7 +168,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-gray-600 border border-zinc-800 focus:border-zinc-700 focus:ring-1 focus:ring-[#0A93F6] outline-none transition-colors"
+              className="w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border border-zinc-800 focus:border-zinc-700 focus:ring-1 focus:ring-[#0A93F6] outline-none transition-colors"
               placeholder="neo@matrix.com"
               required
             />
@@ -175,31 +195,29 @@ export default function LoginPage() {
               required
             />
           </div>
-
           <button
             type="submit"
-            disabled={loading}
-            className="w-full py-2 bg-white hover:bg-gray-100 text-black rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
+            disabled={loading || !email}
+            className="w-full py-2 bg-white hover:bg-gray-100 text-black rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-75 disabled:cursor-not-allowed"
           >
             {loading ? (
-              "Signing in..."
+              "Logging in..."
             ) : (
               <>
                 Continue
-                <span className="ml-2">→</span>
+                <ArrowRight className="ml-1 w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        {/* Terms */}
-        <p className="mt-8 text-center text-sm text-gray-400">
-          By signing in, you agree to our{" "}
-          <Link href="/terms" className="text-blue-500 hover:text-blue-400">
+        <p className="mt-8 text-center text-xs text-zinc-400">
+          By continuing, you agree to our{" "}
+          <Link href="/legal/terms" className="text-zinc-200 hover:brightness-110">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="text-blue-500 hover:text-blue-400">
+          <Link href="/legal/privacy" className="text-zinc-200 hover:brightness-110">
             Privacy Policy
           </Link>
         </p>

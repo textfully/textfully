@@ -114,13 +114,13 @@ export const Footer = () => {
           </div>
           <div className="flex space-x-6">
             <a
-              href="/privacy"
+              href="/legal/privacy"
               className="text-[#50555c] hover:text-[#9CA3AF] text-sm transition-colors"
             >
               Privacy Policy
             </a>
             <a
-              href="/terms"
+              href="/legal/terms"
               className="text-[#50555c] hover:text-[#9CA3AF] text-sm transition-colors"
             >
               Terms of Service

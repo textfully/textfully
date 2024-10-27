@@ -112,7 +112,7 @@ export default function GlobalError({
               </div>
 
               {/* Terminal Content */}
-              <div className="p-4 pt-2 w-full">
+              {/* <div className="p-4 pt-2 w-full">
                 <div className="w-full bg-[#2F3037] relative p-4 rounded-[8px]">
                   <div className="inset-0 absolute element-dark">
                     <div className="inset-0 absolute element opacity-30"></div>
@@ -136,7 +136,7 @@ export default function GlobalError({
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Home button */}
