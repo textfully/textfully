@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react';
 import constate from 'constate';
 
 import type { User } from '@/types/data';
+import { useRouter } from 'next/navigation';
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null | undefined>();
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     fetchUser();

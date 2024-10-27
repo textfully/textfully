@@ -50,8 +50,8 @@ export function NavBar() {
         </div>
       </div>
       <div className="flex items-center space-x-6">
-        <Link href="/sign-in" className="text-gray-400 hover:text-gray-200">
-          Sign in
+        <Link href="/login" className="text-gray-400 hover:text-gray-200 hidden sm:block">
+          Log in
         </Link>
         <Link
           href="/dashboard"
