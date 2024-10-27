@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     url: "https://textfully.dev",
     images: [
       {
-        url: "https://textfully.dev/logo.png",
+        url: "https://textfully.dev/banner.png",
         width: 600,
         height: 600,
         alt: "Textfully",
