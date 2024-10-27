@@ -4,12 +4,12 @@ import { Inter } from "next/font/google";
 import { ContextProvider } from "@/providers/ContextProvider";
 
 import type { Metadata } from "next";
+import { defaultMetadata, defaultOpenGraph } from "@/constants/metadata";
 
 import "@/styles/globals.css";
 import "@/styles/bubbles.css";
 import "@/styles/masks.css";
 import "@/styles/fonts.css";
-import { defaultMetadata, defaultOpenGraph } from "@/constants/metadata";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
