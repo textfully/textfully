@@ -259,7 +259,7 @@ export default function HomePage() {
       </div>
 
       <m.div
-        className="max-w-3xl mx-auto px-6 mb-16"
+        className="max-w-3xl mx-auto px-6 mb-16 mt-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.25 }}
@@ -291,7 +291,7 @@ export default function HomePage() {
                 <div
                   key={card.title}
                   className={cn(
-                    "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5",
+                    "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5 pt-[18px]",
                     isEven ? "received" : "sent"
                   )}
                 >
