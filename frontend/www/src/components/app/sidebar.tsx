@@ -17,6 +17,12 @@ import { cn } from "@/utils/helper";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 interface MenuItem {
   icon: React.FC<{ className?: string }>;
@@ -31,9 +37,12 @@ interface MenuChildItem {
 }
 
 export const Sidebar = () => {
-  const { user, loading } = useAuthContext();
-  const pathname = usePathname();
+  const { user, loading, signOut } = useAuthContext();
+
   const [isHovered, setIsHovered] = useState(false);
+
+  const pathname = usePathname();
+  const router = useRouter();
 
   const menuItems: MenuItem[] = [
     {
@@ -99,7 +108,14 @@ export const Sidebar = () => {
       child?.path?.includes(`/${currentSection}/`)
     );
   });
+
   const isHome = currentSection === "home";
+
+  const handleSignOut = async () => {
+    signOut().then(() => {
+      router.push("/login");
+    });
+  };
 
   return (
     <div
@@ -192,23 +208,34 @@ export const Sidebar = () => {
         </nav>
         {user && !loading && (
           <div className="p-2 border-t border-zinc-800">
-            <button className="w-full p-2 overflow-hidden hover:bg-zinc-800 transition-colors rounded-md">
-              <div className="flex items-center ml-1">
-                <div className="w-6 h-6 bg-zinc-700 rounded-full flex items-center justify-center shrink-0">
-                  <span className="text-white text-sm">
-                    {user.email?.charAt(0).toUpperCase()}
-                  </span>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="w-full focus:outline-none focus:ring-0 focus:ring-offset-0">
+                <div className="w-full p-2 overflow-hidden hover:bg-zinc-800 transition-colors rounded-md">
+                  <div className="flex items-center ml-1">
+                    <div className="w-6 h-6 bg-zinc-700 rounded-full flex items-center justify-center shrink-0">
+                      <span className="text-white text-sm">
+                        {user.email?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <motion.span
+                      className="ml-2 text-sm text-zinc-400 truncate"
+                      animate={{ opacity: isHovered || isHome ? 1 : 0 }}
+                      transition={{ duration: 0.1 }}
+                      style={{
+                        display: isHovered || isHome ? "block" : "none",
+                      }}
+                    >
+                      {user.email}
+                    </motion.span>
+                  </div>
                 </div>
-                <motion.span
-                  className="ml-2 text-sm text-zinc-400 truncate"
-                  animate={{ opacity: isHovered || isHome ? 1 : 0 }}
-                  transition={{ duration: 0.1 }}
-                  style={{ display: isHovered || isHome ? "block" : "none" }}
-                >
-                  {user.email}
-                </motion.span>
-              </div>
-            </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48" align="start">
+                <DropdownMenuItem onClick={handleSignOut}>
+                  <button className="w-full text-left">Sign out</button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
       </motion.div>

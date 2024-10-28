@@ -1,4 +1,4 @@
-import { BackToTop } from "@/components/back-to-top";
+import { BackToTop } from "@/components/landing/back-to-top";
 import { Footer } from "@/components/landing/footer";
 import { NavBar } from "@/components/landing/nav-bar";
 

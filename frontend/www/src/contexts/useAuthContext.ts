@@ -29,7 +29,7 @@ const useAuth = () => {
 
         if (data) {
           toast.success("Your password has been updated.");
-          router.push("/dashboard");
+          
         }
         if (error) {
           toast.error("We encountered an error updating your password.");
