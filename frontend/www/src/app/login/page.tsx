@@ -41,9 +41,9 @@ export default function LoginPage() {
       if (!result.success) {
         const errors = result.error.errors;
         errors.forEach((error) => {
-          if (error.path[0] === 'email') {
+          if (error.path[0] === "email") {
             setEmailError(error.message);
-          } else if (error.path[0] === 'password') {
+          } else if (error.path[0] === "password") {
             setPasswordError(error.message);
           }
         });
