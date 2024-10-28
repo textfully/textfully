@@ -7,6 +7,7 @@ import { NavBar } from "@/components/nav-bar";
 import clsx from "clsx";
 import { Footer } from "@/components/footer";
 import { motion as m } from "framer-motion";
+import { cn } from "@/utils/helper";
 
 export default function PricingPage() {
   const [sliderValue, setSliderValue] = useState(0);
@@ -65,6 +66,7 @@ export default function PricingPage() {
     priceSuffix: string;
     features: { name: string; included: boolean }[];
     cta: string;
+    label?: string;
     type: "highlighted" | "primary" | "surface";
   }
 
@@ -72,7 +74,7 @@ export default function PricingPage() {
     {
       name: "Free",
       price: "$0",
-      priceSuffix: "per month",
+      priceSuffix: "/ month",
       features: [
         { name: "1 contact only", included: true },
         { name: "SMS/MMS only", included: true },
@@ -87,7 +89,8 @@ export default function PricingPage() {
     {
       name: "Basic",
       price: "$10",
-      priceSuffix: "per month",
+      label: "Most Popular",
+      priceSuffix: "/ month",
       features: [
         { name: "Up to 100 contacts", included: true },
         { name: "SMS/MMS only", included: true },
@@ -102,7 +105,8 @@ export default function PricingPage() {
     {
       name: "Pro",
       price: "$25",
-      priceSuffix: "per month",
+      label: "Best Value",
+      priceSuffix: "/ month",
       features: [
         { name: "Up to 1,000 contacts", included: true },
         { name: "SMS/MMS & iMessage", included: true },
@@ -171,16 +175,49 @@ export default function PricingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
                 className={clsx(
-                  "flex flex-col justify-between border rounded-xl px-4 py-6 bg-[#1e1e1e]",
-                  plan.type === "highlighted"
-                    ? "border-[#0A93F6]"
-                    : "border-transparent mt-4"
+                  "flex flex-col justify-start rounded-xl bg-transparent",
+                  plan.type === "highlighted" ? "" : "mt-4"
                 )}
               >
-                <div>
-                  <div className="mb-6">
-                    <h3 className="text-xl mb-4">{plan.name}</h3>
-                    <div className="text-4xl font-bold mb-2">
+                <div className="w-full px-2 pt-2 pb-1 flex items-center justify-between">
+                  <p className="text-sm font-general font-medium text-white">
+                    {plan.name}
+                  </p>
+                  {plan.label && (
+                    <div
+                      className={cn(
+                        "px-2 py-1 rounded-lg",
+                        plan.type === "highlighted"
+                          ? "bg-[#0A93F6]/30"
+                          : "bg-white/20"
+                      )}
+                    >
+                      <p
+                        className={cn(
+                          "text-xs font-medium",
+                          plan.type === "highlighted"
+                            ? "text-[#0A93F6]"
+                            : "text-white"
+                        )}
+                      >
+                        {plan.label}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <div className="w-full p-1 h-full">
+                  <div className="w-full bg-[#2F3037] h-full flex flex-col relative p-4 rounded-xl">
+                    <div className="inset-0 absolute element-dark !rounded-xl">
+                      <div
+                        className={cn(
+                          "inset-0 absolute element opacity-30 !rounded-[11px]",
+                          plan.type === "highlighted"
+                            ? "!bg-[#0b93f6]/40 !border-white"
+                            : ""
+                        )}
+                      ></div>
+                    </div>
+                    <div className="text-4xl font-medium mb-2 font-general relative">
                       {plan.type === "highlighted"
                         ? getCurrentVolumePrice()
                         : plan.price}
@@ -191,7 +228,7 @@ export default function PricingPage() {
                       )}
                     </div>
                     {plan.type === "highlighted" && (
-                      <div className="pt-4">
+                      <div className="pt-4 relative">
                         <Slider
                           value={[sliderValue]}
                           onValueChange={([val]) => {
@@ -209,45 +246,50 @@ export default function PricingPage() {
                         />
                       </div>
                     )}
-                  </div>
-
-                  <div className="space-y-4 mb-8">
-                    {plan.features.map((feature, index) => (
-                      <div
-                        key={feature.name}
-                        className="flex items-center text-sm"
-                      >
-                        {feature.included ? (
-                          <Check className="w-5 h-5 text-white mr-2 flex-shrink-0" />
-                        ) : (
-                          <X className="w-5 h-5 text-[#8a8a8a] mr-2 flex-shrink-0" />
-                        )}
-                        <span
-                          className={
-                            feature.included ? "text-white" : "text-[#8a8a8a]"
-                          }
+                    <div className="flex flex-col gap-y-4 mt-4 mb-6">
+                      {plan.features.map((feature, index) => (
+                        <div
+                          key={feature.name}
+                          className="flex items-center text-[13px]"
                         >
-                          {index === 0 && plan.type === "highlighted"
-                            ? getCurrentVolumeLabel()
-                            : feature.name}
-                        </span>
+                          {feature.included ? (
+                            <Check className="w-5 h-5 text-white mr-2 flex-shrink-0" />
+                          ) : (
+                            <X className="w-5 h-5 text-[#8a8a8a] mr-2 flex-shrink-0" />
+                          )}
+                          <span
+                            className={
+                              feature.included ? "text-white" : "text-[#8a8a8a]"
+                            }
+                          >
+                            {index === 0 && plan.type === "highlighted"
+                              ? getCurrentVolumeLabel()
+                              : feature.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      className={clsx(
+                        "w-full rounded-lg relative mt-auto py-3 font-medium transition",
+                        plan.type === "highlighted"
+                          ? "bg-gradient-to-b hover:brightness-110 from-[#0A93F6] to-[#36a1ed] text-white shadow-sm"
+                          : plan.type === "primary"
+                            ? "bg-white text-black hover:bg-white/80"
+                            : "bg-[#42444c] text-white hover:bg-[#4c4e57] shadow-sm"
+                      )}
+                    >
+                      <div className="inset-0 absolute element-dark !rounded-lg">
+                        <div
+                          className={cn(
+                            "inset-0 absolute element opacity-30 !rounded-[7px]"
+                          )}
+                        ></div>
                       </div>
-                    ))}
+                      {plan.cta}
+                    </button>
                   </div>
                 </div>
-
-                <button
-                  className={clsx(
-                    "w-full rounded-full py-3 font-medium transition-colors",
-                    plan.type === "highlighted"
-                      ? "bg-[#0A93F6] text-white shadow-sm"
-                      : plan.type === "primary"
-                        ? "bg-white text-black hover:bg-white/80"
-                        : "bg-[#3a3a3a] text-white hover:bg-[#3e3e3e] shadow-sm"
-                  )}
-                >
-                  {plan.cta}
-                </button>
               </m.div>
             ))}
           </m.div>
