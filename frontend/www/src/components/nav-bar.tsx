@@ -71,15 +71,13 @@ export const NavBar = ({ shouldAnimate = true }: NavBarProps) => {
       <div className="flex items-center gap-x-4 message-list">
         {user !== undefined && (
           <>
-            {user === null ? (
+            {user === null && (
               <Link
                 href="/login"
                 className="text-sm  font-medium transition text-zinc-400 hover:text-zinc-200"
               >
                 Log in
               </Link>
-            ) : (
-              <button onClick={signOut}>Sign out</button>
             )}
 
             <Link href="/dashboard">
