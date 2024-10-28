@@ -133,22 +133,26 @@ export const Sidebar = () => {
           ease: "easeOut",
         }}
       >
-        <div className="pt-3 pb-1 flex items-center px-4 overflow-hidden">
-          <div className="w-8 h-8 flex items-center justify-center shrink-0">
-            <div className="w-5 h-5 text-[#0A93F6]">
-              <Logo />
+        <div className="pt-3 pb-1 flex px-4 overflow-hidden">
+          <Link href="/dashboard">
+            <div className="flex gap-x-2 items-center">
+              <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                <div className="w-5 h-5 text-[#0A93F6]">
+                  <Logo />
+                </div>
+              </div>
+              {!loading && (
+                <motion.p
+                  className="text-base font-semibold text-white font-general whitespace-nowrap"
+                  animate={{ opacity: isHovered || isHome ? 1 : 0 }}
+                  transition={{ duration: 0.1 }}
+                  style={{ display: isHovered || isHome ? "block" : "none" }}
+                >
+                  Textfully
+                </motion.p>
+              )}
             </div>
-          </div>
-          {!loading && (
-            <motion.p
-              className="ml-2 text-base font-semibold text-white font-general whitespace-nowrap"
-              animate={{ opacity: isHovered || isHome ? 1 : 0 }}
-              transition={{ duration: 0.1 }}
-              style={{ display: isHovered || isHome ? "block" : "none" }}
-            >
-              Textfully
-            </motion.p>
-          )}
+          </Link>
         </div>
 
         <div className="p-2 overflow-hidden">
