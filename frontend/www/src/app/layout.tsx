@@ -4,34 +4,24 @@ import { Inter } from "next/font/google";
 import { ContextProvider } from "@/providers/ContextProvider";
 
 import type { Metadata } from "next";
+import { defaultMetadata, defaultOpenGraph } from "@/constants/metadata";
 
 import "@/styles/globals.css";
 import "@/styles/bubbles.css";
 import "@/styles/masks.css";
 import "@/styles/fonts.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Textfully — The Open Source Twilio Alternative",
-  description:
-    "Textfully makes it easy for developers to send SMS & iMessage in one line of code. Ideal for sending transactional and marketing messages at scale. Get started today for free.",
+  ...defaultMetadata,
   icons: ["/favicon.ico"],
   openGraph: {
-    title: "Textfully — The Open Source Twilio Alternative",
-    description:
-      "Textfully makes it easy for developers to send SMS & iMessage in one line of code. Ideal for sending transactional and marketing messages at scale. Get started today for free.",
+    ...defaultOpenGraph,
     type: "website",
     locale: "en_US",
     url: "https://textfully.dev",
-    images: [
-      {
-        url: "https://textfully.dev/banner.png",
-        width: 600,
-        height: 600,
-        alt: "Textfully",
-      },
-    ],
   },
 };
 
@@ -44,11 +34,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={clsx(
-          "font-inter min-h-screen antialiased bg-black text-white",
+          "font-inter min-h-screen antialiased bg-zinc-950 text-white",
           inter.variable
         )}
       >
         <ContextProvider>{children}</ContextProvider>
+        <Toaster />
       </body>
     </html>
   );

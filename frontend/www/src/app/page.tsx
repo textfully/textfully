@@ -5,28 +5,14 @@ import Go from "@/assets/icons/languages/go";
 import NodeJS from "@/assets/icons/languages/nodejs";
 import Python from "@/assets/icons/languages/python";
 import Rust from "@/assets/icons/languages/rust";
-import { Footer } from "@/components/Footer";
-import { NavBar } from "@/components/NavBar";
-import { PhoneNotifications } from "@/components/PhoneNotifications";
-import { useAppContext } from "@/contexts/useAppContext";
+import { Footer } from "@/components/footer";
+import { NavBar } from "@/components/nav-bar";
+import { PhoneNotifications } from "@/components/phone-notifications";
 import { cn } from "@/utils/helper";
-import clsx from "clsx";
-import { cubicBezier, motion as m } from "framer-motion";
-import { ChevronRight, Play, Plus } from "lucide-react";
+import { motion as m } from "framer-motion";
+import { Play } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-
-interface NavItem {
-  name: string;
-  link: string;
-}
-
-const navItems: NavItem[] = [
-  { name: "Docs", link: "/docs" },
-  { name: "Pricing", link: "/pricing" },
-  { name: "Blog", link: "/blog" },
-  { name: "Resources", link: "/resources" },
-];
 
 interface CodeSnippet {
   comment: string;
@@ -82,7 +68,7 @@ interface Language {
   icon: React.ReactNode;
 }
 
-const languages: Array<Language> = [
+const languages: Language[] = [
   { id: "python", name: "Python", icon: <Python /> },
   { id: "nodejs", name: "Node.js", icon: <NodeJS /> },
   { id: "go", name: "Go", icon: <Go /> },
@@ -97,7 +83,7 @@ interface Feature {
   link: string;
 }
 
-const features: Array<Feature> = [
+const features: Feature[] = [
   {
     title: "Quick Setup",
     description:
@@ -132,6 +118,13 @@ const features: Array<Feature> = [
     cta: "Sign up",
     link: "/dashboard",
   },
+  {
+    title: "All Your Messaging Needs",
+    description:
+      "Explore other products including Phone Numbers, Conversations, AI Agents, and more.",
+    cta: "Learn more",
+    link: "/products",
+  },
 ];
 
 interface CTA {
@@ -139,64 +132,28 @@ interface CTA {
   link: string;
 }
 
-const ctas: Array<CTA> = [
+const ctas: CTA[] = [
   { name: "View Docs", link: "/docs" },
   { name: "Get Started", link: "/dashboard" },
 ];
 
-const cardArrowVariants = {
-  initial: { x: 0 },
-  hover: {
-    x: 4,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-};
-
-const cardButtonVariants = {
-  initial: { opacity: 0.9 },
-  hover: {
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut",
-    },
-  },
-  tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1,
-    },
-  },
-};
-
 export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
-  const [activeWidth, setActiveWidth] = useState(0);
-  const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
-    const activeButton =
-      buttonsRef.current[languages.findIndex((l) => l.id === activeLanguage)];
-    if (activeButton) {
-      setActiveWidth(activeButton.offsetWidth);
-    }
-  }, [activeLanguage]);
+    const time = new Date().getTime();
 
-  const time = new Date().getTime();
-
-  const formattedTime = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(time);
+    const formattedTime = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+    }).format(time);
+    setFormattedTime(formattedTime);
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <NavBar />
-
-      {/* Adjusted to take full height and center content */}
       <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
         <div className="w-full px-6 lg:px-4">
           <m.div
@@ -223,7 +180,7 @@ export default function HomePage() {
               iMessage & SMS API for Developers
             </m.h1>
             <m.p
-              className="text-sm sm:text-base text-zinc-400  mt-6 max-w-lg mx-auto"
+              className="text-sm sm:text-base text-zinc-400 mt-6 max-w-lg mx-auto"
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, delay: 0.25 }}
@@ -244,12 +201,12 @@ export default function HomePage() {
               </div>
               <div className="w-full flex justify-between items-center h-10 px-4 pr-1.5">
                 <div className="flex gap-x-1.5 items-center">
-                  <div className="w-2 h-2 rounded-full bg-rose-500" />
-                  <div className="w-2 h-2 rounded-full bg-amber-500" />
-                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
                 </div>
                 <Link href="/docs">
-                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-2 items-center">
+                  <button className="px-3 py-1.5 mt-0.5 hover:bg-white/5 transition rounded-lg flex gap-x-1.5 items-center">
                     <Play className="w-3 h-3 fill-[#838284] stroke-[#838284]" />
                     <span className="text-xs font-medium">Try it Out</span>
                   </button>
@@ -305,7 +262,7 @@ export default function HomePage() {
         className="max-w-3xl mx-auto px-6 mb-16 mt-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.25 }} // Reduced duration and delay
+        transition={{ duration: 0.3, delay: 0.25 }}
       >
         <div className="flex flex-col gap-6 message-list w-full">
           {features.map((card, index) => {
@@ -314,7 +271,7 @@ export default function HomePage() {
               <div
                 className={cn(
                   "w-full max-w-md flex flex-col relative",
-                  isEven ? "ml-auto" : "mr-auto"
+                  isEven ? "mr-auto" : "ml-auto"
                 )}
               >
                 <div
@@ -327,7 +284,7 @@ export default function HomePage() {
                   <div
                     className={cn(
                       "inset-0 absolute element !rounded-[24px]",
-                      isEven ? "opacity-100" : "opacity-40"
+                      isEven ? "opacity-40" : "opacity-100"
                     )}
                   ></div>
                 </div>
@@ -335,7 +292,7 @@ export default function HomePage() {
                   key={card.title}
                   className={cn(
                     "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5 pt-[18px]",
-                    isEven ? "sent" : "received"
+                    isEven ? "received" : "sent"
                   )}
                 >
                   <h3 className="text-[16px] text-white font-semibold mb-1">
@@ -348,7 +305,7 @@ export default function HomePage() {
                     <p
                       className={cn(
                         "font-semibold text-sm hover:brightness-110",
-                        isEven ? "text-sky-200" : "text-[#0A93F6]"
+                        isEven ? "text-[#0A93F6]" : "text-sky-200"
                       )}
                     >
                       {card.cta}
@@ -359,7 +316,7 @@ export default function HomePage() {
                   <p
                     className={cn(
                       "text-xs text-white/50",
-                      isEven ? "" : "hidden"
+                      isEven || index !== features.length - 1 ? "hidden" : ""
                     )}
                   >
                     <span className="font-semibold">Read&nbsp;</span>
@@ -393,7 +350,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );

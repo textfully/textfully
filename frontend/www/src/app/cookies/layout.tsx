@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: "Pricing | Textfully",
+  title: "Cookie Policy | Textfully",
   openGraph: {
     ...defaultOpenGraph,
-    title: "Pricing | Textfully",
+    title: "Cookie Policy | Textfully",
   },
 };
 
-export default function PricingLayout({
+export default function CookiesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

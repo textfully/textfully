@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: "Pricing | Textfully",
+  title: "Terms of Service | Textfully",
   openGraph: {
     ...defaultOpenGraph,
-    title: "Pricing | Textfully",
+    title: "Terms of Service | Textfully",
   },
 };
 
-export default function PricingLayout({
+export default function TermsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
