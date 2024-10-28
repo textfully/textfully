@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TermsLayout({
+export default function SignupLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

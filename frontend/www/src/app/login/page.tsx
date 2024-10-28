@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,6 +25,9 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
   const router = useRouter();
   const supabase = createClient();
 
@@ -37,16 +40,15 @@ export default function LoginPage() {
     try {
       const formData: LoginFormData = { email, password };
       const result = loginSchema.safeParse(formData);
-
       if (!result.success) {
-        const errors = result.error.errors;
-        errors.forEach((error) => {
-          if (error.path[0] === "email") {
-            setEmailError(error.message);
-          } else if (error.path[0] === "password") {
-            setPasswordError(error.message);
-          }
-        });
+        const error = result.error.errors[0];
+        if (error.path[0] === "email") {
+          setEmailError(error.message);
+          emailRef.current?.focus();
+        } else if (error.path[0] === "password") {
+          setPasswordError(error.message);
+          passwordRef.current?.focus();
+        }
         setLoading(false);
         return;
       }
@@ -59,17 +61,18 @@ export default function LoginPage() {
       if (error) {
         if (error.message.toLowerCase().includes("email")) {
           setEmailError(error.message);
+          emailRef.current?.focus();
         } else if (error.message.toLowerCase().includes("password")) {
           setPasswordError(error.message);
+          passwordRef.current?.focus();
         } else {
-          setPasswordError(error.message);
+          toast.error(error.message);
         }
-        return;
+      } else {
+        router.push("/dashboard");
       }
-
-      router.push("/dashboard");
     } catch (error: any) {
-      setPasswordError(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -92,7 +95,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `https://textfully.dev/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
       if (error) throw error;
@@ -116,9 +119,9 @@ export default function LoginPage() {
 
       <div className="max-w-md mx-auto px-4 pt-16 pb-32">
         <div className="flex justify-center mb-4">
-          <div className="w-10 h-10 text-[#0A93F6]">
+          <Link href="/" className="w-10 h-10 text-[#0A93F6]">
             <Logo />
-          </div>
+          </Link>
         </div>
 
         <div className="text-center mb-8">
@@ -175,6 +178,7 @@ export default function LoginPage() {
             </label>
             <input
               id="email"
+              ref={emailRef}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -204,6 +208,7 @@ export default function LoginPage() {
             </div>
             <input
               id="password"
+              ref={passwordRef}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -220,7 +225,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full py-2 bg-white hover:bg-zinc-100 text-black rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 bg-white hover:bg-zinc-100 text-black rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
           >
             {loading ? (
               "Logging in..."

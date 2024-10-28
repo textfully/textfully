@@ -1,8 +1,8 @@
 import { BackToTop } from "@/components/back-to-top";
-import { Footer } from "@/components/footer";
-import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/landing/footer";
+import { NavBar } from "@/components/landing/nav-bar";
 
-export default function Cookies() {
+export default function CookiesPage() {
   return (
     <>
       <NavBar shouldAnimate={false} />

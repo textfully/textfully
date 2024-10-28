@@ -39,7 +39,7 @@ export default function RootLayout({
         )}
       >
         <ContextProvider>{children}</ContextProvider>
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   );

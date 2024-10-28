@@ -1,19 +1,20 @@
+import { PageLayout } from "@/components/app/page-layout";
 import { defaultMetadata, defaultOpenGraph } from "@/constants/metadata";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: "Login | Textfully",
+  title: "Dashboard | Textfully",
   openGraph: {
     ...defaultOpenGraph,
-    title: "Login | Textfully",
+    title: "Dashboard | Textfully",
   },
 };
 
-export default function LoginLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <PageLayout>{children}</PageLayout>;
 }

@@ -16,3 +16,11 @@ export const noComponent = () => null;
 export const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
+export const createRedirectLink = (
+  targetPath: string,
+  redirectTo: string
+): string => {
+  const encodedRedirect = encodeURIComponent(redirectTo);
+  return `${targetPath}?redirectTo=${encodedRedirect}`;
+};

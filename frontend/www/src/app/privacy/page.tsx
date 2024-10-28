@@ -1,8 +1,8 @@
 import { BackToTop } from "@/components/back-to-top";
-import { Footer } from "@/components/footer";
-import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/landing/footer";
+import { NavBar } from "@/components/landing/nav-bar";
 
-export default function Privacy() {
+export default function PrivacyPage() {
   return (
     <>
       <NavBar shouldAnimate={false} />
