@@ -107,7 +107,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="px-8 py-4 my-auto">
+      <div className="px-6 py-4 my-auto">
         <Link
           href="/"
           className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors"

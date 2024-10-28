@@ -147,7 +147,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
-      <NavBar />
+      <NavBar isFixed={true} />
       <div className="p-8 mb-32">
         <div className="max-w-7xl mx-auto">
           <m.div

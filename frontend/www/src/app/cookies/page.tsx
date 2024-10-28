@@ -5,7 +5,7 @@ import { NavBar } from "@/components/landing/nav-bar";
 export default function CookiesPage() {
   return (
     <>
-      <NavBar shouldAnimate={false} />
+      <NavBar shouldAnimate={false} isFixed={true} />
       <div className="max-w-4xl mx-auto px-4 py-16 mt-16">
         <h1 className="text-4xl font-bold mb-4">Cookie Policy</h1>
         <p className="text-zinc-400 mb-8">Last updated October 27, 2024</p>

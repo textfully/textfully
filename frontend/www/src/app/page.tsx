@@ -153,7 +153,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
-      <NavBar />
+      <NavBar isFixed={true} />
       <div className="h-[calc(100vh-4rem)] max-w-3xl mx-auto flex items-center">
         <div className="w-full px-6 lg:px-4">
           <m.div

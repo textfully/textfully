@@ -36,7 +36,7 @@ const SOCIAL_LINKS: SocialLink[] = [
     ariaLabel: "GitHub",
   },
   {
-    href: "https://discord.gg/textfully",
+    href: "https://discord.gg/Ct6FDCpFBU",
     icon: Discord,
     ariaLabel: "Discord",
   },
