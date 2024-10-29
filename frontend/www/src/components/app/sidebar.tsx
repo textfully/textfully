@@ -119,7 +119,7 @@ export const Sidebar = () => {
 
   return (
     <div
-      className="flex h-screen"
+      className="flex h-full"
       onMouseLeave={() => !loading && setIsHovered(false)}
     >
       <motion.div
@@ -245,7 +245,7 @@ export const Sidebar = () => {
       </motion.div>
 
       {/* Submenu sidebar */}
-      {!loading && !isHome && (
+      {!loading && isHovered && (
         <motion.div
           className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 overflow-hidden"
           initial={{ width: 0, opacity: 0 }}

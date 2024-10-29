@@ -46,7 +46,7 @@ export const NavBar = ({
         transition={{ duration: 0.2 }}
         className={clsx(
           "flex items-center justify-between p-4 px-6",
-          isFixed && "fixed top-0 left-0 right-0 z-50 bg-black"
+          isFixed && "fixed top-0 left-0 right-0 z-30 bg-black"
         )}
       >
         <div className="flex items-center gap-x-8">
@@ -111,42 +111,33 @@ export const NavBar = ({
         <div className="block sm:hidden ml-4">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex-col flex items-center justify-center w-6 h-6"
+            className="flex-col flex items-center justify-center w-5 h-5  "
           >
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {isMenuOpen ? (
-                <>
-                  <rect
-                    x="0"
-                    y="11"
-                    width="24"
-                    height="2"
-                    rx="1"
-                    fill="white"
-                    transform="rotate(45 12 12)"
-                  />
-                  <rect
-                    x="0"
-                    y="11"
-                    width="24"
-                    height="2"
-                    rx="1"
-                    fill="white"
-                    transform="rotate(-45 12 12)"
-                  />
-                </>
-              ) : (
-                <>
-                  <rect y="8" width="24" height="2" rx="1" fill="white" />
-                  <rect y="16" width="24" height="2" rx="1" fill="white" />
-                </>
-              )}
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <m.rect
+                width="24"
+                height="2"
+                rx="1"
+                fill="white"
+                animate={{
+                  y: isMenuOpen ? 11 : 8,
+                  rotate: isMenuOpen ? 45 : 0,
+                  transformOrigin: "center",
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              <m.rect
+                width="24"
+                height="2"
+                rx="1"
+                fill="white"
+                animate={{
+                  y: isMenuOpen ? 11 : 16,
+                  rotate: isMenuOpen ? -45 : 0,
+                  transformOrigin: "center",
+                }}
+                transition={{ duration: 0.3 }}
+              />
             </svg>
           </button>
         </div>
@@ -160,17 +151,17 @@ export const NavBar = ({
           animate={{ y: isMenuOpen ? 0 : -1000 }}
           exit={{ y: isMenuOpen ? -500 : 500 }}
           transition={{ type: "spring", stiffness: 160, damping: 20 }}
-          className="fixed mt-14 inset-0 bg-black z-10 sm:hidden"
+          className="fixed inset-0 bg-black z-30 sm:hidden"
         >
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="flex flex-col items-center gap-y-8">
+          <div className="flex pt-14 flex-col h-full">
+            <div className="flex flex-col gap-y-8 p-8">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.link}
                   onClick={() => setIsMenuOpen(false)}
                   className={clsx(
-                    "text-xl font-medium transition",
+                    "text-base font-medium transition",
                     pathname === item.link
                       ? "text-white"
                       : "text-zinc-400 hover:text-zinc-200"
@@ -180,25 +171,35 @@ export const NavBar = ({
                 </Link>
               ))}
 
-              {user === null && (
-                <Link
-                  href="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-xl font-medium transition text-zinc-400 hover:text-zinc-200"
-                >
-                  Log in
-                </Link>
-              )}
+              <div className="flex justify-between items-center pt-6 border-t border-[#252525] gap-6 w-full message-list">
+                {user === null ? (
+                  <Link
+                    href="/login"
+                    className="text-base font-medium transition text-zinc-400 hover:text-zinc-200"
+                  >
+                    Log in
+                  </Link>
+                ) : (
+                  <div />
+                )}
 
-              <Link
-                href="/dashboard"
-                onClick={() => setIsMenuOpen(false)}
-                className="shared small sent px-4 py-2 flex gap-x-1.5 items-center"
-              >
-                <span className="text-lg font-medium">
-                  {user ? "Dashboard" : "Get Started"}
-                </span>
-              </Link>
+                <Link href="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                  <div className="shared small sent px-3 py-1.5 flex gap-x-1.5 items-center">
+                    <div
+                      style={{
+                        WebkitMaskImage:
+                          "linear-gradient(to bottom, black 20%, transparent 55%)",
+                      }}
+                      className="inset-0 absolute element-dark !rounded-[16px]"
+                    >
+                      <div className="inset-0 absolute element opacity-70 !rounded-[15px]"></div>
+                    </div>
+                    <span className="text-sm font-medium">
+                      {user ? "Dashboard" : "Get Started"}
+                    </span>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </m.div>
