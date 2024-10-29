@@ -11,6 +11,7 @@ import "@/styles/bubbles.css";
 import "@/styles/masks.css";
 import "@/styles/fonts.css";
 import { Toaster } from "sonner";
+import { CSPostHogProvider } from "@/providers/PostHogProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -32,15 +33,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={clsx(
-          "font-inter min-h-screen antialiased bg-zinc-950 text-white",
-          inter.variable
-        )}
-      >
-        <ContextProvider>{children}</ContextProvider>
-        <Toaster richColors />
-      </body>
+      <CSPostHogProvider>
+        <body
+          className={clsx(
+            "font-inter min-h-screen antialiased bg-zinc-950 text-white",
+            inter.variable
+          )}
+        >
+          <ContextProvider>{children}</ContextProvider>
+          <Toaster richColors />
+        </body>
+      </CSPostHogProvider>
     </html>
   );
 }
