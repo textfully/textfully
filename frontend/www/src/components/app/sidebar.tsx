@@ -234,7 +234,11 @@ export const Sidebar = () => {
                   </div>
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48" align="start">
+              <DropdownMenuContent
+                className="w-48"
+                align="start"
+                onMouseEnter={() => setIsHovered(false)}
+              >
                 <DropdownMenuItem onClick={handleSignOut}>
                   <button className="w-full text-left">Sign out</button>
                 </DropdownMenuItem>

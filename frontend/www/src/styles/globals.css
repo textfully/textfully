@@ -8,13 +8,42 @@
     --black: #09090b;
     --white: #fdfdfe;
 
+    --background: #09090b;
+    --foreground: #dee3ea;
+
+    --muted: #212126;
+    --muted-foreground: #838284;
+
+    --accent: #252525;
+    --accent-foreground: #f1f5f9;
+
+    --popover: #09090b;
+    --popover-foreground: #94a3b8;
+
+    --border: #252525;
+    --input: #1e1e1e;
+
+    --card: #212126;
+    --card-foreground: #dee3ea;
+
+    --primary: #0A93F6;
+    --primary-foreground: #ffffff;
+
+    --secondary: #2F3037;
+    --secondary-foreground: #f1f5f9;
+
+    --destructive: #ef4444;
+    --destructive-foreground: #f1f5f9;
+
+    --ring: #1a2435;
+
     --radius: 0.5rem;
   }
 }
 
 @layer base {
   * {
-    @apply border-[#e5e7eb];
+    @apply border-[#e5e7eb]/50;
   }
 }
 
