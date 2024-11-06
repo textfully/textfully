@@ -11,8 +11,7 @@
 
 <p align="center">
   <a href="https://textfully.dev/docs">Documentation</a> • 
-  <!-- TODO: Add Discord link -->
-  <a href="https://discord.gg/textfully">Community</a> • 
+  <a href="https://discord.gg/Ct6FDCpFBU">Community</a> • 
   <a href="https://textfully.dev/roadmap">Roadmap</a> • 
   <a href="https://textfully.dev/changelog">Changelog</a> • 
   <a href="https://textfully.dev/support">Support</a>
