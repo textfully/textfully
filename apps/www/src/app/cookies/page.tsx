@@ -120,7 +120,7 @@ export default function CookiesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="hover:bg-zinc-900">
+                  <tr>
                     <td className="px-4 py-2 border border-zinc-700">s7</td>
                     <td className="px-4 py-2 border border-zinc-700">
                       Gather data regarding site usage and user behavior on the

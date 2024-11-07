@@ -329,7 +329,7 @@ export default function PrivacyPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         A. Identifiers
                       </td>
@@ -341,7 +341,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">YES</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         B. Personal information as defined in the California
                         Customer Records statute
@@ -352,7 +352,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">YES</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         C. Protected classification characteristics under state
                         or federal law
@@ -362,7 +362,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         D. Commercial information
                       </td>
@@ -372,7 +372,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         E. Biometric information
                       </td>
@@ -381,7 +381,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         F. Internet or other similar network activity
                       </td>
@@ -392,7 +392,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         G. Geolocation data
                       </td>
@@ -401,7 +401,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">YES</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         H. Audio, electronic, visual, thermal, olfactory, or
                         similar information
@@ -412,7 +412,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         I. Professional or employment-related information
                       </td>
@@ -424,7 +424,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         J. Education Information
                       </td>
@@ -433,7 +433,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">NO</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         K. Inferences drawn from collected personal information
                       </td>
@@ -445,7 +445,7 @@ export default function PrivacyPage() {
                       </td>
                       <td className="px-4 py-2 border border-zinc-700">YES</td>
                     </tr>
-                    <tr className="hover:bg-zinc-900">
+                    <tr>
                       <td className="px-4 py-2 border border-zinc-700">
                         L. Sensitive personal Information
                       </td>
