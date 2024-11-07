@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { createRedirectLink } from "@/utils/helper";
@@ -25,23 +25,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-interface APIKey {
-  id: string;
-  name: string;
-  shortKey: string;
-  createdAt: string;
-  lastUsed: string;
-}
-
-type APIKeyPermission = "all" | "send_only";
+import { createApiKey } from "@/api/create-api-key";
+import { APIKeyPermission } from "@/types/enums";
+import { APIKeyResponse } from "@/types/responses";
+import { toast } from "sonner";
+import { fetchApiKeys } from "@/api/fetch-api-keys";
+import { revokeApiKey } from "@/api/revoke-api-keys";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
-  const [apiKeys, setApiKeys] = useState<APIKey[]>([]);
+  const [apiKeys, setApiKeys] = useState<APIKeyResponse[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
-  const [permission, setPermission] = useState<APIKeyPermission>("all");
+  const [permission, setPermission] = useState<APIKeyPermission>(
+    APIKeyPermission.ALL
+  );
+  const [nameError, setNameError] = useState<string>("");
+  const [isCreating, setIsCreating] = useState(false);
+
+  const nameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -49,12 +51,76 @@ export default function APIKeysPage() {
     }
   }, [user, loading]);
 
+  useEffect(() => {
+    const loadApiKeys = async () => {
+      if (!loading && user) {
+        try {
+          const keys = await fetchApiKeys();
+          setApiKeys(keys);
+        } catch (error) {
+          console.error(error);
+          toast.error(
+            error instanceof Error ? error.message : "Failed to load API keys"
+          );
+        }
+      }
+    };
+
+    loadApiKeys();
+  }, [user, loading]);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setName("");
+      setPermission(APIKeyPermission.ALL);
+      setNameError("");
+    }
+  }, [isModalOpen]);
+
   const handleCreateApiKey = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement API key creation
-    console.log("Creating new API key with name:", name);
-    setIsModalOpen(false);
-    setName("");
+
+    setNameError("");
+
+    if (!name.trim()) {
+      setNameError("Name is required");
+      nameRef.current?.focus();
+      return;
+    }
+
+    setIsCreating(true);
+
+    try {
+      await createApiKey({
+        name: name.trim(),
+        permission,
+      });
+      const keys = await fetchApiKeys();
+      setApiKeys(keys);
+
+      toast.success("API key created successfully");
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create API key"
+      );
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const handleRevokeKey = async (keyId: string) => {
+    try {
+      await revokeApiKey(keyId);
+      const keys = await fetchApiKeys();
+      setApiKeys(keys);
+
+      toast.success("API key revoked successfully");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to revoke API key"
+      );
+    }
   };
 
   if (loading) {
@@ -72,7 +138,7 @@ export default function APIKeysPage() {
           <h1 className="text-2xl font-semibold">API Keys</h1>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2.5 bg-zinc-900 rounded-full text-white font-medium text-sm leading-none transition hover:brightness-110"
+            className="px-4 py-2.5 bg-white rounded-lg text-zinc-900 font-semibold text-sm leading-none transition hover:brightness-110"
           >
             Create API Key
           </button>
@@ -86,7 +152,7 @@ export default function APIKeysPage() {
                 <TableHead>API Key</TableHead>
                 <TableHead>Created</TableHead>
                 <TableHead>Last Used</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="text-right"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -102,17 +168,20 @@ export default function APIKeysPage() {
                     <TableCell>{apiKey.name}</TableCell>
                     <TableCell>
                       <code className="bg-zinc-800 px-2 py-1 rounded">
-                        {apiKey.shortKey}...
+                        {apiKey.short_key}...
                       </code>
                     </TableCell>
                     <TableCell>
-                      {new Date(apiKey.createdAt).toLocaleDateString()}
+                      {new Date(apiKey.created_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell>
-                      {new Date(apiKey.lastUsed).toLocaleDateString()}
+                      {new Date(apiKey.last_used).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">
-                      <button className="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-full text-sm hover:brightness-110 transition">
+                      <button
+                        onClick={() => handleRevokeKey(apiKey.id)}
+                        className="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-full text-sm hover:brightness-110 transition"
+                      >
                         Revoke
                       </button>
                     </TableCell>
@@ -129,7 +198,7 @@ export default function APIKeysPage() {
           <DialogHeader>
             <DialogTitle>Create API Key</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleCreateApiKey} className="space-y-4">
+          <form onSubmit={handleCreateApiKey} className="space-y-6">
             <div>
               <label
                 htmlFor="name"
@@ -138,14 +207,24 @@ export default function APIKeysPage() {
                 Name
               </label>
               <input
+                ref={nameRef}
                 type="text"
                 id="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setNameError("");
+                }}
                 placeholder="e.g. Production API Key"
-                className="w-full px-2.5 py-1.5 text-sm bg-zinc-900 border border-zinc-800 rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-700"
-                required
+                className={`w-full px-2.5 py-1.5 text-sm bg-zinc-900 border ${
+                  nameError
+                    ? "border-red-500 focus:ring-transparent"
+                    : "border-zinc-700 focus:ring-zinc-700"
+                } rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2`}
               />
+              {nameError && (
+                <p className="mt-1 text-sm text-red-500">{nameError}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-2">
@@ -157,7 +236,7 @@ export default function APIKeysPage() {
                   setPermission(value as APIKeyPermission)
                 }
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-zinc-900">
                   <SelectValue placeholder="Select permission" />
                 </SelectTrigger>
                 <SelectContent>
@@ -170,15 +249,20 @@ export default function APIKeysPage() {
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-sm text-zinc-400 hover:text-white transition"
+                className="px-4 py-2 text-sm font-semibold text-zinc-400 hover:text-white transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-zinc-900 rounded-md text-white text-sm font-medium hover:brightness-110 transition"
+                disabled={isCreating}
+                className={`px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition ${
+                  isCreating
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:brightness-110"
+                }`}
               >
-                Create
+                {isCreating ? "Creating..." : "Create"}
               </button>
             </div>
           </form>
