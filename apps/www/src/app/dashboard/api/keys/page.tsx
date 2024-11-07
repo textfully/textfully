@@ -42,6 +42,7 @@ export default function APIKeysPage() {
   );
   const [nameError, setNameError] = useState<string>("");
   const [isCreating, setIsCreating] = useState(false);
+  const [createdApiKey, setCreatedApiKey] = useState<string | null>(null);
 
   const nameRef = useRef<HTMLInputElement>(null);
 
@@ -74,6 +75,7 @@ export default function APIKeysPage() {
       setName("");
       setPermission(APIKeyPermission.ALL);
       setNameError("");
+      setCreatedApiKey(null);
     }
   }, [isModalOpen]);
 
@@ -91,15 +93,15 @@ export default function APIKeysPage() {
     setIsCreating(true);
 
     try {
-      await createApiKey({
+      const response = await createApiKey({
         name: name.trim(),
         permission,
       });
+      setCreatedApiKey(response.api_key);
       const keys = await fetchApiKeys();
       setApiKeys(keys);
 
       toast.success("API key created successfully");
-      setIsModalOpen(false);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to create API key"
@@ -196,76 +198,139 @@ export default function APIKeysPage() {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create API Key</DialogTitle>
+            <DialogTitle>
+              {createdApiKey ? "Save your API key" : "Create API Key"}
+            </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleCreateApiKey} className="space-y-6">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-zinc-400 mb-2"
-              >
-                Name
-              </label>
-              <input
-                ref={nameRef}
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setNameError("");
-                }}
-                placeholder="e.g. Production API Key"
-                className={`w-full px-2.5 py-1.5 text-sm bg-zinc-900 border ${
-                  nameError
-                    ? "border-red-500 focus:ring-transparent"
-                    : "border-zinc-700 focus:ring-zinc-700"
-                } rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2`}
-              />
-              {nameError && (
-                <p className="mt-1 text-sm text-red-500">{nameError}</p>
-              )}
+          {createdApiKey ? (
+            <div className="space-y-6">
+              <div>
+                <p className="text-sm text-zinc-400 mb-4">
+                  Please save this API key somewhere safe and accessible. For
+                  security reasons, you won't be able to view it again on the
+                  dashboard. If you lose this API key, you'll need to generate a
+                  new one.
+                </p>
+                <div className="flex items-center gap-x-2">
+                  <code className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-hidden text-ellipsis whitespace-nowrap">
+                    {createdApiKey}
+                  </code>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(createdApiKey);
+                      toast.success("API key copied to clipboard");
+                    }}
+                    className="p-2 hover:bg-zinc-800 rounded-md transition shrink-0"
+                    title="Copy to clipboard"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-zinc-400 mb-2">
+                  Permissions
+                </h3>
+                <Select value={permission} disabled>
+                  <SelectTrigger className="w-full bg-zinc-900">
+                    {permission === APIKeyPermission.ALL
+                      ? "Full access"
+                      : "Sending access only"}
+                  </SelectTrigger>
+                </Select>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition hover:brightness-110"
+                >
+                  Done
+                </button>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-2">
-                Permission
-              </label>
-              <Select
-                value={permission}
-                onValueChange={(value) =>
-                  setPermission(value as APIKeyPermission)
-                }
-              >
-                <SelectTrigger className="w-full bg-zinc-900">
-                  <SelectValue placeholder="Select permission" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Full access</SelectItem>
-                  <SelectItem value="send_only">Sending access</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex justify-end gap-x-2">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-sm font-semibold text-zinc-400 hover:text-white transition"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isCreating}
-                className={`px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition ${
-                  isCreating
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:brightness-110"
-                }`}
-              >
-                {isCreating ? "Creating..." : "Create"}
-              </button>
-            </div>
-          </form>
+          ) : (
+            <form onSubmit={handleCreateApiKey} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-zinc-400 mb-2"
+                >
+                  Name
+                </label>
+                <input
+                  ref={nameRef}
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setNameError("");
+                  }}
+                  placeholder="e.g. Production API Key"
+                  className={`w-full px-2.5 py-1.5 text-sm bg-zinc-900 border ${
+                    nameError
+                      ? "border-red-500 focus:ring-transparent"
+                      : "border-zinc-700 focus:ring-zinc-700"
+                  } rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2`}
+                />
+                {nameError && (
+                  <p className="mt-1 text-sm text-red-500">{nameError}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">
+                  Permission
+                </label>
+                <Select
+                  value={permission}
+                  onValueChange={(value) =>
+                    setPermission(value as APIKeyPermission)
+                  }
+                >
+                  <SelectTrigger className="w-full bg-zinc-900">
+                    <SelectValue placeholder="Select permission" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Full access</SelectItem>
+                    <SelectItem value="send_only">Sending access</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex justify-end gap-x-2">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-sm font-semibold text-zinc-400 hover:text-white transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isCreating}
+                  className={`px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition ${
+                    isCreating
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:brightness-110"
+                  }`}
+                >
+                  {isCreating ? "Creating..." : "Create"}
+                </button>
+              </div>
+            </form>
+          )}
         </DialogContent>
       </Dialog>
     </>

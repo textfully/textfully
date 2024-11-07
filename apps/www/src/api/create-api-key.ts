@@ -1,11 +1,11 @@
 import { API_BASE_URL } from "@/constants/env";
 import { APIKeyRequest } from "@/types/requests";
-import { APIKeyResponse } from "@/types/responses";
+import { CreateAPIKeyResponse } from "@/types/responses";
 import { getAuthToken } from "@/utils/api-client";
 
 export async function createApiKey(
   request: APIKeyRequest
-): Promise<APIKeyResponse> {
+): Promise<CreateAPIKeyResponse> {
   try {
     const token = await getAuthToken();
 
