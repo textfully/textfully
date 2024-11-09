@@ -35,6 +35,7 @@ import { revokeApiKey } from "@/api/revoke-api-keys";
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
   const [apiKeys, setApiKeys] = useState<APIKeyResponse[]>([]);
+  const [createdApiKey, setCreatedApiKey] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [permission, setPermission] = useState<APIKeyPermission>(
@@ -42,9 +43,10 @@ export default function APIKeysPage() {
   );
   const [nameError, setNameError] = useState<string>("");
   const [isCreating, setIsCreating] = useState(false);
-  const [createdApiKey, setCreatedApiKey] = useState<string | null>(null);
+  const [isLoadingKeys, setIsLoadingKeys] = useState(true);
 
   const nameRef = useRef<HTMLInputElement>(null);
+  const codeRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -63,6 +65,8 @@ export default function APIKeysPage() {
           toast.error(
             error instanceof Error ? error.message : "Failed to load API keys"
           );
+        } finally {
+          setIsLoadingKeys(false);
         }
       }
     };
@@ -78,6 +82,13 @@ export default function APIKeysPage() {
       setCreatedApiKey(null);
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if (codeRef.current && createdApiKey) {
+      codeRef.current.select();
+      navigator.clipboard.writeText(createdApiKey);
+    }
+  }, [createdApiKey]);
 
   const handleCreateApiKey = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,6 +109,7 @@ export default function APIKeysPage() {
         permission,
       });
       setCreatedApiKey(response.api_key);
+
       const keys = await fetchApiKeys();
       setApiKeys(keys);
 
@@ -114,6 +126,7 @@ export default function APIKeysPage() {
   const handleRevokeKey = async (keyId: string) => {
     try {
       await revokeApiKey(keyId);
+
       const keys = await fetchApiKeys();
       setApiKeys(keys);
 
@@ -158,7 +171,13 @@ export default function APIKeysPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {apiKeys.length === 0 ? (
+              {isLoadingKeys ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center text-zinc-400">
+                    Loading API keys...
+                  </TableCell>
+                </TableRow>
+              ) : apiKeys.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center text-zinc-400">
                     No API keys found. Create one to get started.
@@ -203,7 +222,7 @@ export default function APIKeysPage() {
             </DialogTitle>
           </DialogHeader>
           {createdApiKey ? (
-            <div className="space-y-6">
+            <div className="space-y-6 min-w-0">
               <div>
                 <p className="text-sm text-zinc-400 mb-4">
                   Please save this API key somewhere safe and accessible. For
@@ -212,11 +231,16 @@ export default function APIKeysPage() {
                   new one.
                 </p>
                 <div className="flex items-center gap-x-2">
-                  <code className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-hidden text-ellipsis whitespace-nowrap">
-                    {createdApiKey}
-                  </code>
+                  <input
+                    ref={codeRef}
+                    readOnly
+                    value={createdApiKey}
+                    onClick={(e) => e.currentTarget.select()}
+                    className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-x-auto whitespace-nowrap hide-scrollbar font-mono focus:outline-none focus:ring-2 focus:ring-[#0A93F6] transition-all duration-300"
+                  />
                   <button
                     onClick={() => {
+                      codeRef.current?.select();
                       navigator.clipboard.writeText(createdApiKey);
                       toast.success("API key copied to clipboard");
                     }}
