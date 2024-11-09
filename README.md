@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://textfully.dev/docs">Documentation</a> • 
+  <a href="https://docs.textfully.dev">Documentation</a> • 
   <a href="https://discord.gg/Ct6FDCpFBU">Community</a> • 
   <a href="https://textfully.dev/roadmap">Roadmap</a> • 
   <a href="https://textfully.dev/changelog">Changelog</a> • 
@@ -32,17 +32,18 @@ Textfully is an open-source Twilio alternative that lets developers send texts e
 
 Getting started with Textfully is quick and easy. Install the SDK for your preferred programming language and start sending texts immediately.
 
-- **Python**: Install using `pip install textfully`.
-- **Node.js**: Install with `npm install textfully`.
-- **Go**: Get the package via `go get github.com/gtfol/textfully-go`.
+- [**Python**](https://github.com/textfully/textfully-python): Install using `pip install textfully`.
+- [**Node.js**](https://github.com/textfully/textfully-node): Install with `npm install textfully`.
+- [**Go**](https://github.com/textfully/textfully-go): Get the package via `go get github.com/gtfol/textfully-go`.
 - **Elixir**: Add `{:textfully, "~> 0.1.0"}` to your `mix.exs` dependencies.
 - **Rust**: Include `textfully = "0.1.0"` in your `Cargo.toml`.
+- **REST API**: Send messages using curl, Postman, or any HTTP client.
 
-For detailed instructions and examples, please visit our [Documentation](https://textfully.dev/docs).
+For detailed instructions and examples, please visit our [Documentation](https://docs.textfully.dev).
 
 ## Documentation
 
-Our [Documentation](https://textfully.dev/docs) provides comprehensive guides and API references to help you start sending text messages with ease.
+Our [Documentation](https://docs.textfully.dev) provides comprehensive guides and API references to help you start sending text messages with ease.
 
 ## Contributing
 
