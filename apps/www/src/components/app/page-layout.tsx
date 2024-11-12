@@ -12,11 +12,11 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
       <div className="absolute inset-y-0 left-0 z-50">
         <Sidebar />
       </div>
-      <div className="flex flex-row min-h-screen w-full">
-        <div className="w-16" />
-        <div className="w-full">
+      <div className="flex flex-row h-screen w-full">
+        <div className="min-w-16" />
+        <div className="w-[calc(100%-64px)] flex flex-col overflow-hidden">
           <Topbar />
-          <main className="p-6">{children}</main>
+          <main className="p-6 flex-1 overflow-y-auto">{children}</main>
         </div>
       </div>
     </div>

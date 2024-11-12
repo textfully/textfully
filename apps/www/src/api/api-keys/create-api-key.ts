@@ -14,7 +14,6 @@ export async function createApiKey(
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": "69420", // TODO: remove this
       },
       body: JSON.stringify(request),
     });

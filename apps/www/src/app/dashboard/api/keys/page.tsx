@@ -25,12 +25,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createApiKey } from "@/api/create-api-key";
+import { createApiKey } from "@/api/api-keys/create-api-key";
 import { APIKeyPermission } from "@/types/enums";
 import { APIKeyResponse } from "@/types/responses";
 import { toast } from "sonner";
-import { fetchApiKeys } from "@/api/fetch-api-keys";
-import { revokeApiKey } from "@/api/revoke-api-keys";
+import { fetchApiKeys } from "@/api/api-keys/fetch-api-keys";
+import { revokeApiKey } from "@/api/api-keys/revoke-api-keys";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
@@ -61,7 +61,6 @@ export default function APIKeysPage() {
           const keys = await fetchApiKeys();
           setApiKeys(keys);
         } catch (error) {
-          console.error(error);
           toast.error(
             error instanceof Error ? error.message : "Failed to load API keys"
           );
@@ -148,7 +147,7 @@ export default function APIKeysPage() {
 
   return (
     <>
-      <div className="container mx-auto py-6">
+      <div className="container p-2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">API Keys</h1>
           <button

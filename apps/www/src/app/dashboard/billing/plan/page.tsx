@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { createRedirectLink } from "@/utils/helper";
 
-export default function BillingPage() {
+export default function BillingPlanPage() {
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
     if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/billing"));
+      redirect(createRedirectLink("/login", "/dashboard/billing/plan"));
     }
   }, [user, loading]);
 
@@ -22,5 +22,5 @@ export default function BillingPage() {
     return null;
   }
 
-  return <div>Billing</div>;
+  return <div>Billing Plan</div>;
 }

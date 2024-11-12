@@ -12,3 +12,30 @@ export interface APIKeyResponse {
   last_used: string;
   created_at: string;
 }
+
+export enum MessageService {
+  SMS = "sms",
+  IMESSAGE = "imessage",
+}
+
+export enum MessageStatus {
+  PENDING = "pending",
+  SENT = "sent",
+  DELIVERED = "delivered",
+  READ = "read",
+  FAILED = "failed",
+}
+
+export interface MessageResponse {
+  id: string;
+  recipient: string;
+  text: string;
+  service: MessageService;
+  status: MessageStatus;
+  sent_at: string;
+  sms_fallback: boolean;
+}
+
+export interface IdentityResponse {
+  hash: string;
+}

@@ -1,21 +1,20 @@
 import { API_BASE_URL } from "@/constants/env";
-import { APIKeyResponse } from "@/types/responses";
 import { getAuthToken } from "@/utils/api-client";
+import { MessageResponse } from "@/types/responses";
 
-export async function fetchApiKeys(): Promise<APIKeyResponse[]> {
+export async function fetchMessages(): Promise<MessageResponse[]> {
   try {
     const token = await getAuthToken();
 
-    const response = await fetch(`${API_BASE_URL}/api-keys`, {
+    const response = await fetch(`${API_BASE_URL}/messages`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": "69420", // TODO: remove this
       },
     });
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.detail || "Failed to fetch API keys");
+      throw new Error(error.detail || "Failed to fetch messages");
     }
 
     return response.json();

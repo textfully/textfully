@@ -15,9 +15,8 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { name: "Docs", link: "/docs" },
   { name: "Pricing", link: "/pricing" },
-  // { name: "Docs", link: "/docs" },
-  // { name: "Blog", link: "/blog" },
 ];
 
 interface NavBarProps {

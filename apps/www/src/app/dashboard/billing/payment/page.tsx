@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { createRedirectLink } from "@/utils/helper";
 
-export default function APIKeysPage() {
+export default function BillingPaymentPage() {
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
     if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/api/keys"));
+      redirect(createRedirectLink("/login", "/dashboard/billing/payment"));
     }
   }, [user, loading]);
 
@@ -22,5 +22,5 @@ export default function APIKeysPage() {
     return null;
   }
 
-  return <div>API Keys</div>;
+  return <div>Billing Payment</div>;
 }

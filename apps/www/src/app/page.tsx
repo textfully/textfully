@@ -4,6 +4,7 @@ import Elixir from "@/assets/icons/languages/elixir";
 import Go from "@/assets/icons/languages/go";
 import NodeJS from "@/assets/icons/languages/nodejs";
 import Python from "@/assets/icons/languages/python";
+import RestAPI from "@/assets/icons/languages/restapi";
 import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/landing/footer";
 import { NavBar } from "@/components/landing/nav-bar";
@@ -60,6 +61,15 @@ const codeSnippets: Record<string, CodeSnippet> = {
   <span class="text-[#b8c87d]">"Your table is ready! See the host within 5 minutes or you'll lose your spot."</span>
 <span class="text-[#f9d849]">)</span>;</pre>`,
   },
+  restapi: {
+    comment: "# That's it. Just one line.",
+    code: `<pre class="whitespace-pre-wrap">
+POST https://api.textfully.dev/v1/messages
+{
+  "to": "+16178856037",
+  "text": "Hello, world!"
+}</pre>`,
+  },
 };
 
 interface Language {
@@ -74,6 +84,7 @@ const languages: Language[] = [
   { id: "go", name: "Go", icon: <Go /> },
   { id: "elixir", name: "Elixir", icon: <Elixir /> },
   { id: "rust", name: "Rust", icon: <Rust /> },
+  { id: "restapi", name: "REST API", icon: <RestAPI /> },
 ];
 
 interface Feature {

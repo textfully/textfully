@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { createRedirectLink } from "@/utils/helper";
 
-export default function ManageNumbersPage() {
+export default function BuyPhoneNumbersPage() {
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
     if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/numbers/manage"));
+      redirect(createRedirectLink("/login", "/dashboard/numbers/buy"));
     }
   }, [user, loading]);
 
@@ -22,5 +22,5 @@ export default function ManageNumbersPage() {
     return null;
   }
 
-  return <div>Manage Numbers</div>;
+  return <div>Buy Numbers</div>;
 }

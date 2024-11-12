@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { createRedirectLink } from "@/utils/helper";
 
-export default function BuyNumbersPage() {
+export default function BillingInvoicesPage() {
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
     if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/numbers/buy"));
+      redirect(createRedirectLink("/login", "/dashboard/billing/invoices"));
     }
   }, [user, loading]);
 
@@ -22,5 +22,5 @@ export default function BuyNumbersPage() {
     return null;
   }
 
-  return <div>Buy Numbers</div>;
+  return <div>Billing Invoices</div>;
 }
