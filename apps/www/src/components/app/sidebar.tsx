@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { menuItems } from "@/constants/nav";
+import clsx from "clsx";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
@@ -56,7 +57,10 @@ export const Sidebar = () => {
       onMouseLeave={() => !loading && setIsHovered(false)}
     >
       <motion.div
-        className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-16"
+        className={clsx(
+          "h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-16",
+          isHome ? "w-64" : "w-16"
+        )}
         onMouseEnter={() => !loading && setIsHovered(true)}
         animate={{
           width: !loading && (isHovered || isHome) ? 256 : 64,
