@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import Logo from "@/assets/logo";
-import { cn } from "@/utils/helper";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
@@ -74,7 +74,7 @@ export const Sidebar = () => {
           <Link href="/dashboard">
             <div className="flex gap-x-2 items-center">
               <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                <div className="w-5 h-5 text-[#0A93F6]">
+                <div className="w-5 h-5 text-primary">
                   <Logo />
                 </div>
               </div>

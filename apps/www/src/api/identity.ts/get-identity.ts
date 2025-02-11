@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/constants/env";
-import { getAuthToken } from "@/utils/api-client";
+import { getAuthToken } from "@/lib/api-client";
 import { IdentityResponse } from "@/types/responses";
 
 export async function getIdentity(): Promise<IdentityResponse> {

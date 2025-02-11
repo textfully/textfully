@@ -23,7 +23,7 @@ export default function PrivacyPage() {
                 Visit our website at{" "}
                 <a
                   href="https://textfully.dev"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   textfully.dev
                 </a>
@@ -46,10 +46,10 @@ export default function PrivacyPage() {
               use our Services. If you still have any questions or concerns,
               please contact us at{" "}
               <a
-                href="mailto:textfully@gtfol.inc"
-                className="text-[#0A93F6] hover:brightness-110"
+                href="mailto:textfully@gtfol.dev"
+                className="text-primary hover:brightness-110"
               >
-                textfully@gtfol.inc
+                textfully@gtfol.dev
               </a>
               .
             </p>
@@ -253,14 +253,14 @@ export default function PrivacyPage() {
                   here:{" "}
                   <a
                     href="https://stripe.com/privacy"
-                    className="text-[#0A93F6] hover:brightness-110"
+                    className="text-primary hover:brightness-110"
                   >
                     https://stripe.com/privacy
                   </a>{" "}
                   and{" "}
                   <a
                     href="https://www.revenuecat.com/privacy"
-                    className="text-[#0A93F6] hover:brightness-110"
+                    className="text-primary hover:brightness-110"
                   >
                     https://www.revenuecat.com/privacy
                   </a>
@@ -777,7 +777,7 @@ export default function PrivacyPage() {
                 you can refuse certain cookies is set out in our Cookie Policy:{" "}
                 <a
                   href="https://textfully.dev/cookies"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   https://textfully.dev/cookies
                 </a>
@@ -1268,19 +1268,19 @@ export default function PrivacyPage() {
                     <li>
                       Visit{" "}
                       <a
-                        href="https://gtfol.inc/contact"
-                        className="text-[#0A93F6] hover:brightness-110"
+                        href="https://gtfol.dev/contact"
+                        className="text-primary hover:brightness-110"
                       >
-                        https://gtfol.inc/contact
+                        https://gtfol.dev/contact
                       </a>
                     </li>
                     <li>
                       Email us at{" "}
                       <a
-                        href="mailto:textfully@gtfol.inc"
-                        className="text-[#0A93F6] hover:brightness-110"
+                        href="mailto:textfully@gtfol.dev"
+                        className="text-primary hover:brightness-110"
                       >
-                        textfully@gtfol.inc
+                        textfully@gtfol.dev
                       </a>
                     </li>
                     <li>
@@ -1318,10 +1318,10 @@ export default function PrivacyPage() {
                       to take action regarding your request, you may appeal our
                       decision by emailing us at{" "}
                       <a
-                        href="mailto:textfully@gtfol.inc"
-                        className="text-[#0A93F6] hover:brightness-110"
+                        href="mailto:textfully@gtfol.dev"
+                        className="text-primary hover:brightness-110"
                       >
-                        textfully@gtfol.inc
+                        textfully@gtfol.dev
                       </a>
                       . We will inform you in writing of any action taken or not
                       taken in response to the appeal, including a written
@@ -1473,10 +1473,10 @@ export default function PrivacyPage() {
                 <p className="mb-1">United States</p>
                 <p>
                   <a
-                    href="mailto:textfully@gtfol.inc"
-                    className="text-[#0A93F6] hover:brightness-110"
+                    href="mailto:textfully@gtfol.dev"
+                    className="text-primary hover:brightness-110"
                   >
-                    textfully@gtfol.inc
+                    textfully@gtfol.dev
                   </a>
                 </p>
               </address>
@@ -1503,10 +1503,10 @@ export default function PrivacyPage() {
                   To request to review, update, or delete your personal
                   information, please visit:{" "}
                   <a
-                    href="https://gtfol.inc/contact"
-                    className="text-[#0A93F6] hover:brightness-110"
+                    href="https://gtfol.dev/contact"
+                    className="text-primary hover:brightness-110"
                   >
-                    https://gtfol.inc/contact
+                    https://gtfol.dev/contact
                   </a>
                 </p>
               </div>

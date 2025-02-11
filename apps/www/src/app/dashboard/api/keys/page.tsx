@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/utils/helper";
+import { createRedirectLink } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -235,7 +235,7 @@ export default function APIKeysPage() {
                     readOnly
                     value={createdApiKey}
                     onClick={(e) => e.currentTarget.select()}
-                    className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-x-auto whitespace-nowrap hide-scrollbar font-mono focus:outline-none focus:ring-2 focus:ring-[#0A93F6] transition-all duration-300"
+                    className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-x-auto whitespace-nowrap hide-scrollbar font-mono focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"
                   />
                   <button
                     onClick={() => {
@@ -278,7 +278,7 @@ export default function APIKeysPage() {
               <div className="flex justify-end">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition hover:brightness-110"
+                  className="px-4 py-2 bg-primary rounded-md text-white text-sm font-semibold transition hover:brightness-110"
                 >
                   Done
                 </button>
@@ -343,7 +343,7 @@ export default function APIKeysPage() {
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className={`px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition ${
+                  className={`px-4 py-2 bg-primary rounded-md text-white text-sm font-semibold transition ${
                     isCreating
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:brightness-110"

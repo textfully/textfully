@@ -15,7 +15,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
   const isHome = currentSection === "home";
 
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen bg-zinc-950">
       <div className="absolute inset-y-0 left-0 z-50">
         <Sidebar />
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { scrollToTop } from "@/utils/helper";
+import { scrollToTop } from "@/lib/utils";
 
 export const BackToTop = () => {
   return (

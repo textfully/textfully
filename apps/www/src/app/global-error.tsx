@@ -10,7 +10,7 @@ import { Home, RotateCw } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 
-import { logError } from "@/utils/logger";
+import { logError } from "@/lib/logger";
 
 import "@/styles/globals.css";
 
@@ -67,11 +67,11 @@ export default function GlobalError({
     <html>
       <body
         className={clsx(
-          "font-inter min-h-screen antialiased bg-black text-white",
+          "font-inter min-h-screen antialiased bg-zinc-950 text-white",
           inter.variable
         )}
       >
-        <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+        <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center p-4">
           <div className="w-full max-w-3xl">
             <div className="w-full bg-[#212126] rounded-xl relative">
               <div className="inset-0 absolute element-dark !rounded-xl">
@@ -120,7 +120,7 @@ export default function GlobalError({
                   <div className="relative z-10">
                     <div className="whitespace-pre-wrap break-all text-sm font-mono">
                       <span className="text-green-400 select-none">
-                        textfully@gtfol.inc
+                        textfully@gtfol.dev
                       </span>
                       <span className="text-white mx-1 select-none">:</span>
                       <span className="text-blue-400 select-none">~</span>

@@ -16,10 +16,11 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import clsx from "clsx";
+import { useOrganizationContext } from "@/contexts/useOrganizationContext";
 
 export const Topbar = () => {
   const { user } = useAuthContext();
-
+  const { organizations, fetchOrganizations } = useOrganizationContext();
   const pathname = usePathname();
 
   // Get the current section from the path (e.g. /dashboard/messages/sent -> messages)
@@ -57,11 +58,11 @@ export const Topbar = () => {
     _getIdentity();
   }, []);
 
-  // Add this mock data - later you'll fetch this from your API
-  const organizations = [
-    { id: 1, name: "rev" },
-    // Add more organizations as needed
-  ];
+  useEffect(() => {
+    if (user) {
+      fetchOrganizations();
+    }
+  }, [user]);
 
   return (
     <>
@@ -75,10 +76,10 @@ export const Topbar = () => {
         <div
           className={clsx(
             "flex items-center w-full",
-            isHome ? "justify-between" : "justify-end"
+            isHome && organizations && organizations.length > 0 ? "justify-between" : "justify-end"
           )}
         >
-          {isHome && (
+          {isHome && organizations && organizations.length > 0 && (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
                 <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
@@ -96,7 +97,7 @@ export const Topbar = () => {
                   Organizations
                 </span>
                 <DropdownMenuSeparator />
-                {organizations.map((org) => (
+                {organizations?.map((org) => (
                   <DropdownMenuItem
                     key={org.id}
                     className="flex items-center gap-x-2"

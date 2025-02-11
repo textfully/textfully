@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
@@ -10,6 +10,7 @@ import GitHub from "@/assets/icons/socials/github";
 import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -106,7 +107,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <div className="px-6 py-4 my-auto">
         <Link
           href="/"
@@ -119,7 +120,7 @@ export default function LoginPage() {
 
       <div className="max-w-md mx-auto px-4 pt-16 pb-32">
         <div className="flex justify-center mb-4">
-          <Link href="/" className="w-10 h-10 text-[#0A93F6]">
+          <Link href="/" className="w-10 h-10 text-primary">
             <Logo />
           </Link>
         </div>
@@ -144,7 +145,7 @@ export default function LoginPage() {
               className="text-sm font-semibold w-full px-3 py-2 bg-[#1e1e1e] hover:bg-[#2a2a2a] rounded-lg border border-zinc-800 flex items-center justify-center space-x-2 transition-colors"
             >
               <GitHub className="w-4 h-4 fill-white" />
-              <span>Login with GitHub</span>
+              <span>Continue with GitHub</span>
             </button>
 
             <button
@@ -152,14 +153,9 @@ export default function LoginPage() {
               className="text-sm font-semibold w-full px-3 py-2 bg-[#1e1e1e] hover:bg-[#2a2a2a] rounded-lg border border-zinc-800 flex items-center justify-center space-x-2 transition-colors"
             >
               <Google className="w-4 h-4 fill-white" />
-              <span>Login with Google</span>
+              <span>Continue with Google</span>
             </button>
           </div>
-
-          <button className="text-sm font-semibold w-full px-3 py-2 bg-[#1e1e1e] hover:bg-[#2a2a2a] rounded-lg border border-zinc-800 flex items-center justify-center space-x-2 transition-colors">
-            <Lock className="w-4 h-4 stroke-white" />
-            <span>Login with SSO</span>
-          </button>
         </div>
 
         <div className="relative my-8">
@@ -167,7 +163,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-800"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-black text-zinc-400">or</span>
+            <span className="px-2 bg-zinc-950 text-zinc-400">or</span>
           </div>
         </div>
 
@@ -182,11 +178,12 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors ${
+              className={cn(
+                "w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors",
                 emailError
                   ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-[#0A93F6]"
-              }`}
+                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
+              )}
               placeholder="neo@matrix.com"
             />
             {emailError && (
@@ -212,11 +209,12 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg border focus:ring-1 outline-none transition-colors ${
+              className={cn(
+                "w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors",
                 passwordError
                   ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-[#0A93F6]"
-              }`}
+                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
+              )}
             />
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>

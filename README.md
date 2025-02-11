@@ -34,7 +34,7 @@ Getting started with Textfully is quick and easy. Install the SDK for your prefe
 
 - [**Python**](https://github.com/textfully/textfully-python): Install using `pip install textfully`.
 - [**Node.js**](https://github.com/textfully/textfully-node): Install with `npm install textfully`.
-- [**Go**](https://github.com/textfully/textfully-go): Get the package via `go get github.com/gtfol/textfully-go`.
+- [**Go**](https://github.com/textfully/textfully-go): Get the package via `go get github.com/textfully/textfully-go`.
 - **Elixir**: Add `{:textfully, "~> 0.1.0"}` to your `mix.exs` dependencies.
 - **Rust**: Include `textfully = "0.1.0"` in your `Cargo.toml`.
 - **REST API**: Send messages using curl, Postman, or any HTTP client.

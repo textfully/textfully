@@ -9,10 +9,12 @@ import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/landing/footer";
 import { NavBar } from "@/components/landing/nav-bar";
 import { PhoneNotifications } from "@/components/landing/phone-notifications";
-import { cn } from "@/utils/helper";
+import { cn } from "@/lib/utils";
 import { motion as m } from "framer-motion";
 import { Play } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import React, { useState, useRef, useEffect } from "react";
 
 interface CodeSnippet {
@@ -148,9 +150,15 @@ const ctas: CTA[] = [
   { name: "Get Started", link: "/dashboard" },
 ];
 
+const searchParams = new URLSearchParams(
+  typeof window !== "undefined" ? window.location.search : ""
+);
+
 export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
   const [formattedTime, setFormattedTime] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const time = new Date().getTime();
@@ -161,6 +169,20 @@ export default function HomePage() {
     }).format(time);
     setFormattedTime(formattedTime);
   }, []);
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    const errorCode = searchParams.get("error_code");
+
+    if (error === "access_denied" && errorCode === "otp_expired") {
+      setTimeout(() => {
+        router.replace("/login");
+        toast.error("Email link has expired", {
+          description: "Please try logging in again",
+        });
+      }, 500);
+    }
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -316,7 +338,7 @@ export default function HomePage() {
                     <p
                       className={cn(
                         "font-semibold text-sm hover:brightness-110",
-                        isEven ? "text-[#0A93F6]" : "text-sky-200"
+                        isEven ? "text-primary" : "text-sky-200"
                       )}
                     >
                       {card.cta}

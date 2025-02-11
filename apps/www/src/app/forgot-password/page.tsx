@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
@@ -69,7 +69,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <div className="px-6 py-4 my-auto">
         <Link
           href="/login"
@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
 
       <div className="max-w-md mx-auto px-4 p-32">
         <div className="flex justify-center mb-4">
-          <Link href="/" className="w-10 h-10 text-[#0A93F6]">
+          <Link href="/" className="w-10 h-10 text-primary">
             <Logo />
           </Link>
         </div>
@@ -109,7 +109,7 @@ export default function ForgotPasswordPage() {
               className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors ${
                 emailError
                   ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-[#0A93F6]"
+                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
               }`}
               placeholder="neo@matrix.com"
             />
@@ -121,7 +121,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading || !email}
-            className="w-full py-2 bg-[#0A93F6] hover:brightness-110 text-white rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
+            className="w-full py-2 bg-primary hover:brightness-110 text-white rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
           >
             {loading ? (
               "Sending..."

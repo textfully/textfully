@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import constate from "constate";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
-import { logError } from "@/utils/logger";
+import { createClient } from "@/lib/supabase/client";
+import { logError } from "@/lib/logger";
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null | undefined>();

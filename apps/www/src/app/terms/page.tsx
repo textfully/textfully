@@ -25,7 +25,7 @@ export default function TermsPage() {
                 We operate Textfully at the website{" "}
                 <a
                   href="https://textfully.dev"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   textfully.dev
                 </a>{" "}
@@ -41,10 +41,10 @@ export default function TermsPage() {
             <p className="text-zinc-300 leading-relaxed mt-4">
               You can contact us by email at{" "}
               <a
-                href="mailto:textfully@gtfol.inc"
-                className="text-[#0A93F6] hover:brightness-110"
+                href="mailto:textfully@gtfol.dev"
+                className="text-primary hover:brightness-110"
               >
-                textfully@gtfol.inc
+                textfully@gtfol.dev
               </a>{" "}
               or by mail to 1950 Washington St. Apt. 3A, Boston, MA 02118,
               United States.
@@ -317,10 +317,10 @@ export default function TermsPage() {
                 other than as set out in this section or elsewhere in our Legal
                 Terms, please address your request to:{" "}
                 <a
-                  href="mailto:textfully@gtfol.inc"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  href="mailto:textfully@gtfol.dev"
+                  className="text-primary hover:brightness-110"
                 >
-                  textfully@gtfol.inc
+                  textfully@gtfol.dev
                 </a>
                 . If we ever grant you the permission to post, reproduce, or
                 publicly display any part of our Services or Content, you must
@@ -564,10 +564,10 @@ export default function TermsPage() {
               take effect at the end of the current paid term. If you have any
               questions or are unsatisfied with our Services, please email us at{" "}
               <a
-                href="mailto:textfully@gtfol.inc"
-                className="text-[#0A93F6] hover:brightness-110"
+                href="mailto:textfully@gtfol.dev"
+                className="text-primary hover:brightness-110"
               >
-                textfully@gtfol.inc
+                textfully@gtfol.dev
               </a>
               .
             </p>
@@ -941,7 +941,7 @@ export default function TermsPage() {
               Policy:{" "}
               <a
                 href="/privacy"
-                className="text-[#0A93F6] hover:brightness-110"
+                className="text-primary hover:brightness-110"
               >
                 textfully.dev/privacy
               </a>
@@ -977,7 +977,7 @@ export default function TermsPage() {
               Textfully's software is distributed under the{" "}
               <a
                 href="https://opensource.org/licenses/MIT"
-                className="text-[#0A93F6] hover:brightness-110"
+                className="text-primary hover:brightness-110"
               >
                 MIT License
               </a>
@@ -1019,7 +1019,7 @@ export default function TermsPage() {
               Please review our Contribution Guidelines at{" "}
               <a
                 href="/contributions"
-                className="text-[#0A93F6] hover:brightness-110"
+                className="text-primary hover:brightness-110"
               >
                 textfully.dev/contributions
               </a>{" "}
@@ -1075,10 +1075,10 @@ export default function TermsPage() {
               If you discover any security vulnerabilities in the API, please
               report them promptly to{" "}
               <a
-                href="mailto:textfully@gtfol.inc"
-                className="text-[#0A93F6] hover:brightness-110"
+                href="mailto:textfully@gtfol.dev"
+                className="text-primary hover:brightness-110"
               >
-                textfully@gtfol.inc
+                textfully@gtfol.dev
               </a>
               .
             </p>
@@ -1389,10 +1389,10 @@ export default function TermsPage() {
               If you have any questions or need assistance regarding our SMS
               communications, please email us at{" "}
               <a
-                href="mailto:textfully@gtfol.inc"
-                className="text-[#0A93F6] hover:brightness-110"
+                href="mailto:textfully@gtfol.dev"
+                className="text-primary hover:brightness-110"
               >
-                textfully@gtfol.inc
+                textfully@gtfol.dev
               </a>
               .
             </p>
@@ -1450,10 +1450,10 @@ export default function TermsPage() {
               <p className="mb-1">United States</p>
               <p>
                 <a
-                  href="mailto:textfully@gtfol.inc"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  href="mailto:textfully@gtfol.dev"
+                  className="text-primary hover:brightness-110"
                 >
-                  textfully@gtfol.inc
+                  textfully@gtfol.dev
                 </a>
               </p>
             </address>

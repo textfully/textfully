@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "@/constants/env";
 import { APIKeyResponse } from "@/types/responses";
-import { getAuthToken } from "@/utils/api-client";
+import { getAuthToken } from "@/lib/api-client";
 
 export async function fetchApiKeys(): Promise<APIKeyResponse[]> {
   try {

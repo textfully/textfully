@@ -39,3 +39,17 @@ export interface MessageResponse {
 export interface IdentityResponse {
   hash: string;
 }
+
+export interface OrganizationResponse {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ContactResponse {
+  id: string;
+  phone_number: string;
+  created_at: string;
+  updated_at: string;
+}

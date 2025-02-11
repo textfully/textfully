@@ -45,13 +45,13 @@ export const NavBar = ({
         transition={{ duration: 0.2 }}
         className={clsx(
           "flex items-center justify-between p-4 px-6",
-          isFixed && "fixed top-0 left-0 right-0 z-30 bg-black"
+          isFixed && "fixed top-0 left-0 right-0 z-30 bg-zinc-950"
         )}
       >
         <div className="flex items-center gap-x-8">
           <Link href="/">
             <div className="flex gap-x-2 items-center">
-              <div className="w-5 h-5 text-[#0A93F6]">
+              <div className="w-5 h-5 text-primary">
                 <Logo />
               </div>
               <p className="text-base font-semibold text-white font-general">
@@ -150,7 +150,7 @@ export const NavBar = ({
           animate={{ y: isMenuOpen ? 0 : -1000 }}
           exit={{ y: isMenuOpen ? -500 : 500 }}
           transition={{ type: "spring", stiffness: 160, damping: 20 }}
-          className="fixed inset-0 bg-black z-30 sm:hidden"
+          className="fixed inset-0 bg-zinc-950 z-30 sm:hidden"
         >
           <div className="flex pt-14 flex-col h-full">
             <div className="flex flex-col gap-y-8 p-8">

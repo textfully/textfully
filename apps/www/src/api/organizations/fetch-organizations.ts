@@ -1,12 +1,12 @@
 import { API_BASE_URL } from "@/constants/env";
 import { getAuthToken } from "@/lib/api-client";
-import { MessageResponse } from "@/types/responses";
+import { OrganizationResponse } from "@/types/responses";
 
-export async function fetchMessages(): Promise<MessageResponse[]> {
+export async function fetchOrganizations(): Promise<OrganizationResponse[]> {
   try {
     const token = await getAuthToken();
 
-    const response = await fetch(`${API_BASE_URL}/messages`, {
+    const response = await fetch(`${API_BASE_URL}/organizations`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

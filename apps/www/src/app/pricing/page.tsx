@@ -7,7 +7,7 @@ import { NavBar } from "@/components/landing/nav-bar";
 import clsx from "clsx";
 import { Footer } from "@/components/landing/footer";
 import { motion as m } from "framer-motion";
-import { cn } from "@/utils/helper";
+import { cn } from "@/lib/utils";
 
 export default function PricingPage() {
   const [sliderValue, setSliderValue] = useState(0);
@@ -188,7 +188,7 @@ export default function PricingPage() {
                       className={cn(
                         "px-2 py-1 rounded-lg",
                         plan.type === "highlighted"
-                          ? "bg-[#0A93F6]/30"
+                          ? "bg-primary/30"
                           : "bg-white/20"
                       )}
                     >
@@ -196,7 +196,7 @@ export default function PricingPage() {
                         className={cn(
                           "text-xs font-medium",
                           plan.type === "highlighted"
-                            ? "text-[#0A93F6]"
+                            ? "text-primary"
                             : "text-white"
                         )}
                       >
@@ -273,7 +273,7 @@ export default function PricingPage() {
                       className={clsx(
                         "w-full rounded-lg relative mt-auto py-3 font-medium transition",
                         plan.type === "highlighted"
-                          ? "bg-gradient-to-b hover:brightness-110 from-[#0A93F6] to-[#36a1ed] text-white shadow-sm"
+                          ? "bg-gradient-to-b hover:brightness-110 from-primary to-[#36a1ed] text-white shadow-sm"
                           : plan.type === "primary"
                             ? "bg-white text-black hover:bg-white/80"
                             : "bg-[#42444c] text-white hover:bg-[#4c4e57] shadow-sm"
