@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useAuthContext } from "@/contexts/useAuthContext";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -20,6 +21,8 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const { user } = useAuthContext();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -105,6 +108,12 @@ export default function LoginPage() {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user, router]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
