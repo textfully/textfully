@@ -139,7 +139,7 @@ export default function SignupPage() {
         },
       });
       if (error) throw error;
-      router.push("/");
+      router.push("/dashboard");
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -170,7 +170,7 @@ export default function SignupPage() {
             Already have an account?{" "}
             <Link
               href="/login"
-              className="text-primary underline hover:text-primary/90"
+              className="text-white hover:text-zinc-200 underline"
             >
               Log in
             </Link>
@@ -223,7 +223,7 @@ export default function SignupPage() {
                   ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                   : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
               )}
-              placeholder="Michael Scott"
+              placeholder="Neo"
             />
             {nameError && (
               <p className="text-red-500 mt-1 text-sm">{nameError}</p>
