@@ -204,10 +204,14 @@ export default function APIKeysPage() {
                       </code>
                     </TableCell>
                     <TableCell>
-                      {new Date(apiKey.created_at).toLocaleDateString()}
+                      {apiKey.created_at
+                        ? new Date(apiKey.created_at).toLocaleDateString()
+                        : "-"}
                     </TableCell>
                     <TableCell>
-                      {new Date(apiKey.last_used).toLocaleDateString()}
+                      {apiKey.last_used
+                        ? new Date(apiKey.last_used).toLocaleDateString()
+                        : "-"}
                     </TableCell>
                     <TableCell className="text-right">
                       <button onClick={() => setKeyToRevoke(apiKey)}>

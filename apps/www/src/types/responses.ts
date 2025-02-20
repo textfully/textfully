@@ -1,6 +1,6 @@
 export interface CreateAPIKeyResponse {
   api_key: string;
-  created_at: string;
+  created_at: string | null;
 }
 
 export interface APIKeyResponse {
@@ -9,8 +9,8 @@ export interface APIKeyResponse {
   short_key: string;
   permission: string;
   is_active: boolean;
-  last_used: string;
-  created_at: string;
+  last_used: string | null;
+  created_at: string | null;
 }
 
 export enum MessageService {
@@ -32,7 +32,7 @@ export interface MessageResponse {
   text: string;
   service: MessageService;
   status: MessageStatus;
-  sent_at: string;
+  sent_at: string | null;
   sms_fallback: boolean;
 }
 
@@ -43,13 +43,13 @@ export interface IdentityResponse {
 export interface OrganizationResponse {
   id: string;
   name: string;
-  created_at: string;
-  updated_at: string;
+  created_at: string | null;
+  updated_at: string | null;
 }
 
 export interface ContactResponse {
   id: string;
   phone_number: string;
-  created_at: string;
-  updated_at: string;
+  created_at: string | null;
+  updated_at: string | null;
 }

@@ -84,13 +84,13 @@ export default function SentMessagesPage() {
           <TableBody>
             {isLoadingMessages ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center text-zinc-400">
+                <TableCell colSpan={5} className="text-center text-zinc-400">
                   Loading messages...
                 </TableCell>
               </TableRow>
             ) : messages.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center text-zinc-400">
+                <TableCell colSpan={5} className="text-center text-zinc-400">
                   No messages found.
                 </TableCell>
               </TableRow>
