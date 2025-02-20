@@ -19,45 +19,45 @@ export default function PricingPage() {
   }
 
   const volumeMarks: VolumeMark[] = [
-    { value: 0, label: "Up to 1,000 contacts", price: "$25" }, // $25
-    { value: 2.5, label: "Up to 1,250 contacts", price: "$49" },
-    { value: 5, label: "Up to 1,500 contacts", price: "$49" },
-    { value: 7.5, label: "Up to 1,750 contacts", price: "$49" },
-    { value: 10, label: "Up to 2,000 contacts", price: "$49" },
-    { value: 12.5, label: "Up to 2,250 contacts", price: "$49" },
-    { value: 15, label: "Up to 2,500 contacts", price: "$49" },
-    { value: 17.5, label: "Up to 2,750 contacts", price: "$49" },
-    { value: 20, label: "Up to 3,000 contacts", price: "$49" }, // $49
-    { value: 22.5, label: "Up to 3,500 contacts", price: "$99" },
-    { value: 25, label: "Up to 4,000 contacts", price: "$99" },
-    { value: 27.5, label: "Up to 5,000 contacts", price: "$99" },
-    { value: 30, label: "Up to 6,000 contacts", price: "$99" },
-    { value: 32.5, label: "Up to 7,000 contacts", price: "$99" },
-    { value: 35, label: "Up to 8,000 contacts", price: "$99" },
-    { value: 37.5, label: "Up to 9,000 contacts", price: "$99" },
-    { value: 40, label: "Up to 10,000 contacts", price: "$99" }, // $99
-    { value: 42.5, label: "Up to 12,500 contacts", price: "$199" },
-    { value: 45, label: "Up to 15,000 contacts", price: "$199" },
-    { value: 47.5, label: "Up to 17,500 contacts", price: "$199" },
-    { value: 50, label: "Up to 20,000 contacts", price: "$199" },
-    { value: 52.5, label: "Up to 22,500 contacts", price: "$199" },
+    { value: 0, label: "Up to 500 contacts", price: "$25" }, // $25
+    { value: 2.5, label: "Up to 625 contacts", price: "$49" },
+    { value: 5, label: "Up to 750 contacts", price: "$49" },
+    { value: 7.5, label: "Up to 875 contacts", price: "$49" },
+    { value: 10, label: "Up to 1,000 contacts", price: "$49" },
+    { value: 12.5, label: "Up to 1,125 contacts", price: "$49" },
+    { value: 15, label: "Up to 1,250 contacts", price: "$49" },
+    { value: 17.5, label: "Up to 1,375 contacts", price: "$49" },
+    { value: 20, label: "Up to 1,500 contacts", price: "$49" }, // $49
+    { value: 22.5, label: "Up to 2,000 contacts", price: "$99" },
+    { value: 25, label: "Up to 2,500 contacts", price: "$99" },
+    { value: 27.5, label: "Up to 3,000 contacts", price: "$99" },
+    { value: 30, label: "Up to 3,500 contacts", price: "$99" },
+    { value: 32.5, label: "Up to 4,000 contacts", price: "$99" },
+    { value: 35, label: "Up to 4,500 contacts", price: "$99" },
+    { value: 37.5, label: "Up to 4,750 contacts", price: "$99" },
+    { value: 40, label: "Up to 5,000 contacts", price: "$99" },
+    { value: 42.5, label: "Up to 8,000 contacts", price: "$199" },
+    { value: 45, label: "Up to 11,000 contacts", price: "$199" },
+    { value: 47.5, label: "Up to 14,000 contacts", price: "$199" },
+    { value: 50, label: "Up to 17,000 contacts", price: "$199" },
+    { value: 52.5, label: "Up to 20,000 contacts", price: "$199" },
     { value: 55, label: "Up to 25,000 contacts", price: "$299" }, // $199
-    { value: 57.5, label: "Up to 27,500 contacts", price: "$299" },
-    { value: 60, label: "Up to 30,000 contacts", price: "$299" },
-    { value: 62.5, label: "Up to 35,000 contacts", price: "$299" },
-    { value: 65, label: "Up to 40,000 contacts", price: "$299" },
-    { value: 67.5, label: "Up to 45,000 contacts", price: "$299" },
-    { value: 70, label: "Up to 50,000 contacts", price: "$299" }, // $299
-    { value: 72.5, label: "Up to 55,000 contacts", price: "$399" },
-    { value: 75, label: "Up to 60,000 contacts", price: "$399" },
-    { value: 77.5, label: "Up to 65,000 contacts", price: "$399" },
-    { value: 80, label: "Up to 70,000 contacts", price: "$399" },
-    { value: 82.5, label: "Up to 75,000 contacts", price: "$399" },
-    { value: 85, label: "Up to 80,000 contacts", price: "$399" },
-    { value: 87.5, label: "Up to 85,000 contacts", price: "$399" },
-    { value: 90, label: "Up to 90,000 contacts", price: "$399" },
-    { value: 92.5, label: "Up to 95,000 contacts", price: "$399" },
-    { value: 95, label: "Up to 100,000 contacts", price: "$399" }, // $399
+    { value: 57.5, label: "Up to 28,000 contacts", price: "$299" },
+    { value: 60, label: "Up to 31,000 contacts", price: "$299" },
+    { value: 62.5, label: "Up to 34,000 contacts", price: "$299" },
+    { value: 65, label: "Up to 36,000 contacts", price: "$299" },
+    { value: 67.5, label: "Up to 38,000 contacts", price: "$299" },
+    { value: 70, label: "Up to 40,000 contacts", price: "$299" }, // $299
+    { value: 72.5, label: "Up to 44,000 contacts", price: "$399" },
+    { value: 75, label: "Up to 48,000 contacts", price: "$399" },
+    { value: 77.5, label: "Up to 52,000 contacts", price: "$399" },
+    { value: 80, label: "Up to 56,000 contacts", price: "$399" },
+    { value: 82.5, label: "Up to 60,000 contacts", price: "$399" },
+    { value: 85, label: "Up to 64,000 contacts", price: "$399" },
+    { value: 87.5, label: "Up to 68,000 contacts", price: "$399" },
+    { value: 90, label: "Up to 72,000 contacts", price: "$399" },
+    { value: 92.5, label: "Up to 76,000 contacts", price: "$399" },
+    { value: 95, label: "Up to 80,000 contacts", price: "$399" }, // $399
   ];
 
   interface Plan {

@@ -28,13 +28,12 @@ import clsx from "clsx";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
-
-  const [isHovered, setIsHovered] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
 
-  // Get the current section from the path (e.g. /dashboard/messages/sent -> messages)
   const currentSection = pathname.split("/")[2] || "home";
   const selectedMenuData = menuItems.find((item) => {
     if (currentSection === "home") return item.label === "Home";
@@ -54,22 +53,14 @@ export const Sidebar = () => {
   return (
     <div
       className="flex h-full"
-      onMouseLeave={() => !loading && setIsHovered(false)}
+      onMouseLeave={() => {
+        if (!loading) {
+          setHoveredItem(null);
+          setIsSubMenuVisible(false);
+        }
+      }}
     >
-      <motion.div
-        className={clsx(
-          "h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-16",
-          isHome ? "w-64" : "w-16"
-        )}
-        onMouseEnter={() => !loading && setIsHovered(true)}
-        animate={{
-          width: !loading && (isHovered || isHome) ? 256 : 64,
-        }}
-        transition={{
-          duration: 0.2,
-          ease: "easeOut",
-        }}
-      >
+      <div className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-64">
         <div className="pt-3 pb-1 flex px-4 overflow-hidden">
           <Link href="/dashboard">
             <div className="flex gap-x-2 items-center">
@@ -78,16 +69,9 @@ export const Sidebar = () => {
                   <Logo />
                 </div>
               </div>
-              {!loading && (
-                <motion.p
-                  className="text-base font-semibold text-white font-general whitespace-nowrap"
-                  animate={{ opacity: isHovered || isHome ? 1 : 0 }}
-                  transition={{ duration: 0.1 }}
-                  style={{ display: isHovered || isHome ? "block" : "none" }}
-                >
-                  Textfully
-                </motion.p>
-              )}
+              <p className="text-base font-semibold text-white font-general whitespace-nowrap">
+                Textfully
+              </p>
             </div>
           </Link>
         </div>
@@ -103,16 +87,7 @@ export const Sidebar = () => {
             <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
               <Home className="w-4 h-4" />
             </div>
-            {!loading && (
-              <motion.span
-                className="ml-2 text-sm whitespace-nowrap"
-                animate={{ opacity: isHovered || isHome ? 1 : 0 }}
-                transition={{ duration: 0.1 }}
-                style={{ display: isHovered || isHome ? "block" : "none" }}
-              >
-                Home
-              </motion.span>
-            )}
+            <span className="ml-2 text-sm whitespace-nowrap">Home</span>
           </Link>
         </div>
 
@@ -129,24 +104,24 @@ export const Sidebar = () => {
                   "w-full h-8 flex items-center rounded-md transition-colors",
                   isSelected ? "bg-zinc-800" : "hover:bg-zinc-900"
                 )}
+                onMouseEnter={() => {
+                  if (!loading) {
+                    setHoveredItem(item.label);
+                    setIsSubMenuVisible(true);
+                  }
+                }}
               >
                 <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
                   {item.icon && <item.icon className="w-4 h-4" />}
                 </div>
-                {!loading && (
-                  <motion.span
-                    className="ml-2 text-sm whitespace-nowrap"
-                    animate={{ opacity: isHovered || isHome ? 1 : 0 }}
-                    transition={{ duration: 0.1 }}
-                    style={{ display: isHovered || isHome ? "block" : "none" }}
-                  >
-                    {item.label}
-                  </motion.span>
-                )}
+                <span className="ml-2 text-sm whitespace-nowrap">
+                  {item.label}
+                </span>
               </Link>
             );
           })}
         </nav>
+
         {user && !loading && (
           <div className="p-2 border-t border-zinc-800">
             <DropdownMenu>
@@ -158,23 +133,16 @@ export const Sidebar = () => {
                         {user.email?.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    <motion.span
-                      className="ml-2 text-sm text-zinc-400 truncate"
-                      animate={{ opacity: isHovered || isHome ? 1 : 0 }}
-                      transition={{ duration: 0.1 }}
-                      style={{
-                        display: isHovered || isHome ? "block" : "none",
-                      }}
-                    >
+                    <span className="ml-2 text-sm text-zinc-400 truncate">
                       {user.email}
-                    </motion.span>
+                    </span>
                   </div>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48"
                 align="start"
-                onMouseEnter={() => setIsHovered(false)}
+                onMouseEnter={() => setHoveredItem(null)}
               >
                 <DropdownMenuItem onClick={handleSignOut}>
                   <button className="w-full text-left">Sign out</button>
@@ -183,52 +151,55 @@ export const Sidebar = () => {
             </DropdownMenu>
           </div>
         )}
+      </div>
+
+      <motion.div
+        className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 overflow-hidden"
+        initial={{ width: 0, opacity: 0 }}
+        animate={{
+          width: !loading && hoveredItem && isSubMenuVisible ? 256 : 0,
+          opacity: !loading && hoveredItem && isSubMenuVisible ? 1 : 0
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+      >
+        {hoveredItem && (
+          <>
+            <div className="h-14 px-4 flex items-center border-b border-zinc-800 w-64">
+              <h2 className="font-semibold text-zinc-400">
+                {menuItems.find(item => item.label === hoveredItem)?.label}
+              </h2>
+            </div>
+
+            <nav className="px-2 py-4 w-64 space-y-2">
+              {menuItems
+                .find(item => item.label === hoveredItem)
+                ?.children?.map((child, index) => (
+                  <Link
+                    key={index}
+                    href={child.path ?? "/dashboard"}
+                    {...(!child.path.startsWith("/dashboard")
+                      ? {
+                          rel: "noopener noreferrer",
+                          target: "_blank",
+                        }
+                      : {})}
+                    className={cn(
+                      "w-full h-8 flex items-center px-3 text-sm rounded-md",
+                      pathname === child.path ? "bg-zinc-800" : "hover:bg-zinc-900"
+                    )}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span>{child.label}</span>
+                      {!child.path.startsWith("/dashboard") && (
+                        <ArrowUpRight className="w-4 h-4 text-zinc-400" />
+                      )}
+                    </div>
+                  </Link>
+                ))}
+            </nav>
+          </>
+        )}
       </motion.div>
-
-      {/* Submenu sidebar */}
-      {!loading && isHovered && (
-        <motion.div
-          className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 overflow-hidden"
-          initial={{ width: 0, opacity: 0 }}
-          animate={{
-            width: selectedMenuData && !isHome ? 256 : 0,
-            opacity: selectedMenuData && !isHome ? 1 : 0,
-          }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-        >
-          <div className="h-14 px-4 flex items-center border-b border-zinc-800 w-64">
-            <h2 className="font-semibold text-zinc-400">
-              {selectedMenuData?.label}
-            </h2>
-          </div>
-
-          <nav className="px-2 py-4 w-64 space-y-2">
-            {selectedMenuData?.children?.map((child, index) => (
-              <Link
-                key={index}
-                href={child.path ?? "/dashboard"}
-                {...(!child.path.startsWith("/dashboard")
-                  ? {
-                      rel: "noopener noreferrer",
-                      target: "_blank",
-                    }
-                  : {})}
-                className={cn(
-                  "w-full h-8 flex items-center px-3 text-sm rounded-md",
-                  pathname === child.path ? "bg-zinc-800" : "hover:bg-zinc-900"
-                )}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <span>{child.label}</span>
-                  {!child.path.startsWith("/dashboard") && (
-                    <ArrowUpRight className="w-4 h-4 text-zinc-400" />
-                  )}
-                </div>
-              </Link>
-            ))}
-          </nav>
-        </motion.div>
-      )}
     </div>
   );
 };
