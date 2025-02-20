@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/lib/utils";
+import { cn, createRedirectLink } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -279,7 +279,7 @@ export default function APIKeysPage() {
                   Permissions
                 </h3>
                 <Select value={permission} disabled>
-                  <SelectTrigger className="w-full bg-zinc-900">
+                  <SelectTrigger className="w-full bg-zinc-900 hover:brightness-110">
                     {permission === APIKeyPermission.ALL
                       ? "Full access"
                       : "Sending access only"}
@@ -314,11 +314,12 @@ export default function APIKeysPage() {
                     setNameError("");
                   }}
                   placeholder="e.g. Production API Key"
-                  className={`w-full px-2.5 py-1.5 text-sm bg-zinc-900 border ${
+                  className={cn(
+                    "w-full px-2.5 py-1.5 text-sm bg-zinc-900 border rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2",
                     nameError
                       ? "border-red-500 focus:ring-transparent"
                       : "border-zinc-700 focus:ring-zinc-700"
-                  } rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2`}
+                  )}
                 />
                 {nameError && (
                   <p className="mt-1 text-sm text-red-500">{nameError}</p>

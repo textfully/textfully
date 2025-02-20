@@ -17,6 +17,14 @@ import { fetchMessages } from "@/api/messages/fetch-messages";
 import { MessageResponse, MessageService } from "@/types/responses";
 import { MESSAGE_SERVICE, MESSAGE_STATUS } from "@/constants/messages";
 import { PhoneNumberText } from "@/components/app/phone-number-text";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import advanced from "dayjs/plugin/advancedFormat";
+
+dayjs.extend(timezone);
+dayjs.extend(localizedFormat);
+dayjs.extend(advanced)
 
 export default function SentMessagesPage() {
   const { user, loading } = useAuthContext();
@@ -119,8 +127,8 @@ export default function SentMessagesPage() {
                       {MESSAGE_STATUS[message.status]}
                     </span>
                   </TableCell>
-                  <TableCell className="min-w-56">
-                    {new Date(message.sent_at).toLocaleString()}
+                  <TableCell className="min-w-72">
+                    {dayjs(message.sent_at).format("LLL z")}
                   </TableCell>
                 </TableRow>
               ))

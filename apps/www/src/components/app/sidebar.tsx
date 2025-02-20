@@ -2,17 +2,18 @@
 
 import {
   ArrowUpRight,
+  ChevronDown,
   Code,
   CreditCard,
   Home,
   MessagesSquare,
   Phone,
+  Plus,
   Settings,
   Users,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "@/contexts/useAuthContext";
-import Logo from "@/assets/logo";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
@@ -20,15 +21,19 @@ import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuSeparator,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { menuItems } from "@/constants/nav";
+import { useOrganizationContext } from "@/contexts/useOrganizationContext";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
+
+  const { organizations, fetchOrganizations } = useOrganizationContext();
 
   const pathname = usePathname();
   const router = useRouter();
@@ -49,6 +54,12 @@ export const Sidebar = () => {
     });
   };
 
+  useEffect(() => {
+    if (user) {
+      fetchOrganizations();
+    }
+  }, [user]);
+
   return (
     <div
       className="flex h-full"
@@ -60,34 +71,70 @@ export const Sidebar = () => {
       }}
     >
       <div className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-64">
-        <div className="pt-3 pb-1 flex px-4 overflow-hidden">
-          <Link href="/dashboard">
-            <div className="flex gap-x-2 items-center">
-              <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                <div className="w-5 h-5 text-primary">
-                  <Logo />
+        <div className="pt-3 pb-1 flex px-2 overflow-hidden">
+          {organizations === undefined ? (
+            <div className="h-8 bg-zinc-900 rounded-md w-32" />
+          ) : organizations && organizations.length > 0 ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
+                <div className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded flex items-center justify-center">
+                  <span className="text-sm font-medium text-white uppercase">
+                    {organizations[0].name.charAt(0)}
+                  </span>
                 </div>
-              </div>
-              <p className="text-base font-semibold text-white font-general whitespace-nowrap">
-                Textfully
-              </p>
-            </div>
-          </Link>
+                <span className="text-sm text-left font-medium text-zinc-200 line-clamp-1">
+                  {organizations[0].name}
+                </span>
+                <ChevronDown className="w-4 h-4 text-zinc-400" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64">
+                <span className="px-2 py-2 flex items-center text-zinc-400 text-sm font-medium">
+                  Organizations
+                </span>
+                <DropdownMenuSeparator />
+                {organizations.map((org) => (
+                  <DropdownMenuItem
+                    key={org.id}
+                    className="flex items-center gap-x-2"
+                  >
+                    <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
+                      <span className="text-sm font-medium text-white">
+                        {org.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium">{org.name}</span>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuItem className="flex items-center gap-x-2 h-9">
+                  <div className="flex items-center justify-center w-6 h-6">
+                    <Plus className="w-4 h-4 text-zinc-400" />
+                  </div>
+                  <span className="text-sm font-medium">New organization</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <button className="flex items-center h-8 gap-x-2 pl-2 pr-4 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
+              <Plus className="w-4 h-4 text-zinc-400" />
+              <span className="text-sm font-medium text-zinc-200">
+                Create Organization
+              </span>
+            </button>
+          )}
         </div>
 
         <div className="p-2 overflow-hidden">
-          <Link href="/dashboard" className="w-full flex items-center">
-            <div
-              className={cn(
-                "flex h-8 items-center w-full rounded-md transition-colors",
-                isHome ? "bg-zinc-800" : "hover:bg-zinc-900"
-              )}
-            >
-              <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
-                <Home className="w-4 h-4" />
-              </div>
-              <span className="ml-2 text-sm whitespace-nowrap">Home</span>
+          <Link
+            href="/dashboard"
+            className={cn(
+              "w-full h-8 flex items-center rounded-md transition-colors",
+              isHome ? "bg-zinc-800" : "hover:bg-zinc-900"
+            )}
+          >
+            <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
+              <Home className="w-4 h-4" />
             </div>
+            <span className="ml-2 text-sm whitespace-nowrap">Home</span>
           </Link>
         </div>
 
@@ -100,27 +147,23 @@ export const Sidebar = () => {
               <Link
                 key={index}
                 href={item.path ?? item.children?.[0]?.path ?? "/dashboard"}
-                className="w-full flex items-center"
+                className={cn(
+                  "w-full h-8 flex items-center rounded-md transition-colors",
+                  isSelected ? "bg-zinc-800" : "hover:bg-zinc-900"
+                )}
+                onMouseEnter={() => {
+                  if (!loading) {
+                    setHoveredItem(item.label);
+                    setIsSubMenuVisible(true);
+                  }
+                }}
               >
-                <div
-                  className={cn(
-                    "w-full h-8 flex items-center rounded-md transition-colors",
-                    isSelected ? "bg-zinc-800" : "hover:bg-zinc-900"
-                  )}
-                  onMouseEnter={() => {
-                    if (!loading) {
-                      setHoveredItem(item.label);
-                      setIsSubMenuVisible(true);
-                    }
-                  }}
-                >
-                  <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
-                    {item.icon && <item.icon className="w-4 h-4" />}
-                  </div>
-                  <span className="ml-2 text-sm whitespace-nowrap">
-                    {item.label}
-                  </span>
+                <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
+                  {item.icon && <item.icon className="w-4 h-4" />}
                 </div>
+                <span className="ml-2 text-sm whitespace-nowrap">
+                  {item.label}
+                </span>
               </Link>
             );
           })}
@@ -129,7 +172,7 @@ export const Sidebar = () => {
         {user && !loading && (
           <div className="p-2 border-t border-zinc-800">
             <DropdownMenu>
-              <DropdownMenuTrigger className="w-full focus:ring-0 focus:ring-offset-0">
+              <DropdownMenuTrigger className="w-full focus:ring-0 focus:ring-offset-0 rounded-md">
                 <div className="w-full p-2 overflow-hidden hover:bg-zinc-800 transition-colors rounded-md">
                   <div className="flex items-center ml-1">
                     <div className="w-6 h-6 bg-zinc-700 rounded-full flex items-center justify-center shrink-0">
@@ -187,16 +230,14 @@ export const Sidebar = () => {
                           target: "_blank",
                         }
                       : {})}
-                    className="w-full flex items-center"
+                    className={cn(
+                      "w-full h-8 flex items-center px-3 text-sm rounded-md",
+                      pathname === child.path
+                        ? "bg-zinc-800"
+                        : "hover:bg-zinc-900"
+                    )}
                   >
-                    <div
-                      className={cn(
-                        "flex items-center justify-between w-full rounded-md h-8 px-3 text-sm",
-                        pathname === child.path
-                          ? "bg-zinc-800"
-                          : "hover:bg-zinc-900"
-                      )}
-                    >
+                    <div className="flex items-center justify-between w-full">
                       <span>{child.label}</span>
                       {!child.path.startsWith("/dashboard") && (
                         <ArrowUpRight className="w-4 h-4 text-zinc-400" />
