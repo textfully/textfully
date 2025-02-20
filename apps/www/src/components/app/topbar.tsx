@@ -76,21 +76,25 @@ export const Topbar = () => {
         <div
           className={clsx(
             "flex items-center w-full",
-            isHome && organizations && organizations.length > 0 ? "justify-between" : "justify-end"
+            isHome && organizations && organizations.length > 0
+              ? "justify-between"
+              : "justify-end"
           )}
         >
           {isHome && organizations && organizations.length > 0 && (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
-                <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
-                  <span className="text-sm font-medium text-white">
-                    {organizations[0].name.charAt(0).toUpperCase()}
+              <DropdownMenuTrigger>
+                <div className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
+                  <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
+                    <span className="text-sm font-medium text-white">
+                      {organizations[0].name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="text-sm font-medium text-zinc-200">
+                    {organizations[0].name}
                   </span>
+                  <ChevronDown className="w-4 h-4 text-zinc-400" />
                 </div>
-                <span className="text-sm font-medium text-zinc-200">
-                  {organizations[0].name}
-                </span>
-                <ChevronDown className="w-4 h-4 text-zinc-400" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-64">
                 <span className="px-2 py-2 flex items-center text-zinc-400 text-sm font-medium">
@@ -126,17 +130,17 @@ export const Topbar = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="px-3 py-1.5 bg-zinc-800/50 transition-colors rounded-lg flex items-center gap-x-1.5 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200">
+              <div className="px-3 py-1.5 bg-zinc-800/50 transition-colors rounded-lg flex items-center gap-x-1.5 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200">
                 <MessageCircleMore className="w-4 h-4" />
                 <span className="text-sm font-medium">Feedback</span>
-              </button>
+              </div>
             </a>
 
             <Link href="/docs" target="_blank" rel="noopener noreferrer">
-              <button className="px-3 py-1.5 transition-colors rounded-lg flex items-center gap-x-1.5 text-zinc-400 hover:text-zinc-200">
+              <div className="px-3 py-1.5 transition-colors rounded-lg flex items-center gap-x-1.5 text-zinc-400 hover:text-zinc-200">
                 <FileText className="w-4 h-4" />
                 <span className="text-sm font-medium">Docs</span>
-              </button>
+              </div>
             </Link>
           </div>
         </div>

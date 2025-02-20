@@ -16,7 +16,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
         <div className="min-w-64" />
         <div className="flex flex-col overflow-hidden w-full">
           <Topbar />
-          <main className="p-6 flex-1 overflow-y-auto">{children}</main>
+          <main className="p-6 flex-1 overflow-y-auto focus:outline-none" tabIndex={-1}>{children}</main>
         </div>
       </div>
     </div>

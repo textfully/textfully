@@ -26,10 +26,10 @@
     --card: #212126;
     --card-foreground: #dee3ea;
 
-    --primary: #0A93F6;
+    --primary: #0a93f6;
     --primary-foreground: #ffffff;
 
-    --secondary: #2F3037;
+    --secondary: #2f3037;
     --secondary-foreground: #f1f5f9;
 
     --destructive: #ef4444;
@@ -74,4 +74,14 @@ body,
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+@layer base {
+  a,
+  button {
+    &:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
 }

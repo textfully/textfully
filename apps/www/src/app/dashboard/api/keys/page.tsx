@@ -150,11 +150,10 @@ export default function APIKeysPage() {
       <div className="container p-2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">API Keys</h1>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2.5 bg-white rounded-lg text-zinc-900 font-semibold text-sm leading-none transition hover:brightness-110"
-          >
-            Create API Key
+          <button onClick={() => setIsModalOpen(true)}>
+            <div className="px-4 py-2.5 bg-white rounded-lg text-zinc-900 font-semibold text-sm leading-none transition hover:brightness-110">
+              Create API Key
+            </div>
           </button>
         </div>
 
