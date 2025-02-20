@@ -31,6 +31,17 @@ import { APIKeyResponse } from "@/types/responses";
 import { toast } from "sonner";
 import { fetchApiKeys } from "@/api/api-keys/fetch-api-keys";
 import { revokeApiKey } from "@/api/api-keys/revoke-api-keys";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
@@ -44,6 +55,7 @@ export default function APIKeysPage() {
   const [nameError, setNameError] = useState<string>("");
   const [isCreating, setIsCreating] = useState(false);
   const [isLoadingKeys, setIsLoadingKeys] = useState(true);
+  const [keyToRevoke, setKeyToRevoke] = useState<APIKeyResponse | null>(null);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const codeRef = useRef<HTMLInputElement>(null);
@@ -128,6 +140,7 @@ export default function APIKeysPage() {
 
       const keys = await fetchApiKeys();
       setApiKeys(keys);
+      setKeyToRevoke(null);
 
       toast.success("API key revoked successfully");
     } catch (error) {
@@ -197,11 +210,10 @@ export default function APIKeysPage() {
                       {new Date(apiKey.last_used).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">
-                      <button
-                        onClick={() => handleRevokeKey(apiKey.id)}
-                        className="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-full text-sm hover:brightness-110 transition"
-                      >
-                        Revoke
+                      <button onClick={() => setKeyToRevoke(apiKey)}>
+                        <div className="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-full text-sm hover:brightness-110 transition">
+                          Revoke
+                        </div>
                       </button>
                     </TableCell>
                   </TableRow>
@@ -355,6 +367,33 @@ export default function APIKeysPage() {
           )}
         </DialogContent>
       </Dialog>
+
+      <AlertDialog
+        open={!!keyToRevoke}
+        onOpenChange={(open) => !open && setKeyToRevoke(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Revoke API Key</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to revoke this API key? This action cannot
+              be undone. Any applications using this key will immediately lose
+              access.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setKeyToRevoke(null)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500"
+              onClick={() => keyToRevoke && handleRevokeKey(keyToRevoke.id)}
+            >
+              Revoke Key
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
