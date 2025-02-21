@@ -18,7 +18,7 @@
     --accent-foreground: #f1f5f9;
 
     --popover: #09090b;
-    --popover-foreground: #94a3b8;
+    --popover-foreground: #a1a1aa;
 
     --border: #252525;
     --input: #1e1e1e;
@@ -77,16 +77,13 @@ body,
 }
 
 @layer base {
-  a,
-  button {
+  a {
     &:focus-visible {
       outline: 2px solid var(--primary);
       outline-offset: 2px;
     }
   }
 }
-
-
 
 @layer base {
   * {

@@ -27,11 +27,20 @@ import {
 } from "../ui/dropdown-menu";
 import { menuItems } from "@/constants/nav";
 import { useOrganizationContext } from "@/contexts/useOrganizationContext";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { createOrganization } from "@/api/organizations/create-organization";
+import { toast } from "sonner";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
+  const [isCreateOrgModalOpen, setIsCreateOrgModalOpen] = useState(false);
+  const [newOrgName, setNewOrgName] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
+  const [nameError, setNameError] = useState("");
 
   const {
     organizations,
@@ -65,6 +74,34 @@ export const Sidebar = () => {
     }
   }, [user, loading]);
 
+  const handleCreateOrganization = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setNameError("");
+
+    if (!newOrgName.trim()) {
+      setNameError("Name is required");
+      return;
+    }
+
+    setIsCreating(true);
+
+    try {
+      const org = await createOrganization(newOrgName.trim());
+      await fetchOrganizations();
+      setSelectedOrganization(org);
+      setIsCreateOrgModalOpen(false);
+      setNewOrgName("");
+      toast.success("Organization created successfully");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create organization"
+      );
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
   return (
     <div
       className="flex h-full"
@@ -81,16 +118,18 @@ export const Sidebar = () => {
             <div className="h-8 bg-zinc-900 rounded-md w-32" />
           ) : organizations && organizations.length > 0 ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
-                <div className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded flex items-center justify-center">
-                  <span className="text-sm font-medium text-white uppercase">
-                    {selectedOrganization?.name.charAt(0)}
+              <DropdownMenuTrigger asChild={true}>
+                <Button className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
+                  <div className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded flex items-center justify-center">
+                    <span className="text-sm font-medium text-white uppercase">
+                      {selectedOrganization?.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="text-sm text-left font-medium text-zinc-200 line-clamp-1">
+                    {selectedOrganization?.name}
                   </span>
-                </div>
-                <span className="text-sm text-left font-medium text-zinc-200 line-clamp-1">
-                  {selectedOrganization?.name}
-                </span>
-                <ChevronDown className="w-4 h-4 text-zinc-400" />
+                  <ChevronDown className="w-4 h-4 text-zinc-400" />
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-64">
                 <span className="px-2 py-2 flex items-center text-zinc-400 text-sm font-medium">
@@ -114,21 +153,31 @@ export const Sidebar = () => {
                     </button>
                   </DropdownMenuItem>
                 ))}
-                <DropdownMenuItem className="flex items-center gap-x-2 h-9">
-                  <div className="flex items-center justify-center w-6 h-6">
-                    <Plus className="w-4 h-4 text-zinc-400" />
-                  </div>
-                  <span className="text-sm font-medium">New organization</span>
+                <DropdownMenuItem asChild={true}>
+                  <button
+                    className="flex items-center gap-x-2 h-9 w-full"
+                    onClick={() => setIsCreateOrgModalOpen(true)}
+                  >
+                    <div className="flex items-center justify-center w-6 h-6">
+                      <Plus className="w-4 h-4 text-zinc-400" />
+                    </div>
+                    <span className="text-sm font-medium">
+                      New organization
+                    </span>
+                  </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <button className="flex items-center h-8 gap-x-2 pl-2 pr-4 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
+            <Button
+              className="flex items-center h-8 gap-x-2 pl-2 pr-4 py-1 rounded-md hover:bg-zinc-800/50 transition-colors"
+              onClick={() => setIsCreateOrgModalOpen(true)}
+            >
               <Plus className="w-4 h-4 text-zinc-400" />
               <span className="text-sm font-medium text-zinc-200">
                 Create Organization
               </span>
-            </button>
+            </Button>
           )}
         </div>
 
@@ -181,19 +230,21 @@ export const Sidebar = () => {
         {user && !loading && (
           <div className="p-2 border-t border-zinc-800">
             <DropdownMenu>
-              <DropdownMenuTrigger className="w-full focus:ring-0 focus:ring-offset-0 rounded-md">
-                <div className="w-full p-2 overflow-hidden hover:bg-zinc-800 transition-colors rounded-md">
-                  <div className="flex items-center ml-1">
-                    <div className="w-6 h-6 bg-zinc-700 rounded-full flex items-center justify-center shrink-0">
-                      <span className="text-white text-sm">
-                        {user.email?.charAt(0).toUpperCase()}
+              <DropdownMenuTrigger asChild={true}>
+                <Button className="w-full rounded-md">
+                  <div className="w-full p-2 overflow-hidden hover:bg-zinc-800 transition-colors rounded-md">
+                    <div className="flex items-center ml-1">
+                      <div className="w-6 h-6 bg-zinc-700 rounded-full flex items-center justify-center shrink-0">
+                        <span className="text-white text-sm">
+                          {user.email?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <span className="ml-2 text-sm text-zinc-400 truncate">
+                        {user.email}
                       </span>
                     </div>
-                    <span className="ml-2 text-sm text-zinc-400 truncate">
-                      {user.email}
-                    </span>
                   </div>
-                </div>
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48"
@@ -210,6 +261,54 @@ export const Sidebar = () => {
           </div>
         )}
       </div>
+
+      <Dialog
+        open={isCreateOrgModalOpen}
+        onOpenChange={setIsCreateOrgModalOpen}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create Organization</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleCreateOrganization} className="space-y-6">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-zinc-400 mb-2"
+              >
+                Name
+              </label>
+              <Input
+                id="name"
+                value={newOrgName}
+                onChange={(e) => {
+                  setNewOrgName(e.target.value);
+                  setNameError("");
+                }}
+                placeholder="e.g. My Organization"
+                className={cn(
+                  nameError && "border-red-500 focus:ring-transparent"
+                )}
+              />
+              {nameError && (
+                <p className="mt-1 text-sm text-red-500">{nameError}</p>
+              )}
+            </div>
+            <div className="flex justify-end gap-x-2">
+              <Button
+                type="button"
+                variant="surface"
+                onClick={() => setIsCreateOrgModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" loading={isCreating}>
+                Create
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <motion.div
         className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 overflow-hidden"

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import constate from "constate";
 import { logError } from "@/lib/logger";
 import { OrganizationResponse } from "@/types/responses";
-import { getData, setData } from "@/lib/storage";
+import { getData, removeData, setData } from "@/lib/storage";
 import { fetchOrganizations as _fetchOrganizations } from "@/api/organizations/fetch-organizations";
 
 const useOrganization = () => {
@@ -17,7 +17,7 @@ const useOrganization = () => {
 
   // Load the last selected organization from storage
   useEffect(() => {
-    const savedOrg = getData("LAST_SELECTED_ORGANIZATION");
+    const savedOrg = getData("SELECTED_ORGANIZATION");
     if (savedOrg) {
       try {
         setSelectedOrganization(JSON.parse(savedOrg));
@@ -35,8 +35,7 @@ const useOrganization = () => {
       // If no organization is selected, select the first one
       if (!selectedOrganization && fetchedOrganizations?.length > 0) {
         const orgToSelect = fetchedOrganizations[0];
-        setSelectedOrganization(orgToSelect);
-        setData("LAST_SELECTED_ORGANIZATION", JSON.stringify(orgToSelect));
+        setSelectedOrganizationWithStorage(orgToSelect);
       }
     } catch (error) {
       logError("Error fetching organizations:", error);
@@ -50,7 +49,9 @@ const useOrganization = () => {
   ) => {
     setSelectedOrganization(org);
     if (org) {
-      setData("LAST_SELECTED_ORGANIZATION", JSON.stringify(org));
+      setData("SELECTED_ORGANIZATION", JSON.stringify(org));
+    } else {
+      removeData("SELECTED_ORGANIZATION");
     }
   };
 

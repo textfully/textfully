@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Copy from "@/assets/icons/misc/copy";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
@@ -164,11 +165,7 @@ export default function APIKeysPage() {
       <div className="container p-2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">API Keys</h1>
-          <Button
-            variant="surface"
-            onClick={() => setIsModalOpen(true)}
-            size="sm"
-          >
+          <Button variant="b&w" onClick={() => setIsModalOpen(true)}>
             Create API Key
           </Button>
         </div>
@@ -218,9 +215,8 @@ export default function APIKeysPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <Button
-                        variant="destructive-ghost"
+                        variant="destructive-surface"
                         onClick={() => setKeyToRevoke(apiKey)}
-                        size="sm"
                       >
                         Revoke
                       </Button>
@@ -267,20 +263,7 @@ export default function APIKeysPage() {
                     }}
                     title="Copy to clipboard"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                    </svg>
+                    <Copy />
                   </Button>
                 </div>
               </div>
@@ -297,7 +280,9 @@ export default function APIKeysPage() {
                 </Select>
               </div>
               <div className="flex justify-end">
-                <Button onClick={() => setIsModalOpen(false)}>Done</Button>
+                <Button variant="b&w" onClick={() => setIsModalOpen(false)}>
+                  Done
+                </Button>
               </div>
             </div>
           ) : (
@@ -312,7 +297,6 @@ export default function APIKeysPage() {
                 <Input
                   ref={nameRef}
                   id="name"
-                  variant="default"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -349,12 +333,12 @@ export default function APIKeysPage() {
               <div className="flex justify-end gap-x-2">
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="surface"
                   onClick={() => setIsModalOpen(false)}
                 >
                   Cancel
                 </Button>
-                <Button type="submit" loading={isCreating}>
+                <Button variant="primary" type="submit" loading={isCreating}>
                   Create
                 </Button>
               </div>

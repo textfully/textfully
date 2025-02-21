@@ -128,8 +128,7 @@ export default function LoginPage() {
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
             <Button
               onClick={handleGitHubSignIn}
-              variant="outline"
-              size="sm"
+              variant="surface"
               className="w-full"
             >
               <GitHub className="w-4 h-4 fill-white mr-2" />
@@ -138,8 +137,7 @@ export default function LoginPage() {
 
             <Button
               onClick={handleGoogleSignIn}
-              variant="outline"
-              size="sm"
+              variant="surface"
               className="w-full"
             >
               <Google className="w-4 h-4 fill-white mr-2" />
@@ -210,7 +208,7 @@ export default function LoginPage() {
           </div>
           <Button
             type="submit"
-            variant="surface"
+            variant="b&w"
             loading={loading}
             disabled={!email}
             className="w-full"

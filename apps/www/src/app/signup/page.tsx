@@ -286,7 +286,7 @@ export default function SignupPage() {
 
           <Button
             type="submit"
-            variant="surface"
+            variant="b&w"
             loading={loading}
             disabled={!email || !password || !name || !confirmPassword}
             className="w-full"
