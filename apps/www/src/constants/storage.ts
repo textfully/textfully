@@ -1,10 +1,8 @@
-export type StorageKey = 'LOCAL_STORAGE_1' | 'LOCAL_STORAGE_2';
+export type StorageKey = 'LAST_SELECTED_ORGANIZATION';
 export type SecretKey = 'COOKIE_1' | 'COOKIE_2';
 
-// TODO: replace this with your own local storage keys
 export const storage: Record<StorageKey, string> = {
-  LOCAL_STORAGE_1: '@ls1',
-  LOCAL_STORAGE_2: '@ls2',
+  LAST_SELECTED_ORGANIZATION: '@tx_last_org',
 };
 
 // TODO: replace this with your own cookie keys

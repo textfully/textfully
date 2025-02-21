@@ -33,7 +33,12 @@ export const Sidebar = () => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
 
-  const { organizations, fetchOrganizations } = useOrganizationContext();
+  const {
+    organizations,
+    fetchOrganizations,
+    selectedOrganization,
+    setSelectedOrganization,
+  } = useOrganizationContext();
 
   const pathname = usePathname();
   const router = useRouter();
@@ -79,11 +84,11 @@ export const Sidebar = () => {
               <DropdownMenuTrigger className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
                 <div className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded flex items-center justify-center">
                   <span className="text-sm font-medium text-white uppercase">
-                    {organizations[0].name.charAt(0)}
+                    {selectedOrganization?.name.charAt(0)}
                   </span>
                 </div>
                 <span className="text-sm text-left font-medium text-zinc-200 line-clamp-1">
-                  {organizations[0].name}
+                  {selectedOrganization?.name}
                 </span>
                 <ChevronDown className="w-4 h-4 text-zinc-400" />
               </DropdownMenuTrigger>
@@ -96,6 +101,9 @@ export const Sidebar = () => {
                   <DropdownMenuItem
                     key={org.id}
                     className="flex items-center gap-x-2"
+                    onClick={() => {
+                      setSelectedOrganization(org);
+                    }}
                   >
                     <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
                       <span className="text-sm font-medium text-white">
