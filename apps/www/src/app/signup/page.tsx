@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
@@ -12,6 +10,8 @@ import { cn } from "@/lib/utils";
 import Logo from "@/assets/logo";
 import GitHub from "@/assets/icons/socials/github";
 import { useAuthContext } from "@/contexts/useAuthContext";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const signupSchema = z
   .object({
@@ -33,7 +33,7 @@ const signupSchema = z
 type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
-  const { user } = useAuthContext();
+  const { signUp, signInWithOAuth } = useAuthContext();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -51,9 +51,6 @@ export default function SignupPage() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
-
-  const router = useRouter();
-  const supabase = createClient();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,15 +87,7 @@ export default function SignupPage() {
         return;
       }
 
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name,
-          },
-        },
-      });
+      const { error } = await signUp(email, password, name);
 
       if (error) {
         if (error.message.toLowerCase().includes("email")) {
@@ -112,7 +101,6 @@ export default function SignupPage() {
         }
       } else {
         toast.success("Please check your email to verify your account");
-        router.push("/login");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -123,11 +111,10 @@ export default function SignupPage() {
 
   const handleGitHubSignIn = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "github",
-      });
-      if (error) throw error;
-      router.push("/dashboard");
+      const { error } = await signInWithOAuth("github");
+      if (error) {
+        toast.error(error.message);
+      }
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -135,24 +122,14 @@ export default function SignupPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (error) throw error;
-      router.push("/dashboard");
+      const { error } = await signInWithOAuth("google");
+      if (error) {
+        toast.error(error.message);
+      }
     } catch (error: any) {
       toast.error(error.message);
     }
   };
-
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard");
-    }
-  }, [user, router]);
 
   return (
     <div className="bg-zinc-950 min-h-screen text-white">
@@ -190,7 +167,7 @@ export default function SignupPage() {
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
             <button
               onClick={handleGitHubSignIn}
-              className="text-sm font-semibold w-full px-3 py-2 bg-[#1e1e1e] hover:bg-[#2a2a2a] rounded-lg border border-zinc-800 flex items-center justify-center space-x-2 transition-colors"
+              className="text-sm font-semibold w-full px-3 py-2 bg-zinc-900 hover:bg-[#2a2a2a] rounded-lg border border-zinc-800 flex items-center justify-center space-x-2 transition-colors"
             >
               <GitHub className="w-4 h-4 fill-white" />
               <span>Continue with GitHub</span>
@@ -198,7 +175,7 @@ export default function SignupPage() {
 
             <button
               onClick={handleGoogleSignIn}
-              className="group flex w-full items-center justify-center space-x-2 rounded-lg border border-zinc-800 bg-[#1e1e1e] hover:bg-[#2a2a2a] px-3 py-2 text-sm font-semibold transition-colors"
+              className="group flex w-full items-center justify-center space-x-2 rounded-lg border border-zinc-800 bg-zinc-900 hover:bg-[#2a2a2a] px-3 py-2 text-sm font-semibold transition-colors"
             >
               <Google className="h-4 w-4 fill-white" />
               <span>Continue with Google</span>
@@ -220,17 +197,16 @@ export default function SignupPage() {
             <label htmlFor="name" className="block text-sm text-zinc-400">
               Full Name
             </label>
-            <input
+            <Input
               id="name"
               ref={nameRef}
               type="text"
+              variant="primary"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={cn(
-                "w-full rounded-lg border bg-[#1e1e1e] px-3 py-2 outline-none transition-colors placeholder:text-zinc-600 focus:ring-1",
-                nameError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
+                nameError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
               )}
               placeholder="Neo"
             />
@@ -243,17 +219,16 @@ export default function SignupPage() {
             <label htmlFor="email" className="block text-sm text-zinc-400">
               Email
             </label>
-            <input
+            <Input
               id="email"
               ref={emailRef}
               type="email"
+              variant="primary"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={cn(
-                "w-full rounded-lg border bg-[#1e1e1e] px-3 py-2 outline-none transition-colors placeholder:text-zinc-600 focus:ring-1",
-                emailError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
+                emailError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
               )}
               placeholder="neo@matrix.com"
             />
@@ -266,17 +241,16 @@ export default function SignupPage() {
             <label htmlFor="password" className="block text-sm text-zinc-400">
               Password
             </label>
-            <input
+            <Input
               id="password"
               ref={passwordRef}
               type="password"
+              variant="primary"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={cn(
-                "w-full rounded-lg border bg-[#1e1e1e] px-3 py-2 outline-none transition-colors placeholder:text-zinc-600 focus:ring-1",
-                passwordError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
+                passwordError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
               )}
             />
             {passwordError && (
@@ -291,17 +265,16 @@ export default function SignupPage() {
             >
               Confirm Password
             </label>
-            <input
+            <Input
               id="confirmPassword"
               ref={confirmPasswordRef}
               type="password"
+              variant="primary"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={cn(
-                "w-full rounded-lg border bg-[#1e1e1e] px-3 py-2 outline-none transition-colors placeholder:text-zinc-600 focus:ring-1",
-                confirmPasswordError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
+                confirmPasswordError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
               )}
             />
             {confirmPasswordError && (
@@ -311,22 +284,16 @@ export default function SignupPage() {
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
-            disabled={
-              loading || !email || !password || !name || !confirmPassword
-            }
-            className="flex w-full items-center justify-center rounded-lg bg-white py-2 font-medium text-black transition-colors hover:bg-zinc-100 disabled:opacity-50"
+            variant="surface"
+            loading={loading}
+            disabled={!email || !password || !name || !confirmPassword}
+            className="w-full"
           >
-            {loading ? (
-              "Creating account..."
-            ) : (
-              <>
-                Create account
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </>
-            )}
-          </button>
+            Create account
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Button>
         </form>
 
         <p className="mt-8 text-center text-xs text-zinc-400">

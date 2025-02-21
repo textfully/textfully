@@ -43,6 +43,7 @@ export interface IdentityResponse {
 export interface OrganizationResponse {
   id: string;
   name: string;
+  role: string;
   created_at: string | null;
   updated_at: string | null;
 }

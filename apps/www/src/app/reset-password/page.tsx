@@ -1,13 +1,16 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
+import { ArrowRight, ChevronLeft } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useAuthContext } from "@/contexts/useAuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const resetPasswordSchema = z.object({
   password: z
@@ -26,16 +29,15 @@ const resetPasswordSchema = z.object({
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPasswordPage() {
+  const { updatePassword } = useAuthContext();
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const passwordRef = useRef<HTMLInputElement>(null);
-
   const router = useRouter();
-  const supabase = createClient();
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setPasswordError(null);
@@ -56,9 +58,7 @@ export default function ResetPasswordPage() {
         return;
       }
 
-      const { data, error } = await supabase.auth.updateUser({
-        password,
-      });
+      const { error } = await updatePassword(password);
 
       if (error) {
         setPasswordError(error.message);
@@ -97,43 +97,37 @@ export default function ResetPasswordPage() {
           <p className="text-zinc-400">Enter your new password below.</p>
         </div>
 
-        <form onSubmit={handleSignIn} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="password" className="block text-sm text-zinc-400">
               Password
             </label>
-            <input
+            <Input
               id="password"
               ref={passwordRef}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors ${
-                passwordError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
-              }`}
-              placeholder="neo@matrix.com"
+              variant="primary"
+              placeholder="Enter your new password"
+              className={cn(
+                passwordError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
+              )}
             />
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={loading || !password}
-            className="w-full py-2 bg-primary hover:brightness-110 text-white rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
+            loading={loading}
           >
-            {loading ? (
-              "Updating..."
-            ) : (
-              <>
-                Update password
-                <ArrowRight className="ml-1 w-4 h-4" />
-              </>
-            )}
-          </button>
+            Update password
+            <ArrowRight className="ml-1 w-4 h-4" />
+          </Button>
         </form>
       </div>
     </div>

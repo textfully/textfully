@@ -1,13 +1,16 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+import { useAuthContext } from "@/contexts/useAuthContext";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const forgotPasswordSchema = z.object({
   email: z
@@ -19,16 +22,15 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
+  const { resetPasswordForEmail } = useAuthContext();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
 
   const emailRef = useRef<HTMLInputElement>(null);
-
   const router = useRouter();
-  const supabase = createClient();
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setEmailError(null);
@@ -49,9 +51,7 @@ export default function ForgotPasswordPage() {
         return;
       }
 
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
-      });
+      const { error } = await resetPasswordForEmail(email);
 
       if (error) {
         setEmailError(error.message);
@@ -95,22 +95,22 @@ export default function ForgotPasswordPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSignIn} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm text-zinc-400">
               Email
             </label>
-            <input
+            <Input
               id="email"
               ref={emailRef}
               type="email"
+              variant="primary"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors ${
-                emailError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-primary"
-              }`}
+              className={cn(
+                emailError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
+              )}
               placeholder="neo@matrix.com"
             />
             {emailError && (
@@ -118,20 +118,15 @@ export default function ForgotPasswordPage() {
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
-            disabled={loading || !email}
-            className="w-full py-2 bg-primary hover:brightness-110 text-white rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
+            loading={loading}
+            disabled={!email}
+            className="w-full"
           >
-            {loading ? (
-              "Sending..."
-            ) : (
-              <>
-                Send reset email
-                <ArrowRight className="ml-1 w-4 h-4" />
-              </>
-            )}
-          </button>
+            Send reset email
+            <ArrowRight className="ml-1 w-4 h-4" />
+          </Button>
         </form>
       </div>
     </div>

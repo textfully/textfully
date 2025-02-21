@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import constate from "constate";
 import { logError } from "@/lib/logger";
 import { OrganizationResponse } from "@/types/responses";
-import { fetchOrganizations as _fetchOrganizations } from "@/api/organizations/fetch-organizations";
 import { getData, setData } from "@/lib/storage";
+import { fetchOrganizations as _fetchOrganizations } from "@/api/organizations/fetch-organizations";
 
 const useOrganization = () => {
   const [organizations, setOrganizations] = useState<
@@ -40,6 +40,7 @@ const useOrganization = () => {
       }
     } catch (error) {
       logError("Error fetching organizations:", error);
+      setOrganizations(null);
     }
   };
 

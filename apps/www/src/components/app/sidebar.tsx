@@ -60,10 +60,10 @@ export const Sidebar = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       fetchOrganizations();
     }
-  }, [user]);
+  }, [user, loading]);
 
   return (
     <div
@@ -98,19 +98,20 @@ export const Sidebar = () => {
                 </span>
                 <DropdownMenuSeparator />
                 {organizations.map((org) => (
-                  <DropdownMenuItem
-                    key={org.id}
-                    className="flex items-center gap-x-2"
-                    onClick={() => {
-                      setSelectedOrganization(org);
-                    }}
-                  >
-                    <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
-                      <span className="text-sm font-medium text-white">
-                        {org.name.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <span className="text-sm font-medium">{org.name}</span>
+                  <DropdownMenuItem key={org.id} asChild={true}>
+                    <button
+                      className="flex items-center gap-x-2 w-full"
+                      onClick={() => {
+                        setSelectedOrganization(org);
+                      }}
+                    >
+                      <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
+                        <span className="text-sm font-medium text-white">
+                          {org.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <span className="text-sm font-medium">{org.name}</span>
+                    </button>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuItem className="flex items-center gap-x-2 h-9">
@@ -199,8 +200,10 @@ export const Sidebar = () => {
                 align="start"
                 onMouseEnter={() => setHoveredItem(null)}
               >
-                <DropdownMenuItem onClick={handleSignOut}>
-                  <button className="w-full text-left">Sign out</button>
+                <DropdownMenuItem asChild={true}>
+                  <button onClick={handleSignOut} className="w-full text-left">
+                    Sign out
+                  </button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

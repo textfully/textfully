@@ -42,6 +42,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
@@ -163,11 +164,13 @@ export default function APIKeysPage() {
       <div className="container p-2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">API Keys</h1>
-          <button onClick={() => setIsModalOpen(true)}>
-            <div className="px-4 py-2.5 bg-white rounded-lg text-zinc-900 font-semibold text-sm leading-none transition hover:brightness-110">
-              Create API Key
-            </div>
-          </button>
+          <Button
+            variant="surface"
+            onClick={() => setIsModalOpen(true)}
+            size="sm"
+          >
+            Create API Key
+          </Button>
         </div>
 
         <div className="overflow-hidden rounded-md border border-zinc-800">
@@ -214,11 +217,13 @@ export default function APIKeysPage() {
                         : "-"}
                     </TableCell>
                     <TableCell className="text-right">
-                      <button onClick={() => setKeyToRevoke(apiKey)}>
-                        <div className="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-full text-sm hover:brightness-110 transition">
-                          Revoke
-                        </div>
-                      </button>
+                      <Button
+                        variant="destructive-ghost"
+                        onClick={() => setKeyToRevoke(apiKey)}
+                        size="sm"
+                      >
+                        Revoke
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))
@@ -252,13 +257,14 @@ export default function APIKeysPage() {
                     onClick={(e) => e.currentTarget.select()}
                     className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-x-auto whitespace-nowrap hide-scrollbar font-mono focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"
                   />
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => {
                       codeRef.current?.select();
                       navigator.clipboard.writeText(createdApiKey);
                       toast.success("API key copied to clipboard");
                     }}
-                    className="p-2 hover:bg-zinc-800 rounded-md transition shrink-0"
                     title="Copy to clipboard"
                   >
                     <svg
@@ -275,7 +281,7 @@ export default function APIKeysPage() {
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div>
@@ -291,12 +297,7 @@ export default function APIKeysPage() {
                 </Select>
               </div>
               <div className="flex justify-end">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-primary rounded-md text-white text-sm font-semibold transition hover:brightness-110"
-                >
-                  Done
-                </button>
+                <Button onClick={() => setIsModalOpen(false)}>Done</Button>
               </div>
             </div>
           ) : (
@@ -308,10 +309,10 @@ export default function APIKeysPage() {
                 >
                   Name
                 </label>
-                <input
+                <Input
                   ref={nameRef}
-                  type="text"
                   id="name"
+                  variant="default"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -319,10 +320,7 @@ export default function APIKeysPage() {
                   }}
                   placeholder="e.g. Production API Key"
                   className={cn(
-                    "w-full px-2.5 py-1.5 text-sm bg-zinc-900 border rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2",
-                    nameError
-                      ? "border-red-500 focus:ring-transparent"
-                      : "border-zinc-700 focus:ring-zinc-700"
+                    nameError && "border-red-500 focus:ring-transparent"
                   )}
                 />
                 {nameError && (
@@ -349,24 +347,16 @@ export default function APIKeysPage() {
                 </Select>
               </div>
               <div className="flex justify-end gap-x-2">
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm font-semibold text-zinc-400 hover:text-white transition"
                 >
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isCreating}
-                  className={`px-4 py-2 bg-primary rounded-md text-white text-sm font-semibold transition ${
-                    isCreating
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:brightness-110"
-                  }`}
-                >
-                  {isCreating ? "Creating..." : "Create"}
-                </button>
+                </Button>
+                <Button type="submit" loading={isCreating}>
+                  Create
+                </Button>
               </div>
             </form>
           )}
