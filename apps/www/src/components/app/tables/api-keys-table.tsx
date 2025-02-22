@@ -10,7 +10,7 @@ export const APIKeysTableHeader = () => {
       <TableHead>API Key</TableHead>
       <TableHead>Created</TableHead>
       <TableHead>Last Used</TableHead>
-      <TableHead className="text-right"></TableHead>
+      <TableHead></TableHead>
     </TableRow>
   );
 };
@@ -24,23 +24,23 @@ export const APIKeysTableRow = ({
 }) => {
   return (
     <TableRow>
-      <TableCell>{apiKey.name}</TableCell>
-      <TableCell>
+      <TableCell className="w-64">{apiKey.name}</TableCell>
+      <TableCell className="flex-1">
         <code className="bg-zinc-800 px-2 py-1 rounded">
           {apiKey.short_key}...
         </code>
       </TableCell>
-      <TableCell>
+      <TableCell className="w-40">
         {apiKey.created_at
           ? new Date(apiKey.created_at).toLocaleDateString()
           : "-"}
       </TableCell>
-      <TableCell>
+      <TableCell className="w-40">
         {apiKey.last_used
           ? new Date(apiKey.last_used).toLocaleDateString()
           : "-"}
       </TableCell>
-      <TableCell className="text-right">
+      <TableCell className="w-32">
         <Button variant="destructive-surface" onClick={() => onRevoke(apiKey)}>
           Revoke
         </Button>
@@ -52,20 +52,20 @@ export const APIKeysTableRow = ({
 export const APIKeysTableHeaderSkeleton = () => {
   return (
     <TableRow>
-      <TableHead>
+      <TableHead className="w-64">
         <Skeleton className="h-4 w-32" />
       </TableHead>
-      <TableHead>
+      <TableHead className="flex-1">
         <Skeleton className="h-4 w-32" />
       </TableHead>
-      <TableHead>
+      <TableHead className="w-40">
         <Skeleton className="h-4 w-32" />
       </TableHead>
-      <TableHead>
+      <TableHead className="w-40">
         <Skeleton className="h-4 w-32" />
       </TableHead>
-      <TableHead>
-        <Skeleton className="h-4 w-32" />
+      <TableHead className="w-32">
+        <Skeleton className="h-4 w-24" />
       </TableHead>
     </TableRow>
   );
@@ -76,20 +76,20 @@ export const APIKeysTableBodySkeleton = () => {
     <>
       {[...Array(5)].map((_, index) => (
         <TableRow key={index}>
-          <TableCell>
+          <TableCell className="w-64">
             <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell>
+          <TableCell className="flex-1">
             <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell>
+          <TableCell className="w-40">
             <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell>
+          <TableCell className="w-40">
             <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell className="text-right">
-            <Skeleton className="h-4 w-32 ml-auto" />
+          <TableCell className="w-32">
+            <Skeleton className="h-4 w-24" />
           </TableCell>
         </TableRow>
       ))}

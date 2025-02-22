@@ -22,5 +22,5 @@ export default function ScheduledMessagesPage() {
     return null;
   }
 
-  return <div>Scheduled Messages</div>;
+  return <div>Coming Soon...</div>;
 }

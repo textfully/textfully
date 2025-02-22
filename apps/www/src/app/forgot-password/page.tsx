@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
@@ -22,9 +22,10 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
-  const { resetPasswordForEmail } = useAuthContext();
+  const { resetPasswordForEmail, user, loading } = useAuthContext();
+
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
 
   const emailRef = useRef<HTMLInputElement>(null);
@@ -32,7 +33,7 @@ export default function ForgotPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     setEmailError(null);
 
     try {
@@ -47,7 +48,7 @@ export default function ForgotPasswordPage() {
             emailRef.current?.focus();
           }
         });
-        setLoading(false);
+        setIsSubmitting(false);
         return;
       }
 
@@ -64,9 +65,15 @@ export default function ForgotPasswordPage() {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && user) {
+      redirect("/dashboard");
+    }
+  }, [user, loading]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -103,7 +110,6 @@ export default function ForgotPasswordPage() {
             <Input
               id="email"
               ref={emailRef}
-              type="email"
               variant="primary"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -120,7 +126,8 @@ export default function ForgotPasswordPage() {
 
           <Button
             type="submit"
-            loading={loading}
+            variant="b&w"
+            loading={isSubmitting}
             disabled={!email}
             className="w-full"
           >

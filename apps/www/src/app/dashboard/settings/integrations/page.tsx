@@ -24,5 +24,5 @@ export default function IntegrationsSettingsPage() {
     return null;
   }
 
-  return <div>Integrations Settings</div>;
+  return <div>Coming Soon...</div>;
 }

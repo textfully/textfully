@@ -22,5 +22,5 @@ export default function TeamSettingsPage() {
     return null;
   }
 
-  return <div>Team</div>;
+  return <div>Coming Soon...</div>;
 }

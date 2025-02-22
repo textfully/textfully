@@ -176,32 +176,30 @@ export default function APIKeysPage() {
           </Button>
         </div>
 
-        <div className="overflow-hidden rounded-md border border-zinc-800">
-          <Table>
-            <TableHeader>
-              {isLoadingKeys ? (
-                <APIKeysTableHeaderSkeleton />
-              ) : (
-                <APIKeysTableHeader />
-              )}
-            </TableHeader>
-            <TableBody>
-              {isLoadingKeys ? (
-                <APIKeysTableBodySkeleton />
-              ) : apiKeys.length === 0 ? (
-                <APIKeysTableBodyEmpty />
-              ) : (
-                apiKeys.map((apiKey) => (
-                  <APIKeysTableRow
-                    key={apiKey.id}
-                    apiKey={apiKey}
-                    onRevoke={setKeyToRevoke}
-                  />
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
+        <Table>
+          <TableHeader>
+            {isLoadingKeys ? (
+              <APIKeysTableHeaderSkeleton />
+            ) : (
+              <APIKeysTableHeader />
+            )}
+          </TableHeader>
+          <TableBody>
+            {isLoadingKeys ? (
+              <APIKeysTableBodySkeleton />
+            ) : apiKeys.length === 0 ? (
+              <APIKeysTableBodyEmpty />
+            ) : (
+              apiKeys.map((apiKey) => (
+                <APIKeysTableRow
+                  key={apiKey.id}
+                  apiKey={apiKey}
+                  onRevoke={setKeyToRevoke}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

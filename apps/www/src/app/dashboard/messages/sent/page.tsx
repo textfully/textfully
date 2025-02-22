@@ -66,28 +66,26 @@ export default function SentMessagesPage() {
         <h1 className="text-2xl font-semibold">Sent Messages</h1>
       </div>
 
-      <div className="overflow-hidden rounded-md border border-zinc-800">
-        <Table>
-          <TableHeader>
-            {isLoadingMessages ? (
-              <SentMessagesTableHeaderSkeleton />
-            ) : (
-              <SentMessagesTableHeader />
-            )}
-          </TableHeader>
-          <TableBody>
-            {isLoadingMessages ? (
-              <SentMessagesTableBodySkeleton />
-            ) : messages.length === 0 ? (
-              <SentMessagesTableBodyEmpty />
-            ) : (
-              messages.map((message) => (
-                <SentMessagesTableRow key={message.id} message={message} />
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+      <Table>
+        <TableHeader>
+          {isLoadingMessages ? (
+            <SentMessagesTableHeaderSkeleton />
+          ) : (
+            <SentMessagesTableHeader />
+          )}
+        </TableHeader>
+        <TableBody>
+          {isLoadingMessages ? (
+            <SentMessagesTableBodySkeleton />
+          ) : messages.length === 0 ? (
+            <SentMessagesTableBodyEmpty />
+          ) : (
+            messages.map((message) => (
+              <SentMessagesTableRow key={message.id} message={message} />
+            ))
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }

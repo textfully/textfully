@@ -22,5 +22,5 @@ export default function BuyPhoneNumbersPage() {
     return null;
   }
 
-  return <div>Buy Numbers</div>;
+  return <div>Coming Soon...</div>;
 }

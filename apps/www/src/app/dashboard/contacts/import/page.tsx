@@ -22,5 +22,5 @@ export default function ImportContactsPage() {
     return null;
   }
 
-  return <div>Import Contacts</div>;
+  return <div>Coming Soon...</div>;
 }

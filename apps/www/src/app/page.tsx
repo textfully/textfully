@@ -13,9 +13,7 @@ import { cn } from "@/lib/utils";
 import { motion as m } from "framer-motion";
 import { Play } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 interface CodeSnippet {
   comment: string;
@@ -150,15 +148,9 @@ const ctas: CTA[] = [
   { name: "Get Started", link: "/dashboard" },
 ];
 
-const searchParams = new URLSearchParams(
-  typeof window !== "undefined" ? window.location.search : ""
-);
-
 export default function HomePage() {
   const [activeLanguage, setActiveLanguage] = useState("python");
   const [formattedTime, setFormattedTime] = useState("");
-
-  const router = useRouter();
 
   useEffect(() => {
     const time = new Date().getTime();
@@ -169,20 +161,6 @@ export default function HomePage() {
     }).format(time);
     setFormattedTime(formattedTime);
   }, []);
-
-  useEffect(() => {
-    const error = searchParams.get("error");
-    const errorCode = searchParams.get("error_code");
-
-    if (error === "access_denied" && errorCode === "otp_expired") {
-      setTimeout(() => {
-        router.replace("/login");
-        toast.error("Email link has expired", {
-          description: "Please try logging in again",
-        });
-      }, 500);
-    }
-  }, [router]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">

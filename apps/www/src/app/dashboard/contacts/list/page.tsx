@@ -22,5 +22,5 @@ export default function ContactListPage() {
     return null;
   }
 
-  return <div>Contact List</div>;
+  return <div>Coming Soon...</div>;
 }

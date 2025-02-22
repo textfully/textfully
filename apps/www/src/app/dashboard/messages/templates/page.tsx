@@ -22,5 +22,5 @@ export default function MessageTemplatesPage() {
     return null;
   }
 
-  return <div>Message Templates</div>;
+  return <div>Coming Soon...</div>;
 }

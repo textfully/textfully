@@ -22,5 +22,5 @@ export default function BillingPlanPage() {
     return null;
   }
 
-  return <div>Billing Plan</div>;
+  return <div>Coming Soon...</div>;
 }

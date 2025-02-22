@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
 import Logo from "@/assets/logo";
@@ -8,10 +8,11 @@ import GitHub from "@/assets/icons/socials/github";
 import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { cn, createRedirectLink } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -21,11 +22,12 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { signInWithPassword, signInWithOAuth } = useAuthContext();
+  const { signInWithPassword, signInWithOAuth, user, loading } =
+    useAuthContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
@@ -34,7 +36,7 @@ export default function LoginPage() {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoggingIn(true);
     setEmailError(null);
     setPasswordError(null);
 
@@ -50,7 +52,7 @@ export default function LoginPage() {
           setPasswordError(error.message);
           passwordRef.current?.focus();
         }
-        setLoading(false);
+        setIsLoggingIn(false);
         return;
       }
 
@@ -70,7 +72,7 @@ export default function LoginPage() {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setIsLoggingIn(false);
     }
   };
 
@@ -91,6 +93,12 @@ export default function LoginPage() {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (!loading && user) {
+      redirect("/dashboard");
+    }
+  }, [user, loading]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -209,8 +217,8 @@ export default function LoginPage() {
           <Button
             type="submit"
             variant="b&w"
-            loading={loading}
-            disabled={!email}
+            loading={isLoggingIn}
+            disabled={!email || !password}
             className="w-full"
           >
             Continue

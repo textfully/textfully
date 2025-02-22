@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import Google from "@/assets/icons/socials/google";
@@ -12,6 +12,7 @@ import GitHub from "@/assets/icons/socials/github";
 import { useAuthContext } from "@/contexts/useAuthContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 const signupSchema = z
   .object({
@@ -33,13 +34,13 @@ const signupSchema = z
 type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
-  const { signUp, signInWithOAuth } = useAuthContext();
+  const { signUp, signInWithOAuth, user, loading } = useAuthContext();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
   const [nameError, setNameError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
@@ -54,7 +55,7 @@ export default function SignupPage() {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSigningUp(true);
     setNameError(null);
     setEmailError(null);
     setPasswordError(null);
@@ -83,7 +84,7 @@ export default function SignupPage() {
           setConfirmPasswordError(error.message);
           confirmPasswordRef.current?.focus();
         }
-        setLoading(false);
+        setIsSigningUp(false);
         return;
       }
 
@@ -105,7 +106,7 @@ export default function SignupPage() {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setIsSigningUp(false);
     }
   };
 
@@ -130,6 +131,12 @@ export default function SignupPage() {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (!loading && user) {
+      redirect("/dashboard");
+    }
+  }, [user, loading]);
 
   return (
     <div className="bg-zinc-950 min-h-screen text-white">
@@ -222,7 +229,6 @@ export default function SignupPage() {
             <Input
               id="email"
               ref={emailRef}
-              type="email"
               variant="primary"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -287,7 +293,7 @@ export default function SignupPage() {
           <Button
             type="submit"
             variant="b&w"
-            loading={loading}
+            loading={isSigningUp}
             disabled={!email || !password || !name || !confirmPassword}
             className="w-full"
           >

@@ -4,9 +4,12 @@ import { OrganizationResponse } from "@/types/responses";
 
 export async function fetchOrganizations(): Promise<OrganizationResponse[]> {
   try {
-    return await makeApiRequest<OrganizationResponse[]>(`${API_BASE_URL}/organizations`, {
-      errorMessage: "Failed to fetch organizations"
-    });
+    return await makeApiRequest<OrganizationResponse[]>(
+      `${API_BASE_URL}/organizations`,
+      {
+        errorMessage: "Failed to fetch organizations",
+      }
+    );
   } catch (error) {
     throw error;
   }

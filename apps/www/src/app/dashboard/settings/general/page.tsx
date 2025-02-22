@@ -22,5 +22,5 @@ export default function GeneralSettingsPage() {
     return null;
   }
 
-  return <div>General Settings</div>;
+  return <div>Coming Soon...</div>;
 }

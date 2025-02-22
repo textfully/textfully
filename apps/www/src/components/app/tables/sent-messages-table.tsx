@@ -1,13 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableCell, TableHead, TableRow } from "@/components/ui/table";
-import { MessageResponse, MessageService } from "@/types/responses";
-import { MESSAGE_SERVICE, MESSAGE_STATUS } from "@/constants/messages";
+import { MessageResponse } from "@/types/responses";
+import { MESSAGE_SERVICE, MESSAGE_STATUS } from "@/constants/enums";
 import { PhoneNumberText } from "@/components/app/phone-number-text";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import advanced from "dayjs/plugin/advancedFormat";
 import { cn } from "@/lib/utils";
+import { MessageService } from "@/types/enums";
 
 dayjs.extend(timezone);
 dayjs.extend(localizedFormat);

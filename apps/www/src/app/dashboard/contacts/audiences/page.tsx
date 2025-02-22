@@ -22,5 +22,5 @@ export default function ContactAudiencesPage() {
     return null;
   }
 
-  return <div>Contact Audiences</div>;
+  return <div>Coming Soon...</div>;
 }

@@ -22,5 +22,5 @@ export default function BillingPaymentPage() {
     return null;
   }
 
-  return <div>Billing Payment</div>;
+  return <div>Coming Soon...</div>;
 }

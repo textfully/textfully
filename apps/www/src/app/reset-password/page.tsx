@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
@@ -28,10 +28,15 @@ const resetPasswordSchema = z.object({
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
+const searchParams = new URLSearchParams(
+  typeof window !== "undefined" ? window.location.search : ""
+);
+
 export default function ResetPasswordPage() {
-  const { updatePassword } = useAuthContext();
+  const { updatePassword, user, loading } = useAuthContext();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -39,7 +44,7 @@ export default function ResetPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     setPasswordError(null);
 
     try {
@@ -54,7 +59,7 @@ export default function ResetPasswordPage() {
             passwordRef.current?.focus();
           }
         });
-        setLoading(false);
+        setIsSubmitting(false);
         return;
       }
 
@@ -69,9 +74,31 @@ export default function ResetPasswordPage() {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      redirect("/login");
+    } else if (!loading && user) {
+      setEmail(user.email || "");
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    const errorCode = searchParams.get("error_code");
+
+    if (error === "access_denied" && errorCode === "otp_expired") {
+      setTimeout(() => {
+        router.replace("/login");
+        toast.error("Email link has expired", {
+          description: "Please try again",
+        });
+      }, 500);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -98,6 +125,9 @@ export default function ResetPasswordPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="hidden">
+            <Input id="email" value={email} />
+          </div>
           <div className="space-y-2">
             <label htmlFor="password" className="block text-sm text-zinc-400">
               Password
@@ -122,8 +152,10 @@ export default function ResetPasswordPage() {
 
           <Button
             type="submit"
-            disabled={loading || !password}
-            loading={loading}
+            variant="b&w"
+            disabled={!password}
+            loading={isSubmitting}
+            className="w-full"
           >
             Update password
             <ArrowRight className="ml-1 w-4 h-4" />
