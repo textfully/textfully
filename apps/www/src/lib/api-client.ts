@@ -55,5 +55,9 @@ export async function makeApiRequest<T>(
     throw new Error(error.detail || errorMessage);
   }
 
-  return response.json();
+  if (response.status === 204) {
+    return null as unknown as T;
+  } else {
+    return response.json();
+  }
 }
