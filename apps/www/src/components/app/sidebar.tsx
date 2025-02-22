@@ -32,6 +32,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { createOrganization } from "@/api/organizations/create-organization";
 import { toast } from "sonner";
+import { OrganizationResponse } from "@/types/responses";
+import { Skeleton } from "../ui/skeleton";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
@@ -102,6 +104,11 @@ export const Sidebar = () => {
     }
   };
 
+  const handleSelectOrganization = (org: OrganizationResponse) => () => {
+    setSelectedOrganization(org);
+    window.location.reload();
+  };
+
   return (
     <div
       className="flex h-full"
@@ -115,7 +122,10 @@ export const Sidebar = () => {
       <div className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-64">
         <div className="pt-3 pb-1 flex px-2 overflow-hidden">
           {organizations === undefined ? (
-            <div className="h-8 bg-zinc-900 rounded-md w-32" />
+            <div className="flex items-center h-9 gap-x-2 px-2 py-1">
+              <Skeleton className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded" />
+              <Skeleton className="h-6 bg-zinc-800 rounded w-20" />
+            </div>
           ) : organizations && organizations.length > 0 ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild={true}>
@@ -140,9 +150,7 @@ export const Sidebar = () => {
                   <DropdownMenuItem key={org.id} asChild={true}>
                     <button
                       className="flex items-center gap-x-2 w-full"
-                      onClick={() => {
-                        setSelectedOrganization(org);
-                      }}
+                      onClick={handleSelectOrganization(org)}
                     >
                       <div className="w-6 h-6 bg-zinc-800 rounded flex items-center justify-center">
                         <span className="text-sm font-medium text-white">

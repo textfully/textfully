@@ -7,7 +7,6 @@ import { cn, createRedirectLink } from "@/lib/utils";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -44,6 +43,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Copy from "@/assets/icons/misc/check";
+import {
+  APIKeysTableBodyEmpty,
+  APIKeysTableBodySkeleton,
+  APIKeysTableHeader,
+  APIKeysTableHeaderSkeleton,
+  APIKeysTableRow,
+} from "@/components/app/tables/api-keys-table";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
@@ -173,55 +179,24 @@ export default function APIKeysPage() {
         <div className="overflow-hidden rounded-md border border-zinc-800">
           <Table>
             <TableHeader>
-              <TableRow className="border-zinc-800 bg-zinc-900">
-                <TableHead>Name</TableHead>
-                <TableHead>API Key</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Last Used</TableHead>
-                <TableHead className="text-right"></TableHead>
-              </TableRow>
+              {isLoadingKeys ? (
+                <APIKeysTableHeaderSkeleton />
+              ) : (
+                <APIKeysTableHeader />
+              )}
             </TableHeader>
             <TableBody>
               {isLoadingKeys ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center text-zinc-400">
-                    Loading API keys...
-                  </TableCell>
-                </TableRow>
+                <APIKeysTableBodySkeleton />
               ) : apiKeys.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center text-zinc-400">
-                    No API keys found. Create one to get started.
-                  </TableCell>
-                </TableRow>
+                <APIKeysTableBodyEmpty />
               ) : (
                 apiKeys.map((apiKey) => (
-                  <TableRow key={apiKey.id} className="border-zinc-800">
-                    <TableCell>{apiKey.name}</TableCell>
-                    <TableCell>
-                      <code className="bg-zinc-800 px-2 py-1 rounded">
-                        {apiKey.short_key}...
-                      </code>
-                    </TableCell>
-                    <TableCell>
-                      {apiKey.created_at
-                        ? new Date(apiKey.created_at).toLocaleDateString()
-                        : "-"}
-                    </TableCell>
-                    <TableCell>
-                      {apiKey.last_used
-                        ? new Date(apiKey.last_used).toLocaleDateString()
-                        : "-"}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="destructive-surface"
-                        onClick={() => setKeyToRevoke(apiKey)}
-                      >
-                        Revoke
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                  <APIKeysTableRow
+                    key={apiKey.id}
+                    apiKey={apiKey}
+                    onRevoke={setKeyToRevoke}
+                  />
                 ))
               )}
             </TableBody>

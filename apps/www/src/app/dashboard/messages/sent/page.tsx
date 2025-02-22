@@ -8,23 +8,19 @@ import { toast } from "sonner";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { fetchMessages } from "@/api/messages/fetch-messages";
-import { MessageResponse, MessageService } from "@/types/responses";
-import { MESSAGE_SERVICE, MESSAGE_STATUS } from "@/constants/messages";
-import { PhoneNumberText } from "@/components/app/phone-number-text";
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import advanced from "dayjs/plugin/advancedFormat";
-
-dayjs.extend(timezone);
-dayjs.extend(localizedFormat);
-dayjs.extend(advanced)
+import { MessageResponse } from "@/types/responses";
+import {
+  SentMessagesTableBodyEmpty,
+  SentMessagesTableBodySkeleton,
+  SentMessagesTableHeader,
+  SentMessagesTableHeaderSkeleton,
+  SentMessagesTableRow,
+} from "@/components/app/tables/sent-messages-table";
 
 export default function SentMessagesPage() {
   const { user, loading } = useAuthContext();
@@ -73,64 +69,20 @@ export default function SentMessagesPage() {
       <div className="overflow-hidden rounded-md border border-zinc-800">
         <Table>
           <TableHeader>
-            <TableRow className="border-zinc-800 bg-zinc-900">
-              <TableHead>Recipient</TableHead>
-              <TableHead>Service</TableHead>
-              <TableHead>Text</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Sent At</TableHead>
-            </TableRow>
+            {isLoadingMessages ? (
+              <SentMessagesTableHeaderSkeleton />
+            ) : (
+              <SentMessagesTableHeader />
+            )}
           </TableHeader>
           <TableBody>
             {isLoadingMessages ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center text-zinc-400">
-                  Loading messages...
-                </TableCell>
-              </TableRow>
+              <SentMessagesTableBodySkeleton />
             ) : messages.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center text-zinc-400">
-                  No messages found.
-                </TableCell>
-              </TableRow>
+              <SentMessagesTableBodyEmpty />
             ) : (
               messages.map((message) => (
-                <TableRow key={message.id} className="border-zinc-800">
-                  <TableCell className="min-w-48">
-                    <PhoneNumberText phoneNumber={message.recipient} />
-                  </TableCell>
-                  <TableCell className="min-w-16">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        message.service === MessageService.SMS
-                          ? "bg-[#34DA52]/10 text-[#34DA52]"
-                          : "bg-[#0b93f6]/10 text-[#0b93f6]"
-                      }`}
-                    >
-                      {MESSAGE_SERVICE[message.service]}
-                    </span>
-                  </TableCell>
-                  <TableCell className="min-w-64 w-full">
-                    {message.text}
-                  </TableCell>
-                  <TableCell className="min-w-24">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        message.status === "delivered"
-                          ? "bg-green-500/10 text-green-500"
-                          : message.status === "failed"
-                            ? "bg-red-500/10 text-red-500"
-                            : "bg-yellow-500/10 text-yellow-500"
-                      }`}
-                    >
-                      {MESSAGE_STATUS[message.status]}
-                    </span>
-                  </TableCell>
-                  <TableCell className="min-w-72">
-                    {dayjs(message.sent_at).format("LLL z")}
-                  </TableCell>
-                </TableRow>
+                <SentMessagesTableRow key={message.id} message={message} />
               ))
             )}
           </TableBody>

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { getData } from "./storage";
 
 export async function getAuthToken(): Promise<string> {
   const supabase = createClient();
@@ -29,16 +30,18 @@ export async function makeApiRequest<T>(
 ): Promise<T> {
   const token = await getAuthToken();
   const {
-    organizationId,
     headers = {},
     errorMessage = "API request failed",
     ...rest
   } = options;
 
+  const storedOrg = getData("SELECTED_ORGANIZATION");
+  const selectedOrg = storedOrg ? JSON.parse(storedOrg) : null;
+
   const requestHeaders = {
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
-    ...(organizationId && { "X-Organization-ID": organizationId }),
+    ...(selectedOrg && { "X-Organization-ID": selectedOrg.id }),
     ...headers,
   };
 
