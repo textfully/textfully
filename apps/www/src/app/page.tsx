@@ -9,11 +9,11 @@ import Rust from "@/assets/icons/languages/rust";
 import { Footer } from "@/components/landing/footer";
 import { NavBar } from "@/components/landing/nav-bar";
 import { PhoneNotifications } from "@/components/landing/phone-notifications";
-import { cn } from "@/utils/helper";
+import { cn } from "@/lib/utils";
 import { motion as m } from "framer-motion";
 import { Play } from "lucide-react";
 import Link from "next/link";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 interface CodeSnippet {
   comment: string;
@@ -316,7 +316,7 @@ export default function HomePage() {
                     <p
                       className={cn(
                         "font-semibold text-sm hover:brightness-110",
-                        isEven ? "text-[#0A93F6]" : "text-sky-200"
+                        isEven ? "text-primary" : "text-sky-200"
                       )}
                     >
                       {card.cta}

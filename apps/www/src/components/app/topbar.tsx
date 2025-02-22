@@ -3,12 +3,7 @@
 import { getIdentity } from "@/api/identity.ts/get-identity";
 import { menuItems } from "@/constants/nav";
 import { useAuthContext } from "@/contexts/useAuthContext";
-import {
-  HelpCircle,
-  ExternalLink,
-  MessageCircleMore,
-  FileText,
-} from "lucide-react";
+import { MessageCircleMore, FileText } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
@@ -16,7 +11,6 @@ import { useEffect } from "react";
 
 export const Topbar = () => {
   const { user } = useAuthContext();
-
   const pathname = usePathname();
 
   // Get the current section from the path (e.g. /dashboard/messages/sent -> messages)
@@ -55,31 +49,39 @@ export const Topbar = () => {
   return (
     <>
       <Script src="https://do.featurebase.app/js/sdk.js" id="featurebase-sdk" />
-      <div className="h-14 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between px-4">
-        <div className="px-4 h-full flex items-center w-64">
+      <div className="h-14 bg-zinc-950 border-b border-zinc-800 flex items-center px-4">
+        <div className="h-full flex items-center">
           <h2 className="font-semibold text-zinc-400">
-            {selectedMenuData?.label}
+            {selectedMenuData?.label || "Home"}
           </h2>
         </div>
-        <div className="flex items-center space-x-2">
-          <a
-            data-featurebase-link
-            href="https://textfully.featurebase.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="px-3 py-1.5 bg-zinc-800/50 transition-colors rounded-lg flex items-center gap-x-1.5 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200">
-              <MessageCircleMore className="w-4 h-4" />
-              <span className="text-sm font-medium">Feedback</span>
-            </button>
-          </a>
+        <div className="flex items-center w-full justify-end">
+          <div className="flex items-center space-x-2">
+            <a
+              data-featurebase-link
+              href="https://textfully.featurebase.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg"
+            >
+              <div className="px-3 py-1.5 bg-zinc-800/50 transition-colors rounded-lg flex items-center gap-x-1.5 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200">
+                <MessageCircleMore className="w-4 h-4" />
+                <span className="text-sm font-medium">Feedback</span>
+              </div>
+            </a>
 
-          <Link href="/docs" target="_blank" rel="noopener noreferrer">
-            <button className="px-3 py-1.5 transition-colors rounded-lg flex items-center gap-x-1.5 text-zinc-400 hover:text-zinc-200">
-              <FileText className="w-4 h-4" />
-              <span className="text-sm font-medium">Docs</span>
-            </button>
-          </Link>
+            <Link
+              href="/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg"
+            >
+              <div className="px-3 py-1.5 transition-colors rounded-lg flex items-center gap-x-1.5 text-zinc-400 hover:text-zinc-200">
+                <FileText className="w-4 h-4" />
+                <span className="text-sm font-medium">Docs</span>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </>

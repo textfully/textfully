@@ -18,7 +18,7 @@
     --accent-foreground: #f1f5f9;
 
     --popover: #09090b;
-    --popover-foreground: #94a3b8;
+    --popover-foreground: #a1a1aa;
 
     --border: #252525;
     --input: #1e1e1e;
@@ -26,10 +26,10 @@
     --card: #212126;
     --card-foreground: #dee3ea;
 
-    --primary: #0A93F6;
+    --primary: #0a93f6;
     --primary-foreground: #ffffff;
 
-    --secondary: #2F3037;
+    --secondary: #2f3037;
     --secondary-foreground: #f1f5f9;
 
     --destructive: #ef4444;
@@ -74,4 +74,22 @@ body,
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+@layer base {
+  a {
+    &:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

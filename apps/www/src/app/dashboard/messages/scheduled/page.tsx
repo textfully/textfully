@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/utils/helper";
+import { createRedirectLink } from "@/lib/utils";
 
 export default function ScheduledMessagesPage() {
   const { user, loading } = useAuthContext();
@@ -22,5 +22,5 @@ export default function ScheduledMessagesPage() {
     return null;
   }
 
-  return <div>Scheduled Messages</div>;
+  return <div>Coming Soon...</div>;
 }

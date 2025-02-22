@@ -4,7 +4,7 @@ import Discord from "@/assets/icons/socials/discord";
 import GitHub from "@/assets/icons/socials/github";
 import Logo from "@/assets/logo";
 import X from "@/assets/icons/socials/x";
-import { scrollToTop } from "@/utils/helper";
+import { scrollToTop } from "@/lib/utils";
 
 interface SocialLink {
   href: string;
@@ -31,7 +31,7 @@ const SOCIAL_LINKS: SocialLink[] = [
     ariaLabel: "Twitter",
   },
   {
-    href: "https://github.com/gtfol/textfully",
+    href: "https://github.com/textfully",
     icon: GitHub,
     ariaLabel: "GitHub",
   },
@@ -76,7 +76,7 @@ export const Footer = () => {
         <div className="flex flex-col gap-12 sm:gap-24 sm:flex-row sm:flex-wrap">
           <div className="w-full sm:w-auto flex flex-row justify-between sm:justify-start items-center sm:flex-col sm:items-start sm:space-y-8">
             <button className="flex gap-x-2 items-center" onClick={scrollToTop}>
-              <div className="w-5 h-5 text-[#0A93F6]">
+              <div className="w-5 h-5 text-primary">
                 <Logo />
               </div>
               <p className="text-base font-semibold text-white font-general">
@@ -117,7 +117,7 @@ export const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-[#252525] flex flex-col sm:flex-row justify-between items-center">
           <div className="text-[#50555c] text-sm mb-4 sm:mb-0">
-            © 2024 gtfol, LLC. All rights reserved.
+            {`© ${new Date().getFullYear()} gtfol, LLC. All rights reserved.`}
           </div>
         </div>
       </div>

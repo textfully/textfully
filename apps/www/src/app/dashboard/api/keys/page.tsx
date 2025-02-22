@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/utils/helper";
+import { cn, createRedirectLink } from "@/lib/utils";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -31,6 +30,26 @@ import { APIKeyResponse } from "@/types/responses";
 import { toast } from "sonner";
 import { fetchApiKeys } from "@/api/api-keys/fetch-api-keys";
 import { revokeApiKey } from "@/api/api-keys/revoke-api-keys";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Copy from "@/assets/icons/misc/check";
+import {
+  APIKeysTableBodyEmpty,
+  APIKeysTableBodySkeleton,
+  APIKeysTableHeader,
+  APIKeysTableHeaderSkeleton,
+  APIKeysTableRow,
+} from "@/components/app/tables/api-keys-table";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
@@ -44,6 +63,7 @@ export default function APIKeysPage() {
   const [nameError, setNameError] = useState<string>("");
   const [isCreating, setIsCreating] = useState(false);
   const [isLoadingKeys, setIsLoadingKeys] = useState(true);
+  const [keyToRevoke, setKeyToRevoke] = useState<APIKeyResponse | null>(null);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const codeRef = useRef<HTMLInputElement>(null);
@@ -128,6 +148,7 @@ export default function APIKeysPage() {
 
       const keys = await fetchApiKeys();
       setApiKeys(keys);
+      setKeyToRevoke(null);
 
       toast.success("API key revoked successfully");
     } catch (error) {
@@ -150,67 +171,35 @@ export default function APIKeysPage() {
       <div className="container p-2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">API Keys</h1>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2.5 bg-white rounded-lg text-zinc-900 font-semibold text-sm leading-none transition hover:brightness-110"
-          >
+          <Button variant="b&w" onClick={() => setIsModalOpen(true)}>
             Create API Key
-          </button>
+          </Button>
         </div>
 
-        <div className="overflow-hidden rounded-md border border-zinc-800">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-zinc-800 bg-zinc-900">
-                <TableHead>Name</TableHead>
-                <TableHead>API Key</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Last Used</TableHead>
-                <TableHead className="text-right"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {isLoadingKeys ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center text-zinc-400">
-                    Loading API keys...
-                  </TableCell>
-                </TableRow>
-              ) : apiKeys.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center text-zinc-400">
-                    No API keys found. Create one to get started.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                apiKeys.map((apiKey) => (
-                  <TableRow key={apiKey.id} className="border-zinc-800">
-                    <TableCell>{apiKey.name}</TableCell>
-                    <TableCell>
-                      <code className="bg-zinc-800 px-2 py-1 rounded">
-                        {apiKey.short_key}...
-                      </code>
-                    </TableCell>
-                    <TableCell>
-                      {new Date(apiKey.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell>
-                      {new Date(apiKey.last_used).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <button
-                        onClick={() => handleRevokeKey(apiKey.id)}
-                        className="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-full text-sm hover:brightness-110 transition"
-                      >
-                        Revoke
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
+        <Table>
+          <TableHeader>
+            {isLoadingKeys ? (
+              <APIKeysTableHeaderSkeleton />
+            ) : (
+              <APIKeysTableHeader />
+            )}
+          </TableHeader>
+          <TableBody>
+            {isLoadingKeys ? (
+              <APIKeysTableBodySkeleton />
+            ) : apiKeys.length === 0 ? (
+              <APIKeysTableBodyEmpty />
+            ) : (
+              apiKeys.map((apiKey) => (
+                <APIKeysTableRow
+                  key={apiKey.id}
+                  apiKey={apiKey}
+                  onRevoke={setKeyToRevoke}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -235,32 +224,20 @@ export default function APIKeysPage() {
                     readOnly
                     value={createdApiKey}
                     onClick={(e) => e.currentTarget.select()}
-                    className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-x-auto whitespace-nowrap hide-scrollbar font-mono focus:outline-none focus:ring-2 focus:ring-[#0A93F6] transition-all duration-300"
+                    className="flex-1 bg-zinc-900 px-3 py-2 rounded-md text-sm block overflow-x-auto whitespace-nowrap hide-scrollbar font-mono focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"
                   />
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => {
                       codeRef.current?.select();
                       navigator.clipboard.writeText(createdApiKey);
                       toast.success("API key copied to clipboard");
                     }}
-                    className="p-2 hover:bg-zinc-800 rounded-md transition shrink-0"
                     title="Copy to clipboard"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                    </svg>
-                  </button>
+                    <Copy />
+                  </Button>
                 </div>
               </div>
               <div>
@@ -268,7 +245,7 @@ export default function APIKeysPage() {
                   Permissions
                 </h3>
                 <Select value={permission} disabled>
-                  <SelectTrigger className="w-full bg-zinc-900">
+                  <SelectTrigger className="w-full bg-zinc-900 hover:brightness-110">
                     {permission === APIKeyPermission.ALL
                       ? "Full access"
                       : "Sending access only"}
@@ -276,12 +253,9 @@ export default function APIKeysPage() {
                 </Select>
               </div>
               <div className="flex justify-end">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition hover:brightness-110"
-                >
+                <Button variant="b&w" onClick={() => setIsModalOpen(false)}>
                   Done
-                </button>
+                </Button>
               </div>
             </div>
           ) : (
@@ -293,9 +267,8 @@ export default function APIKeysPage() {
                 >
                   Name
                 </label>
-                <input
+                <Input
                   ref={nameRef}
-                  type="text"
                   id="name"
                   value={name}
                   onChange={(e) => {
@@ -303,11 +276,9 @@ export default function APIKeysPage() {
                     setNameError("");
                   }}
                   placeholder="e.g. Production API Key"
-                  className={`w-full px-2.5 py-1.5 text-sm bg-zinc-900 border ${
-                    nameError
-                      ? "border-red-500 focus:ring-transparent"
-                      : "border-zinc-700 focus:ring-zinc-700"
-                  } rounded-md text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2`}
+                  className={cn(
+                    nameError && "border-red-500 focus:ring-transparent"
+                  )}
                 />
                 {nameError && (
                   <p className="mt-1 text-sm text-red-500">{nameError}</p>
@@ -333,29 +304,48 @@ export default function APIKeysPage() {
                 </Select>
               </div>
               <div className="flex justify-end gap-x-2">
-                <button
+                <Button
                   type="button"
+                  variant="surface"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm font-semibold text-zinc-400 hover:text-white transition"
                 >
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isCreating}
-                  className={`px-4 py-2 bg-[#0A93F6] rounded-md text-white text-sm font-semibold transition ${
-                    isCreating
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:brightness-110"
-                  }`}
-                >
-                  {isCreating ? "Creating..." : "Create"}
-                </button>
+                </Button>
+                <Button variant="primary" type="submit" loading={isCreating}>
+                  Create
+                </Button>
               </div>
             </form>
           )}
         </DialogContent>
       </Dialog>
+
+      <AlertDialog
+        open={!!keyToRevoke}
+        onOpenChange={(open) => !open && setKeyToRevoke(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Revoke API Key</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to revoke this API key? This action cannot
+              be undone. Any applications using this key will immediately lose
+              access.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setKeyToRevoke(null)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500"
+              onClick={() => keyToRevoke && handleRevokeKey(keyToRevoke.id)}
+            >
+              Revoke Key
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

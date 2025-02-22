@@ -18,7 +18,7 @@ export default function CookiesPage() {
               when you visit our website at{" "}
               <a
                 href="https://textfully.dev"
-                className="text-[#0A93F6] hover:brightness-110"
+                className="text-primary hover:brightness-110"
               >
                 https://textfully.dev
               </a>{" "}
@@ -159,7 +159,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://support.google.com/chrome/answer/95647#zippy=%2Callow-or-block-cookies"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Chrome
                 </a>
@@ -167,7 +167,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://support.microsoft.com/en-us/windows/delete-and-manage-cookies-168dab11-0753-043d-7c16-ede5947fc64d"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Internet Explorer
                 </a>
@@ -175,7 +175,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop?redirectslug=enable-and-disable-cookies-website-preferences&redirectlocale=en-US"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Firefox
                 </a>
@@ -183,7 +183,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://support.apple.com/en-ie/guide/safari/sfri11471/mac"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Safari
                 </a>
@@ -191,7 +191,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://support.microsoft.com/en-us/windows/microsoft-edge-browsing-data-and-privacy-bb8174ba-9d73-dcf2-9b4a-c582b4e640dd"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Edge
                 </a>
@@ -199,7 +199,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://help.opera.com/en/latest/web-preferences/"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Opera
                 </a>
@@ -215,7 +215,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="http://www.aboutads.info/choices/"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Digital Advertising Alliance
                 </a>
@@ -223,7 +223,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="https://youradchoices.ca/"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   Digital Advertising Alliance of Canada
                 </a>
@@ -231,7 +231,7 @@ export default function CookiesPage() {
               <li>
                 <a
                   href="http://www.youronlinechoices.com/"
-                  className="text-[#0A93F6] hover:brightness-110"
+                  className="text-primary hover:brightness-110"
                 >
                   European Interactive Digital Advertising Alliance
                 </a>
@@ -277,14 +277,14 @@ export default function CookiesPage() {
               storage using the tools contained in the{" "}
               <a
                 href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager07.html"
-                className="text-[#0A93F6] hover:brightness-110"
+                className="text-primary hover:brightness-110"
               >
                 Website Storage Settings Panel
               </a>
               . You can also control Flash Cookies by going to the{" "}
               <a
                 href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager03.html"
-                className="text-[#0A93F6] hover:brightness-110"
+                className="text-primary hover:brightness-110"
               >
                 Global Storage Settings Panel
               </a>{" "}
@@ -343,7 +343,7 @@ export default function CookiesPage() {
             </h2>
             <p className="text-zinc-300 mb-4">
               If you have any questions about our use of cookies or other
-              technologies, please email us at textfully@gtfol.inc or by post
+              technologies, please email us at textfully@gtfol.dev or by post
               to:
             </p>
             <div className="text-zinc-300">

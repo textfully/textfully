@@ -1,13 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
+import { ArrowRight, ChevronLeft } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useAuthContext } from "@/contexts/useAuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const resetPasswordSchema = z.object({
   password: z
@@ -25,19 +28,23 @@ const resetPasswordSchema = z.object({
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
+const searchParams = new URLSearchParams(
+  typeof window !== "undefined" ? window.location.search : ""
+);
+
 export default function ResetPasswordPage() {
+  const { updatePassword, user, loading } = useAuthContext();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const passwordRef = useRef<HTMLInputElement>(null);
-
   const router = useRouter();
-  const supabase = createClient();
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     setPasswordError(null);
 
     try {
@@ -52,13 +59,11 @@ export default function ResetPasswordPage() {
             passwordRef.current?.focus();
           }
         });
-        setLoading(false);
+        setIsSubmitting(false);
         return;
       }
 
-      const { data, error } = await supabase.auth.updateUser({
-        password,
-      });
+      const { error } = await updatePassword(password);
 
       if (error) {
         setPasswordError(error.message);
@@ -69,12 +74,34 @@ export default function ResetPasswordPage() {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
+  useEffect(() => {
+    if (!loading && !user) {
+      redirect("/login");
+    } else if (!loading && user) {
+      setEmail(user.email || "");
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    const errorCode = searchParams.get("error_code");
+
+    if (error === "access_denied" && errorCode === "otp_expired") {
+      setTimeout(() => {
+        router.replace("/login");
+        toast.error("Email link has expired", {
+          description: "Please try again",
+        });
+      }, 500);
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-white">
       <div className="px-6 py-4 my-auto">
         <Link
           href="/login"
@@ -87,7 +114,7 @@ export default function ResetPasswordPage() {
 
       <div className="max-w-md mx-auto px-4 p-32">
         <div className="flex justify-center mb-4">
-          <Link href="/" className="w-10 h-10 text-[#0A93F6]">
+          <Link href="/" className="w-10 h-10 text-primary">
             <Logo />
           </Link>
         </div>
@@ -97,43 +124,42 @@ export default function ResetPasswordPage() {
           <p className="text-zinc-400">Enter your new password below.</p>
         </div>
 
-        <form onSubmit={handleSignIn} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="hidden">
+            <Input id="email" value={email} />
+          </div>
           <div className="space-y-2">
             <label htmlFor="password" className="block text-sm text-zinc-400">
               Password
             </label>
-            <input
+            <Input
               id="password"
               ref={passwordRef}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full px-3 py-2 bg-[#1e1e1e] rounded-lg placeholder:text-zinc-600 border focus:ring-1 outline-none transition-colors ${
-                passwordError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-zinc-800 focus:border-zinc-700 focus:ring-[#0A93F6]"
-              }`}
-              placeholder="neo@matrix.com"
+              variant="primary"
+              placeholder="Enter your new password"
+              className={cn(
+                passwordError &&
+                  "border-red-500 focus:border-red-500 focus:ring-red-500"
+              )}
             />
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
-            disabled={loading || !password}
-            className="w-full py-2 bg-[#0A93F6] hover:brightness-110 text-white rounded-lg font-medium transition-colors flex items-center justify-center disabled:opacity-50"
+            variant="b&w"
+            disabled={!password}
+            loading={isSubmitting}
+            className="w-full"
           >
-            {loading ? (
-              "Updating..."
-            ) : (
-              <>
-                Update password
-                <ArrowRight className="ml-1 w-4 h-4" />
-              </>
-            )}
-          </button>
+            Update password
+            <ArrowRight className="ml-1 w-4 h-4" />
+          </Button>
         </form>
       </div>
     </div>

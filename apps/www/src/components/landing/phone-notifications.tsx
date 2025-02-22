@@ -49,7 +49,7 @@ const notifications = [
   {
     translateY: 24,
     delay: 0.6,
-    bgColor: "bg-[#0A93F6]/20 border border-dashed border-[#0A93F6]/50",
+    bgColor: "bg-primary/20 border border-dashed border-primary/50",
     className: "right-3.5 w-[calc(100%-56px)]",
   },
   {
@@ -61,7 +61,7 @@ const notifications = [
   {
     translateY: 72,
     delay: 1,
-    bgColor: "bg-[#0A93F6]/20 border border-dashed border-[#0A93F6]/50",
+    bgColor: "bg-primary/20 border border-dashed border-primary/50",
     className: "right-3.5 w-[calc(100%-56px)] h-10",
   },
   {
