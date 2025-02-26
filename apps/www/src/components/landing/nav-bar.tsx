@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion as m } from "framer-motion";
 import clsx from "clsx";
 import Logo from "@/assets/logo";
-import { useAppContext } from "@/contexts/useAppContext";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { useState } from "react";
 
 interface NavItem {
@@ -28,7 +27,6 @@ export const NavBar = ({
   shouldAnimate = true,
   isFixed = false,
 }: NavBarProps) => {
-  const { shouldLoadAnimation } = useAppContext();
   const { user } = useAuthContext();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,15 +34,11 @@ export const NavBar = ({
   return (
     <>
       <m.nav
-        initial={
-          shouldAnimate && shouldLoadAnimation ? { opacity: 0, y: -20 } : false
-        }
-        animate={
-          shouldAnimate && shouldLoadAnimation ? { opacity: 1, y: 0 } : false
-        }
-        transition={{ duration: 0.2 }}
+        initial={shouldAnimate ? { opacity: 0, y: -20 } : false}
+        animate={shouldAnimate ? { opacity: 1, y: 0 } : false}
+        transition={{ duration: 0.8 }}
         className={clsx(
-          "flex items-center justify-between p-4 px-6",
+          "flex items-center justify-between p-4 px-6 h-16",
           isFixed && "fixed top-0 left-0 right-0 z-30 bg-zinc-950"
         )}
       >
@@ -107,52 +101,64 @@ export const NavBar = ({
             </>
           )}
         </div>
-        <div className="block sm:hidden ml-4">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex-col flex items-center justify-center w-5 h-5  "
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24">
-              <m.rect
-                width="24"
-                height="2"
-                rx="1"
-                fill="white"
-                animate={{
-                  y: isMenuOpen ? 11 : 8,
-                  rotate: isMenuOpen ? 45 : 0,
-                  transformOrigin: "center",
-                }}
-                transition={{ duration: 0.3 }}
-              />
-              <m.rect
-                width="24"
-                height="2"
-                rx="1"
-                fill="white"
-                animate={{
-                  y: isMenuOpen ? 11 : 16,
-                  rotate: isMenuOpen ? -45 : 0,
-                  transformOrigin: "center",
-                }}
-                transition={{ duration: 0.3 }}
-              />
-            </svg>
-          </button>
-        </div>
+        {user !== undefined && (
+          <div className="block sm:hidden ml-4">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex-col flex items-center justify-center [&_svg]:size-5"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <m.rect
+                  width="24"
+                  height="2"
+                  rx="1"
+                  fill="white"
+                  initial={{
+                    y: 8,
+                    rotate: 0,
+                    transformOrigin: "center",
+                  }}
+                  animate={{
+                    y: isMenuOpen ? 11 : 8,
+                    rotate: isMenuOpen ? 45 : 0,
+                    transformOrigin: "center",
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+                <m.rect
+                  width="24"
+                  height="2"
+                  rx="1"
+                  fill="white"
+                  initial={{
+                    y: 16,
+                    rotate: 0,
+                    transformOrigin: "center",
+                  }}
+                  animate={{
+                    y: isMenuOpen ? 11 : 16,
+                    rotate: isMenuOpen ? -45 : 0,
+                    transformOrigin: "center",
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+              </svg>
+            </button>
+          </div>
+        )}
       </m.nav>
 
       {/* Mobile Menu */}
       <>
-        {isFixed && <div className="h-14" />}
+        {isFixed && <div className="h-16" />}
         <m.div
-          initial={{ y: -500 }}
+          initial={{ y: -800 }}
           animate={{ y: isMenuOpen ? 0 : -1000 }}
           exit={{ y: isMenuOpen ? -500 : 500 }}
           transition={{ type: "spring", stiffness: 160, damping: 20 }}
-          className="fixed inset-0 bg-zinc-950 z-30 sm:hidden"
+          className="fixed inset-0 bg-zinc-950 z-20 sm:hidden"
         >
-          <div className="flex pt-14 flex-col h-full">
+          <div className="flex pt-16 flex-col h-full">
             <div className="flex flex-col gap-y-8 p-8">
               {navItems.map((item) => (
                 <Link

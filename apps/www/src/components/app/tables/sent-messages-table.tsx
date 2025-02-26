@@ -17,11 +17,11 @@ dayjs.extend(advanced);
 export const SentMessagesTableHeader = () => {
   return (
     <TableRow>
-      <TableHead>Recipient</TableHead>
-      <TableHead>Service</TableHead>
-      <TableHead>Text</TableHead>
-      <TableHead>Status</TableHead>
-      <TableHead>Sent At</TableHead>
+      <TableHead className="w-48">Recipient</TableHead>
+      <TableHead className="w-32">Service</TableHead>
+      <TableHead className="flex-1">Text</TableHead>
+      <TableHead className="w-32">Status</TableHead>
+      <TableHead className="w-72">Sent At</TableHead>
     </TableRow>
   );
 };
@@ -36,7 +36,7 @@ export const SentMessagesTableRow = ({
       <TableCell className="w-48">
         <PhoneNumberText phoneNumber={message.recipient} />
       </TableCell>
-      <TableCell className="w-16">
+      <TableCell className="w-32">
         <span
           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
             message.service === MessageService.SMS
@@ -48,7 +48,7 @@ export const SentMessagesTableRow = ({
         </span>
       </TableCell>
       <TableCell className="flex-1">{message.text}</TableCell>
-      <TableCell className="w-24">
+      <TableCell className="w-32">
         <span
           className={cn(
             "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
@@ -65,28 +65,6 @@ export const SentMessagesTableRow = ({
       <TableCell className="w-72">
         {dayjs(message.sent_at).format("LLL z")}
       </TableCell>
-    </TableRow>
-  );
-};
-
-export const SentMessagesTableHeaderSkeleton = () => {
-  return (
-    <TableRow>
-      <TableHead>
-        <Skeleton className="h-4 w-32" />
-      </TableHead>
-      <TableHead>
-        <Skeleton className="h-4 w-[76px]" />
-      </TableHead>
-      <TableHead>
-        <Skeleton className="h-4 w-3/4" />
-      </TableHead>
-      <TableHead>
-        <Skeleton className="h-4 w-20" />
-      </TableHead>
-      <TableHead>
-        <Skeleton className="h-4 w-40" />
-      </TableHead>
     </TableRow>
   );
 };

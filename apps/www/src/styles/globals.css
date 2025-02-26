@@ -83,6 +83,9 @@ body,
       outline-offset: 2px;
     }
   }
+  img {
+    @apply select-none;
+  }
 }
 
 @layer base {

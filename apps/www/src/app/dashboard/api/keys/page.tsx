@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { redirect } from "next/navigation";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { cn, createRedirectLink } from "@/lib/utils";
 import {
   Table,
@@ -42,17 +42,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Copy from "@/assets/icons/misc/check";
+import Copy from "@/assets/icons/misc/copy";
 import {
   APIKeysTableBodyEmpty,
   APIKeysTableBodySkeleton,
   APIKeysTableHeader,
-  APIKeysTableHeaderSkeleton,
   APIKeysTableRow,
 } from "@/components/app/tables/api-keys-table";
 
 export default function APIKeysPage() {
   const { user, loading } = useAuthContext();
+
   const [apiKeys, setApiKeys] = useState<APIKeyResponse[]>([]);
   const [createdApiKey, setCreatedApiKey] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,6 +62,7 @@ export default function APIKeysPage() {
   );
   const [nameError, setNameError] = useState<string>("");
   const [isCreating, setIsCreating] = useState(false);
+  const [isRevoking, setIsRevoking] = useState(false);
   const [isLoadingKeys, setIsLoadingKeys] = useState(true);
   const [keyToRevoke, setKeyToRevoke] = useState<APIKeyResponse | null>(null);
 
@@ -69,14 +70,9 @@ export default function APIKeysPage() {
   const codeRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/api/keys"));
-    }
-  }, [user, loading]);
-
-  useEffect(() => {
     const loadApiKeys = async () => {
       if (!loading && user) {
+        setIsLoadingKeys(true);
         try {
           const keys = await fetchApiKeys();
           setApiKeys(keys);
@@ -143,6 +139,7 @@ export default function APIKeysPage() {
   };
 
   const handleRevokeKey = async (keyId: string) => {
+    setIsRevoking(true);
     try {
       await revokeApiKey(keyId);
 
@@ -155,16 +152,10 @@ export default function APIKeysPage() {
       toast.error(
         error instanceof Error ? error.message : "Failed to revoke API key"
       );
+    } finally {
+      setIsRevoking(false);
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <>
@@ -178,11 +169,7 @@ export default function APIKeysPage() {
 
         <Table>
           <TableHeader>
-            {isLoadingKeys ? (
-              <APIKeysTableHeaderSkeleton />
-            ) : (
-              <APIKeysTableHeader />
-            )}
+            <APIKeysTableHeader />
           </TableHeader>
           <TableBody>
             {isLoadingKeys ? (
@@ -234,6 +221,7 @@ export default function APIKeysPage() {
                       navigator.clipboard.writeText(createdApiKey);
                       toast.success("API key copied to clipboard");
                     }}
+                    className="[&_svg]:size-4"
                     title="Copy to clipboard"
                   >
                     <Copy />
@@ -338,10 +326,15 @@ export default function APIKeysPage() {
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-500"
-              onClick={() => keyToRevoke && handleRevokeKey(keyToRevoke.id)}
+              disabled={isRevoking}
+              onClick={(e) => {
+                e.preventDefault();
+                if (keyToRevoke) {
+                  handleRevokeKey(keyToRevoke.id);
+                }
+              }}
             >
-              Revoke Key
+              {isRevoking ? "Revoking..." : "Revoke Key"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -2,7 +2,8 @@
 
 import { getIdentity } from "@/api/identity.ts/get-identity";
 import { menuItems } from "@/constants/nav";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
+import { useOrganizationContext } from "@/contexts/use-organization-context";
 import { MessageCircleMore, FileText } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +12,8 @@ import { useEffect } from "react";
 
 export const Topbar = () => {
   const { user } = useAuthContext();
+  const { selectedOrganization } = useOrganizationContext();
+
   const pathname = usePathname();
 
   // Get the current section from the path (e.g. /dashboard/messages/sent -> messages)
@@ -23,6 +26,8 @@ export const Topbar = () => {
   });
 
   useEffect(() => {
+    if (!user || !selectedOrganization) return;
+
     const win = window as any;
     if (typeof win.Featurebase !== "function") {
       win.Featurebase = function () {
@@ -32,7 +37,6 @@ export const Topbar = () => {
 
     const _getIdentity = async () => {
       const identity = await getIdentity();
-      console.log(user?.user_metadata);
       win.Featurebase("identify", {
         organization: "textfully",
         email: user?.email,
@@ -44,18 +48,18 @@ export const Topbar = () => {
     };
 
     _getIdentity();
-  }, []);
+  }, [user, selectedOrganization]);
 
   return (
     <>
       <Script src="https://do.featurebase.app/js/sdk.js" id="featurebase-sdk" />
       <div className="h-14 bg-zinc-950 border-b border-zinc-800 flex items-center px-4">
-        <div className="h-full flex items-center">
-          <h2 className="font-semibold text-zinc-400">
+        <div className="h-full w-full flex items-center">
+          <h2 className="font-semibold text-zinc-400 line-clamp-1">
             {selectedMenuData?.label || "Home"}
           </h2>
         </div>
-        <div className="flex items-center w-full justify-end">
+        <div className="flex items-center justify-end">
           <div className="flex items-center space-x-2">
             <a
               data-featurebase-link

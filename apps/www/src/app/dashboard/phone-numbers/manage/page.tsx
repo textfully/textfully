@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/lib/utils";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import {
   ManagePhoneNumbersTableHeader,
   ManagePhoneNumbersTableRow,
@@ -15,12 +12,6 @@ import { Table, TableBody, TableHeader } from "@/components/ui/table";
 
 export default function ManagePhoneNumbersPage() {
   const { user, loading } = useAuthContext();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/phone-numbers/manage"));
-    }
-  }, [user, loading]);
 
   if (loading) {
     return <div>Loading...</div>;

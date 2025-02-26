@@ -7,7 +7,7 @@ import { ArrowRight, ChevronLeft } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
 import { toast } from "sonner";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -40,7 +40,11 @@ export default function ResetPasswordPage() {
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const passwordRef = useRef<HTMLInputElement>(null);
+  
   const router = useRouter();
+
+  const errorParam = searchParams.get("error");
+  const errorCode = searchParams.get("error_code");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +72,7 @@ export default function ResetPasswordPage() {
       if (error) {
         setPasswordError(error.message);
       } else {
-        router.push("/dashboard");
+        router.replace("/login");
         toast.success("Password updated successfully");
       }
     } catch (error: any) {
@@ -87,27 +91,24 @@ export default function ResetPasswordPage() {
   }, [user, loading]);
 
   useEffect(() => {
-    const error = searchParams.get("error");
-    const errorCode = searchParams.get("error_code");
-
-    if (error === "access_denied" && errorCode === "otp_expired") {
+    if (errorParam === "access_denied" && errorCode === "otp_expired") {
       setTimeout(() => {
-        router.replace("/login");
+        router.replace("/reset-password");
         toast.error("Email link has expired", {
           description: "Please try again",
         });
       }, 500);
     }
-  }, []);
+  }, [errorParam, errorCode]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <div className="px-6 py-4 my-auto">
         <Link
           href="/login"
-          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors"
+          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors [&_svg]:size-4"
         >
-          <ChevronLeft className="w-4 h-4 mr-1" />
+          <ChevronLeft />
           Login
         </Link>
       </div>
@@ -155,10 +156,10 @@ export default function ResetPasswordPage() {
             variant="b&w"
             disabled={!password}
             loading={isSubmitting}
-            className="w-full"
+            className="w-full [&_svg]:size-4"
           >
             Update password
-            <ArrowRight className="ml-1 w-4 h-4" />
+            <ArrowRight />
           </Button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import { MessageService } from "./enums";
+import { MessageService, OrganizationRole } from "./enums";
 
 import { MessageStatus } from "./enums";
 
@@ -45,6 +45,26 @@ export interface OrganizationResponse {
   role: string;
   created_at: string | null;
   updated_at: string | null;
+}
+
+export interface OrganizationMemberResponse {
+  id: string;
+  organization_id: string;
+  user_id: string;
+  role: OrganizationRole;
+  created_at: string | null;
+  updated_at: string | null;
+  full_name: string;
+  avatar_url: string | null;
+}
+
+export interface InviteMemberResponse {
+  id: string;
+  organization_id: string;
+  email: string;
+  role: string;
+  expires_at: string;
+  created_at: string;
 }
 
 export interface ContactResponse {

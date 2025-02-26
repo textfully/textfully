@@ -3,14 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const inputVariants = cva(
-  "flex w-full border px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full border px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-500 transition-colors",
+          "bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-500 focus-visible:border-zinc-600 transition-colors",
         primary:
-          "bg-zinc-900 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:border-zinc-700 focus-visible:ring-primary transition-colors",
+          "bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-500 focus-visible:border-primary transition-colors",
       },
       size: {
         default: "h-9 text-sm rounded-md",

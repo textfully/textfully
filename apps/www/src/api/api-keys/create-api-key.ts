@@ -3,6 +3,13 @@ import { makeApiRequest } from "@/lib/api-client";
 import { APIKeyRequest } from "@/types/requests";
 import { CreateAPIKeyResponse } from "@/types/responses";
 
+/**
+ * Create a new API key
+ *
+ * @param request - The request body for creating an API key
+ * @returns A promise that resolves to the created API key
+ * @throws Error if the creation fails
+ */
 export async function createApiKey(
   request: APIKeyRequest
 ): Promise<CreateAPIKeyResponse> {

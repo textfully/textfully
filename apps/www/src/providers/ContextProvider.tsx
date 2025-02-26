@@ -1,15 +1,12 @@
-import { AppProvider } from "@/contexts/useAppContext";
-import { AuthProvider } from "@/contexts/useAuthContext";
-import { OrganizationProvider } from "@/contexts/useOrganizationContext";
+import { AuthProvider } from "@/contexts/use-auth-context";
+import { OrganizationProvider } from "@/contexts/use-organization-context";
 
 import type { FC, PropsWithChildren } from "react";
 
 export const ContextProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <AppProvider>
-      <AuthProvider>
-        <OrganizationProvider>{children}</OrganizationProvider>
-      </AuthProvider>
-    </AppProvider>
+    <AuthProvider>
+      <OrganizationProvider>{children}</OrganizationProvider>
+    </AuthProvider>
   );
 };

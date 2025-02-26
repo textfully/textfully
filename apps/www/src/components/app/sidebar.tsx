@@ -1,19 +1,8 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  ChevronDown,
-  Code,
-  CreditCard,
-  Home,
-  MessagesSquare,
-  Phone,
-  Plus,
-  Settings,
-  Users,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { ArrowUpRight, ChevronDown, Home, Plus } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
@@ -26,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { menuItems } from "@/constants/nav";
-import { useOrganizationContext } from "@/contexts/useOrganizationContext";
+import { useOrganizationContext } from "@/contexts/use-organization-context";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -44,11 +33,14 @@ export const Sidebar = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [nameError, setNameError] = useState("");
 
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
   const {
     organizations,
     fetchOrganizations,
     selectedOrganization,
     setSelectedOrganization,
+    isLoadingOrganization,
   } = useOrganizationContext();
 
   const pathname = usePathname();
@@ -70,12 +62,6 @@ export const Sidebar = () => {
     });
   };
 
-  useEffect(() => {
-    if (!loading && user) {
-      fetchOrganizations();
-    }
-  }, [user, loading]);
-
   const handleCreateOrganization = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -94,7 +80,11 @@ export const Sidebar = () => {
       setSelectedOrganization(org);
       setIsCreateOrgModalOpen(false);
       setNewOrgName("");
+
       toast.success("Organization created successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to create organization"
@@ -109,6 +99,14 @@ export const Sidebar = () => {
     window.location.reload();
   };
 
+  useEffect(() => {
+    if (isCreateOrgModalOpen) {
+      setTimeout(() => {
+        nameInputRef.current?.focus();
+      }, 100);
+    }
+  }, [isCreateOrgModalOpen]);
+
   return (
     <div
       className="flex h-full"
@@ -121,7 +119,7 @@ export const Sidebar = () => {
     >
       <div className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-64">
         <div className="pt-3 pb-1 flex px-2 overflow-hidden">
-          {organizations === undefined ? (
+          {isLoadingOrganization || organizations === undefined ? (
             <div className="flex items-center h-9 gap-x-2 px-2 py-1">
               <Skeleton className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded" />
               <Skeleton className="h-6 bg-zinc-800 rounded w-20" />
@@ -129,7 +127,7 @@ export const Sidebar = () => {
           ) : organizations && organizations.length > 0 ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild={true}>
-                <Button className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors">
+                <Button className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors [&_svg]:size-4 [&_svg]:text-zinc-400">
                   <div className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded flex items-center justify-center">
                     <span className="text-sm font-medium text-white uppercase">
                       {selectedOrganization?.name.charAt(0).toUpperCase()}
@@ -138,7 +136,7 @@ export const Sidebar = () => {
                   <span className="text-sm text-left font-medium text-zinc-200 line-clamp-1">
                     {selectedOrganization?.name}
                   </span>
-                  <ChevronDown className="w-4 h-4 text-zinc-400" />
+                  <ChevronDown />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-64">
@@ -178,10 +176,10 @@ export const Sidebar = () => {
             </DropdownMenu>
           ) : (
             <Button
-              className="flex items-center h-8 gap-x-2 pl-2 pr-4 py-1 rounded-md hover:bg-zinc-800/50 transition-colors"
+              className="flex items-center h-8 gap-x-2 pl-2 pr-4 py-1 rounded-md hover:bg-zinc-800/50 transition-colors [&_svg]:size-4 [&_svg]:text-zinc-400"
               onClick={() => setIsCreateOrgModalOpen(true)}
             >
-              <Plus className="w-4 h-4 text-zinc-400" />
+              <Plus />
               <span className="text-sm font-medium text-zinc-200">
                 Create Organization
               </span>
@@ -196,6 +194,12 @@ export const Sidebar = () => {
               "w-full h-8 flex items-center rounded-md transition-colors",
               isHome ? "bg-zinc-800" : "hover:bg-zinc-900"
             )}
+            onMouseEnter={() => {
+              if (!loading) {
+                setHoveredItem("Home");
+                setIsSubMenuVisible(false);
+              }
+            }}
           >
             <div className="w-8 h-8 flex items-center justify-center ml-2 shrink-0">
               <Home className="w-4 h-4" />
@@ -220,7 +224,10 @@ export const Sidebar = () => {
                 onMouseEnter={() => {
                   if (!loading) {
                     setHoveredItem(item.label);
-                    setIsSubMenuVisible(true);
+                    const menuItem = menuItems.find(
+                      (m) => m.label === item.label
+                    );
+                    setIsSubMenuVisible(!!menuItem?.children?.length);
                   }
                 }}
               >
@@ -260,6 +267,12 @@ export const Sidebar = () => {
                 onMouseEnter={() => setHoveredItem(null)}
               >
                 <DropdownMenuItem asChild={true}>
+                  <Link href="/dashboard/account/settings" className="w-full">
+                    Account Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild={true}>
                   <button onClick={handleSignOut} className="w-full text-left">
                     Sign out
                   </button>
@@ -288,6 +301,7 @@ export const Sidebar = () => {
               </label>
               <Input
                 id="name"
+                ref={nameInputRef}
                 value={newOrgName}
                 onChange={(e) => {
                   setNewOrgName(e.target.value);
@@ -327,7 +341,7 @@ export const Sidebar = () => {
         }}
         transition={{ duration: 0.2, ease: "easeOut" }}
       >
-        {hoveredItem && (
+        {hoveredItem && isSubMenuVisible && (
           <>
             <div className="h-14 px-4 flex items-center border-b border-zinc-800 w-64">
               <h2 className="font-semibold text-zinc-400">

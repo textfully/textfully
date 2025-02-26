@@ -9,7 +9,7 @@ import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
 import { toast } from "sonner";
 import { cn, createRedirectLink } from "@/lib/utils";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
@@ -105,16 +105,17 @@ export default function LoginPage() {
       <div className="px-6 py-4 my-auto">
         <Link
           href="/"
-          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors"
+          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors [&_svg]:size-4"
+          tabIndex={1}
         >
-          <ChevronLeft className="w-4 h-4 mr-1" />
+          <ChevronLeft />
           Home
         </Link>
       </div>
 
       <div className="max-w-md mx-auto px-4 pt-16 pb-32">
         <div className="flex justify-center mb-4">
-          <Link href="/" className="w-10 h-10 text-primary">
+          <Link href="/" className="w-10 h-10 text-primary" tabIndex={2}>
             <Logo />
           </Link>
         </div>
@@ -126,6 +127,7 @@ export default function LoginPage() {
             <Link
               href="/signup"
               className="underline text-white hover:text-zinc-200"
+              tabIndex={3}
             >
               Sign up
             </Link>
@@ -137,18 +139,20 @@ export default function LoginPage() {
             <Button
               onClick={handleGitHubSignIn}
               variant="surface"
-              className="w-full"
+              className="w-full [&_svg]:size-4 [&_svg]:fill-white"
+              tabIndex={4}
             >
-              <GitHub className="w-4 h-4 fill-white mr-2" />
+              <GitHub />
               Continue with GitHub
             </Button>
 
             <Button
               onClick={handleGoogleSignIn}
               variant="surface"
-              className="w-full"
+              className="w-full [&_svg]:size-4 [&_svg]:fill-white"
+              tabIndex={5}
             >
-              <Google className="w-4 h-4 fill-white mr-2" />
+              <Google />
               Continue with Google
             </Button>
           </div>
@@ -180,6 +184,7 @@ export default function LoginPage() {
                   "border-red-500 focus:border-red-500 focus:ring-red-500"
               )}
               placeholder="neo@matrix.com"
+              tabIndex={6}
             />
             {emailError && (
               <p className="text-red-500 text-sm mt-1">{emailError}</p>
@@ -194,6 +199,7 @@ export default function LoginPage() {
               <Link
                 href="/forgot-password"
                 className="text-sm text-zinc-500 font-medium hover:brightness-110"
+                tabIndex={9}
               >
                 Forgot your password?
               </Link>
@@ -209,6 +215,7 @@ export default function LoginPage() {
                 passwordError &&
                   "border-red-500 focus:border-red-500 focus:ring-red-500"
               )}
+              tabIndex={7}
             />
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>
@@ -219,20 +226,21 @@ export default function LoginPage() {
             variant="b&w"
             loading={isLoggingIn}
             disabled={!email || !password}
-            className="w-full"
+            className="w-full [&_svg]:size-4"
+            tabIndex={8}
           >
             Continue
-            <ArrowRight className="ml-1 w-4 h-4" />
+            <ArrowRight />
           </Button>
         </form>
 
         <p className="mt-8 text-center text-xs text-zinc-400">
           By continuing, you agree to our{" "}
-          <Link href="/terms" className="text-zinc-200 hover:brightness-110">
+          <Link href="/terms" className="text-zinc-200 hover:brightness-110" tabIndex={10}>
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="text-zinc-200 hover:brightness-110">
+          <Link href="/privacy" className="text-zinc-200 hover:brightness-110" tabIndex={11}>
             Privacy Policy
           </Link>
         </p>

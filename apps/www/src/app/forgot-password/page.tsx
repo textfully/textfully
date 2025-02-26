@@ -8,7 +8,7 @@ import Logo from "@/assets/logo";
 import { z } from "zod";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -80,9 +80,9 @@ export default function ForgotPasswordPage() {
       <div className="px-6 py-4 my-auto">
         <Link
           href="/login"
-          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors"
+          className="inline-flex h-8 items-center text-sm text-zinc-400 hover:text-white transition-colors [&_svg]:size-4"
         >
-          <ChevronLeft className="w-4 h-4 mr-1" />
+          <ChevronLeft />
           Login
         </Link>
       </div>
@@ -129,10 +129,10 @@ export default function ForgotPasswordPage() {
             variant="b&w"
             loading={isSubmitting}
             disabled={!email}
-            className="w-full"
+            className="w-full [&_svg]:size-4"
           >
             Send reset email
-            <ArrowRight className="ml-1 w-4 h-4" />
+            <ArrowRight />
           </Button>
         </form>
       </div>

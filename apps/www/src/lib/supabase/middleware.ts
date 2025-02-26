@@ -6,7 +6,8 @@ const PUBLIC_ROUTES = [
   "/signup",
   "/forgot-password",
   "/reset-password",
-  "/auth",
+  "/auth/verify",
+  "/auth/callback",
 ];
 
 export async function updateSession(request: NextRequest) {
@@ -50,7 +51,7 @@ export async function updateSession(request: NextRequest) {
   );
   const isHomePage = request.nextUrl.pathname === "/";
 
-  // Redirect to dashboard if user is signed in and trying to access auth routes (but not home page)
+  // Redirect to dashboard if user is signed in and trying to access public routes (except auth callback)
   if (user && isPublicRoute && !request.nextUrl.pathname.startsWith("/auth")) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
@@ -59,10 +60,11 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect to login if user is not signed in and trying to access protected routes
   if (!user && !isPublicRoute && !isHomePage) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/login";
+    // Add the original URL as a search parameter to redirect back after login
+    redirectUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+    return NextResponse.redirect(redirectUrl);
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're

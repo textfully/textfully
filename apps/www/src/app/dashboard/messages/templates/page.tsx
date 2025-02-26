@@ -1,18 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import { redirect } from "next/navigation";
-import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/lib/utils";
+import { useAuthContext } from "@/contexts/use-auth-context";
 
 export default function MessageTemplatesPage() {
   const { user, loading } = useAuthContext();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/messages/templates"));
-    }
-  }, [user, loading]);
 
   if (loading) {
     return <div>Loading...</div>;

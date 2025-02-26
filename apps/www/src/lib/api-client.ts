@@ -1,22 +1,14 @@
 import { createClient } from "@/lib/supabase/client";
 import { getData } from "./storage";
+import { createRedirectLink } from "./utils";
 
-export async function getAuthToken(): Promise<string> {
+export async function getAuthToken(): Promise<string | null> {
   const supabase = createClient();
   const {
     data: { session },
-    error,
   } = await supabase.auth.getSession();
 
-  if (error) {
-    throw new Error("Failed to get auth token");
-  }
-
-  if (!session?.access_token) {
-    throw new Error("No auth token found");
-  }
-
-  return session.access_token;
+  return session?.access_token || null;
 }
 
 interface RequestOptions extends RequestInit {
@@ -29,19 +21,26 @@ export async function makeApiRequest<T>(
   options: RequestOptions = {}
 ): Promise<T> {
   const token = await getAuthToken();
+
+  if (!token) {
+    if (window.location.pathname.startsWith("/dashboard")) {
+      const currentPath = window.location.pathname;
+      window.location.href = createRedirectLink("/login", currentPath);
+    }
+  }
+
   const {
     headers = {},
     errorMessage = "API request failed",
     ...rest
   } = options;
 
-  const storedOrg = getData("SELECTED_ORGANIZATION");
-  const selectedOrg = storedOrg ? JSON.parse(storedOrg) : null;
+  const storedOrgId = getData("SELECTED_ORGANIZATION_ID");
 
   const requestHeaders = {
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
-    ...(selectedOrg && { "X-Organization-ID": selectedOrg.id }),
+    ...(storedOrgId && { "X-Organization-ID": storedOrgId }),
     ...headers,
   };
 

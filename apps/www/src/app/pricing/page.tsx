@@ -337,10 +337,6 @@ export default function PricingPage() {
       </div>
 
       <Footer />
-      <Cal
-        namespace="textfully-growth-plan"
-        calLink="gtfol/textfully-growth-plan"
-      />
     </div>
   );
 }

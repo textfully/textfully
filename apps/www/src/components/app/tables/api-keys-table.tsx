@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 export const APIKeysTableHeader = () => {
   return (
     <TableRow>
-      <TableHead>Name</TableHead>
-      <TableHead>API Key</TableHead>
-      <TableHead>Created</TableHead>
-      <TableHead>Last Used</TableHead>
-      <TableHead></TableHead>
+      <TableHead className="w-64">Name</TableHead>
+      <TableHead className="flex-1">API Key</TableHead>
+      <TableHead className="w-40">Created</TableHead>
+      <TableHead className="w-40">Last Used</TableHead>
+      <TableHead className="w-32"></TableHead>
     </TableRow>
   );
 };
@@ -45,28 +45,6 @@ export const APIKeysTableRow = ({
           Revoke
         </Button>
       </TableCell>
-    </TableRow>
-  );
-};
-
-export const APIKeysTableHeaderSkeleton = () => {
-  return (
-    <TableRow>
-      <TableHead className="w-64">
-        <Skeleton className="h-4 w-32" />
-      </TableHead>
-      <TableHead className="flex-1">
-        <Skeleton className="h-4 w-32" />
-      </TableHead>
-      <TableHead className="w-40">
-        <Skeleton className="h-4 w-32" />
-      </TableHead>
-      <TableHead className="w-40">
-        <Skeleton className="h-4 w-32" />
-      </TableHead>
-      <TableHead className="w-32">
-        <Skeleton className="h-4 w-24" />
-      </TableHead>
     </TableRow>
   );
 };

@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
-import { useAuthContext } from "@/contexts/useAuthContext";
-import { createRedirectLink } from "@/lib/utils";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { toast } from "sonner";
 import {
   Table,
   TableBody,
-  TableHead,
   TableHeader,
-  TableRow,
 } from "@/components/ui/table";
 import { fetchMessages } from "@/api/messages/fetch-messages";
 import { MessageResponse } from "@/types/responses";
@@ -18,7 +14,6 @@ import {
   SentMessagesTableBodyEmpty,
   SentMessagesTableBodySkeleton,
   SentMessagesTableHeader,
-  SentMessagesTableHeaderSkeleton,
   SentMessagesTableRow,
 } from "@/components/app/tables/sent-messages-table";
 
@@ -28,14 +23,9 @@ export default function SentMessagesPage() {
   const [isLoadingMessages, setIsLoadingMessages] = useState(true);
 
   useEffect(() => {
-    if (!loading && !user) {
-      redirect(createRedirectLink("/login", "/dashboard/messages/sent"));
-    }
-  }, [user, loading]);
-
-  useEffect(() => {
     const loadMessages = async () => {
       if (!loading && user) {
+        setIsLoadingMessages(true);
         try {
           const fetchedMessages = await fetchMessages();
           setMessages(fetchedMessages);
@@ -68,11 +58,11 @@ export default function SentMessagesPage() {
 
       <Table>
         <TableHeader>
-          {isLoadingMessages ? (
+          {/* {isLoadingMessages ? (
             <SentMessagesTableHeaderSkeleton />
-          ) : (
+          ) : ( */}
             <SentMessagesTableHeader />
-          )}
+          {/* )} */}
         </TableHeader>
         <TableBody>
           {isLoadingMessages ? (

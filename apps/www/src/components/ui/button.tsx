@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:outline-primary focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 select-none",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors transition-opacity duration-300 focus-visible:outline-none focus-visible:outline-primary focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50 select-none",
   {
     variants: {
       variant: {
@@ -15,18 +15,18 @@ const buttonVariants = cva(
           "bg-primary text-primary-foreground shadow hover:brightness-110",
         "b&w": "bg-white hover:brightness-90 text-black",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:brightness-110",
+          "bg-destructive text-destructive-foreground shadow-sm hover:brightness-110 focus-visible:outline-destructive",
         surface: "bg-zinc-900 hover:bg-zinc-800 text-white",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:brightness-110",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         "destructive-surface":
-          "bg-destructive/10 text-destructive hover:brightness-110 focus-visible:outline-destructive",
+          "bg-destructive/15 text-destructive hover:bg-destructive/20 hover:brightness-110 focus-visible:outline-destructive",
       },
       size: {
         default: "h-9 rounded-md px-3 py-1.5 text-sm",
-        lg: "h-11 rounded-lg px-8 text-base",
+        lg: "h-11 rounded-lg px-4 py-2 text-base",
         icon: "h-9 w-9 rounded-md",
       },
     },

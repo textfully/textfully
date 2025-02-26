@@ -19,6 +19,26 @@ interface MenuChildItem {
   path: string;
 }
 
+export interface SettingsLink {
+  href: string;
+  label: string;
+}
+
+export const settingsLinks: SettingsLink[] = [
+  {
+    href: "/dashboard/settings/general",
+    label: "General",
+  },
+  {
+    href: "/dashboard/settings/team",
+    label: "Team",
+  },
+  {
+    href: "/dashboard/settings/integrations",
+    label: "Integrations",
+  },
+];
+
 export const menuItems: MenuItem[] = [
   {
     icon: MessagesSquare,
@@ -67,10 +87,6 @@ export const menuItems: MenuItem[] = [
   {
     icon: Settings,
     label: "Settings",
-    children: [
-      { label: "General", path: "/dashboard/settings/general" },
-      { label: "Team", path: "/dashboard/settings/team" },
-      { label: "Integrations", path: "/dashboard/settings/integrations" },
-    ],
+    path: "/dashboard/settings/general",
   },
 ];

@@ -9,10 +9,10 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import Logo from "@/assets/logo";
 import GitHub from "@/assets/icons/socials/github";
-import { useAuthContext } from "@/contexts/useAuthContext";
+import { useAuthContext } from "@/contexts/use-auth-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const signupSchema = z
   .object({
@@ -53,6 +53,8 @@ export default function SignupPage() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
+  const router = useRouter();
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSigningUp(true);
@@ -88,7 +90,7 @@ export default function SignupPage() {
         return;
       }
 
-      const { error } = await signUp(email, password, name);
+      const { data, error } = await signUp(email, password, name);
 
       if (error) {
         if (error.message.toLowerCase().includes("email")) {
@@ -101,7 +103,16 @@ export default function SignupPage() {
           toast.error(error.message);
         }
       } else {
-        toast.success("Please check your email to verify your account");
+        if (data && data.user) {
+          if (data.user.identities && data.user.identities?.length > 0) {
+            router.replace("/login");
+            toast.success("Please check your email to verify your account");
+          } else {
+            toast.error("Email address already in use. Please log in instead.");
+          }
+        } else {
+          toast.error("Something went wrong. Please try again.");
+        }
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -172,21 +183,23 @@ export default function SignupPage() {
 
         <div className="space-y-4 text-zinc-300">
           <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-            <button
+            <Button
               onClick={handleGitHubSignIn}
-              className="text-sm font-semibold w-full px-3 py-2 bg-zinc-900 hover:bg-[#2a2a2a] rounded-lg border border-zinc-800 flex items-center justify-center space-x-2 transition-colors"
+              variant="surface"
+              className="w-full [&_svg]:size-4 [&_svg]:fill-white"
             >
-              <GitHub className="w-4 h-4 fill-white" />
-              <span>Continue with GitHub</span>
-            </button>
+              <GitHub />
+              Continue with GitHub
+            </Button>
 
-            <button
+            <Button
               onClick={handleGoogleSignIn}
-              className="group flex w-full items-center justify-center space-x-2 rounded-lg border border-zinc-800 bg-zinc-900 hover:bg-[#2a2a2a] px-3 py-2 text-sm font-semibold transition-colors"
+              variant="surface"
+              className="w-full [&_svg]:size-4 [&_svg]:fill-white"
             >
-              <Google className="h-4 w-4 fill-white" />
-              <span>Continue with Google</span>
-            </button>
+              <Google />
+              Continue with Google
+            </Button>
           </div>
         </div>
 
@@ -295,10 +308,10 @@ export default function SignupPage() {
             variant="b&w"
             loading={isSigningUp}
             disabled={!email || !password || !name || !confirmPassword}
-            className="w-full"
+            className="w-full [&_svg]:size-4"
           >
             Create account
-            <ArrowRight className="ml-1 h-4 w-4" />
+            <ArrowRight />
           </Button>
         </form>
 
