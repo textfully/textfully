@@ -22,8 +22,6 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <h1 className="text-2xl font-bold">Account Settings</h1>
-
       <Card>
         <CardHeader>
           <CardTitle>Profile Information</CardTitle>
@@ -50,9 +48,6 @@ export default function AccountSettingsPage() {
               disabled
               className="bg-zinc-900"
             />
-            <p className="text-xs text-zinc-500 mt-1">
-              Name editing coming soon
-            </p>
           </div>
         </CardContent>
       </Card>

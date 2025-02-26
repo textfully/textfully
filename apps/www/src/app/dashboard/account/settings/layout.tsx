@@ -16,5 +16,5 @@ export default function AccountSettingsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <PageLayout>{children}</PageLayout>;
+  return <>{children}</>;
 }
