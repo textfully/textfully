@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { OrganizationRole } from "@/types/enums";
+import ThreeDots from "@/assets/icons/misc/three-dots";
 
 export const OrganizationMembersTableHeader = () => {
   return (
@@ -24,7 +25,7 @@ export const OrganizationMembersTableHeader = () => {
       <TableRow>
         <TableHead className="w-24">User</TableHead>
         <TableHead className="flex-1">Name</TableHead>
-        <TableHead className="w-64">Email</TableHead>
+        <TableHead className="w-80">Email</TableHead>
         <TableHead className="w-48">Role</TableHead>
         <TableHead className="w-16"></TableHead>
       </TableRow>
@@ -78,7 +79,7 @@ export const OrganizationMembersTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell className="w-64">
+      <TableCell className="w-80">
         <div className="text-zinc-300">{member.email}</div>
       </TableCell>
       <TableCell className="w-48">
@@ -87,26 +88,15 @@ export const OrganizationMembersTableRow = ({
         </div>
       </TableCell>
       <TableCell className="w-16">
-        {shouldShowMenu && (
+        {shouldShowMenu ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-zinc-400"
-                >
-                  <circle cx="12" cy="12" r="1" />
-                  <circle cx="12" cy="5" r="1" />
-                  <circle cx="12" cy="19" r="1" />
-                </svg>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 p-0 [&_svg]:size-4"
+              >
+                <ThreeDots />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -121,6 +111,8 @@ export const OrganizationMembersTableRow = ({
               )}
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : (
+          <div className="w-8" />
         )}
       </TableCell>
     </TableRow>
@@ -132,19 +124,19 @@ export const OrganizationMembersTableBodySkeleton = () => {
     <>
       {[...Array(5)].map((_, index) => (
         <TableRow key={index}>
-          <TableCell className="w-24">
+          <TableCell className="w-24 h-row-lg">
             <Skeleton className="h-8 w-8 rounded-full" />
           </TableCell>
-          <TableCell className="flex-1">
-            <Skeleton className="h-5 w-32" />
+          <TableCell className="flex-1 h-row-lg">
+            <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell className="w-64">
-            <Skeleton className="h-5 w-40" />
+          <TableCell className="w-80 h-row-lg">
+            <Skeleton className="h-4 w-64" />
           </TableCell>
-          <TableCell className="w-48">
-            <Skeleton className="h-5 w-20" />
+          <TableCell className="w-48 h-row-lg">
+            <Skeleton className="h-4 w-24" />
           </TableCell>
-          <TableCell className="w-16">
+          <TableCell className="w-16 h-row-lg">
             <Skeleton className="invisible h-8 w-8" />
           </TableCell>
         </TableRow>
