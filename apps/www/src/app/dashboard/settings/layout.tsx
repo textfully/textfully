@@ -1,8 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { Card } from "@/components/ui/card";
-import { settingsLinks } from "@/constants/nav";
+import { SETTINGS_LINKS } from "@/constants/nav";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 
@@ -15,9 +14,8 @@ export default function SettingsLayout({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
 
-  // Set the active tab based on the current pathname
   useEffect(() => {
-    const activeLink = settingsLinks.find((link) => pathname === link.href);
+    const activeLink = SETTINGS_LINKS.find((link) => pathname === link.href);
     setActiveTab(activeLink?.href);
   }, [pathname]);
 
@@ -31,10 +29,10 @@ export default function SettingsLayout({
         <Tabs
           value={activeTab}
           onValueChange={handleTabChange}
-          defaultValue={settingsLinks[0].href}
+          defaultValue={SETTINGS_LINKS[0].href}
         >
           <TabsList>
-            {settingsLinks.map((link) => (
+            {SETTINGS_LINKS.map((link) => (
               <TabsTrigger key={link.href} value={link.href}>
                 {link.label}
               </TabsTrigger>

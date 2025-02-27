@@ -73,7 +73,7 @@ export default function GeneralSettingsPage() {
     setIsDeleting(true);
     try {
       await deleteOrganization(selectedOrganization.id);
-      toast.success("Organization deleted successfully");
+      toast.success("The organization was successfully deleted");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -109,7 +109,7 @@ export default function GeneralSettingsPage() {
 
       await fetchOrganizations();
 
-      toast.success("Organization name updated successfully");
+      toast.success("The organization name was successfully updated");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to update organization"
@@ -265,7 +265,7 @@ export default function GeneralSettingsPage() {
                         type="submit"
                         disabled={isDeleting || confirmationText !== orgName}
                       >
-                        {isDeleting ? "Deleting..." : "Delete Organization"}
+                        {isDeleting ? "Deleting..." : "Delete"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </form>

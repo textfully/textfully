@@ -7,10 +7,10 @@ export const APIKeysTableHeader = () => {
   return (
     <TableRow>
       <TableHead className="w-64">Name</TableHead>
-      <TableHead className="flex-1">API Key</TableHead>
+      <TableHead className="w-64">API Key</TableHead>
       <TableHead className="w-40">Created</TableHead>
       <TableHead className="w-40">Last Used</TableHead>
-      <TableHead className="w-32"></TableHead>
+      <TableHead className="w-24"></TableHead>
     </TableRow>
   );
 };
@@ -25,7 +25,7 @@ export const APIKeysTableRow = ({
   return (
     <TableRow>
       <TableCell className="w-64">{apiKey.name}</TableCell>
-      <TableCell className="flex-1">
+      <TableCell className="w-64">
         <code className="bg-zinc-800 px-2 py-1 rounded">
           {apiKey.short_key}...
         </code>
@@ -40,7 +40,7 @@ export const APIKeysTableRow = ({
           ? new Date(apiKey.last_used).toLocaleDateString()
           : "-"}
       </TableCell>
-      <TableCell className="w-32">
+      <TableCell className="w-24">
         <Button variant="destructive-surface" onClick={() => onRevoke(apiKey)}>
           Revoke
         </Button>
@@ -54,20 +54,20 @@ export const APIKeysTableBodySkeleton = () => {
     <>
       {[...Array(5)].map((_, index) => (
         <TableRow key={index}>
-          <TableCell className="w-64">
+          <TableCell className="w-64 h-row-lg">
             <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell className="flex-1">
+          <TableCell className="w-64 h-row-lg">
             <Skeleton className="h-4 w-32" />
           </TableCell>
-          <TableCell className="w-40">
-            <Skeleton className="h-4 w-32" />
-          </TableCell>
-          <TableCell className="w-40">
-            <Skeleton className="h-4 w-32" />
-          </TableCell>
-          <TableCell className="w-32">
+          <TableCell className="w-40 h-row-lg">
             <Skeleton className="h-4 w-24" />
+          </TableCell>
+          <TableCell className="w-40 h-row-lg">
+            <Skeleton className="h-4 w-24" />
+          </TableCell>
+          <TableCell className="w-24 h-row-lg">
+            <Skeleton className="invisible h-8 w-[72px]" />
           </TableCell>
         </TableRow>
       ))}

@@ -128,7 +128,7 @@ export default function APIKeysPage() {
       const keys = await fetchApiKeys();
       setApiKeys(keys);
 
-      toast.success("API key created successfully");
+      toast.success("The API key was successfully created");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to create API key"
@@ -147,7 +147,7 @@ export default function APIKeysPage() {
       setApiKeys(keys);
       setKeyToRevoke(null);
 
-      toast.success("API key revoked successfully");
+      toast.success("The API key was successfully revoked");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to revoke API key"
@@ -334,7 +334,7 @@ export default function APIKeysPage() {
                 }
               }}
             >
-              {isRevoking ? "Revoking..." : "Revoke Key"}
+              {isRevoking ? "Revoking..." : "Revoke"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

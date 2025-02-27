@@ -73,7 +73,7 @@ export default function ResetPasswordPage() {
         setPasswordError(error.message);
       } else {
         router.replace("/login");
-        toast.success("Password updated successfully");
+        toast.success("The password was successfully updated");
       }
     } catch (error: any) {
       toast.error(error.message);

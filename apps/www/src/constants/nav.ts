@@ -24,21 +24,21 @@ export interface SettingsLink {
   label: string;
 }
 
-export const additionalItems: MenuItem[] = [
+export const ADDITIONAL_ITEMS: MenuItem[] = [
   {
     path: "/dashboard/account/settings",
     label: "Account Settings",
   },
 ];
 
-export const settingsLinks: SettingsLink[] = [
+export const SETTINGS_LINKS: SettingsLink[] = [
   {
     href: "/dashboard/settings/general",
     label: "General",
   },
   {
-    href: "/dashboard/settings/team",
-    label: "Team",
+    href: "/dashboard/settings/members",
+    label: "Members",
   },
   {
     href: "/dashboard/settings/integrations",
@@ -46,7 +46,7 @@ export const settingsLinks: SettingsLink[] = [
   },
 ];
 
-export const menuItems: MenuItem[] = [
+export const MENU_ITEMS: MenuItem[] = [
   {
     icon: MessagesSquare,
     label: "Messages",

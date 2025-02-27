@@ -85,6 +85,9 @@ const config: Config = {
             "color-mix(in srgb, var(--card-foreground) calc(100% * <alpha-value>), transparent)",
         },
       },
+      height: {
+        "row-lg": "68px",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

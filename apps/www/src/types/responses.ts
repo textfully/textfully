@@ -55,6 +55,7 @@ export interface OrganizationMemberResponse {
   created_at: string | null;
   updated_at: string | null;
   full_name: string;
+  email: string;
   avatar_url: string | null;
 }
 

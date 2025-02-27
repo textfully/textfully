@@ -1,7 +1,7 @@
 "use client";
 
 import { getIdentity } from "@/api/identity.ts/get-identity";
-import { additionalItems, menuItems } from "@/constants/nav";
+import { ADDITIONAL_ITEMS, MENU_ITEMS } from "@/constants/nav";
 import { useAuthContext } from "@/contexts/use-auth-context";
 import { useOrganizationContext } from "@/contexts/use-organization-context";
 import { MessageCircleMore, FileText } from "lucide-react";
@@ -26,7 +26,7 @@ export const Topbar = () => {
     }
 
     // Check for direct matches in menuItems first (for items without children)
-    const directMenuItem = menuItems.find((item) =>
+    const directMenuItem = MENU_ITEMS.find((item) =>
       item.path?.includes(`/${currentSection}/`)
     );
     if (directMenuItem) {
@@ -34,14 +34,14 @@ export const Topbar = () => {
     }
 
     // Check for matches in menuItems children
-    const matchingMenuItem = menuItems.find((item) =>
+    const matchingMenuItem = MENU_ITEMS.find((item) =>
       item.children?.some((child) =>
         child?.path?.includes(`/${currentSection}/`)
       )
     );
 
     // Check for matches in additionalItems
-    const matchingAdditionalItem = additionalItems.find((item) =>
+    const matchingAdditionalItem = ADDITIONAL_ITEMS.find((item) =>
       item.path?.includes(`/${currentSection}/`)
     );
 

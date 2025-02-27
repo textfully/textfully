@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { menuItems } from "@/constants/nav";
+import { MENU_ITEMS } from "@/constants/nav";
 import { useOrganizationContext } from "@/contexts/use-organization-context";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
 import { Button } from "../../ui/button";
@@ -47,7 +47,7 @@ export const Sidebar = () => {
   const router = useRouter();
 
   const currentSection = pathname.split("/")[2] || "home";
-  const selectedMenuData = menuItems.find((item) => {
+  const selectedMenuData = MENU_ITEMS.find((item) => {
     if (currentSection === "home") return item.label === "Home";
     
     if (item.path && item.path.includes(`/${currentSection}/`)) {
@@ -86,7 +86,7 @@ export const Sidebar = () => {
       setIsCreateOrgModalOpen(false);
       setNewOrgName("");
 
-      toast.success("Organization created successfully");
+      toast.success("The organization was successfully created");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -206,7 +206,7 @@ export const Sidebar = () => {
         <div className="mx-4 h-px bg-zinc-800" />
 
         <nav className="flex-1 px-2 py-4 overflow-hidden space-y-2">
-          {menuItems.map((item, index) => {
+          {MENU_ITEMS.map((item, index) => {
             const isSelected = item === selectedMenuData;
             return (
               <Link
@@ -219,7 +219,7 @@ export const Sidebar = () => {
                 onMouseEnter={() => {
                   if (!loading) {
                     setHoveredItem(item.label);
-                    const menuItem = menuItems.find(
+                    const menuItem = MENU_ITEMS.find(
                       (m) => m.label === item.label
                     );
                     setIsSubMenuVisible(!!menuItem?.children?.length);
@@ -340,12 +340,12 @@ export const Sidebar = () => {
           <>
             <div className="h-14 px-4 flex items-center border-b border-zinc-800 w-64">
               <h2 className="font-semibold text-zinc-400">
-                {menuItems.find((item) => item.label === hoveredItem)?.label}
+                {MENU_ITEMS.find((item) => item.label === hoveredItem)?.label}
               </h2>
             </div>
 
             <nav className="px-2 py-4 w-64 space-y-2">
-              {menuItems
+              {MENU_ITEMS
                 .find((item) => item.label === hoveredItem)
                 ?.children?.map((child, index) => (
                   <Link
