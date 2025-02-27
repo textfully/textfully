@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { defaultMetadata, defaultOpenGraph } from "@/constants/metadata";
-import { PageLayout } from "@/components/app/page-layout";
+import { PageLayout } from "@/components/app/layouts/page-layout";
 
 export const metadata: Metadata = {
   ...defaultMetadata,

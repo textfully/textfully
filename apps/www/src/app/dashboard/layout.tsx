@@ -1,4 +1,4 @@
-import { PageLayout } from "@/components/app/page-layout";
+import { PageLayout } from "@/components/app/layouts/page-layout";
 import { defaultMetadata, defaultOpenGraph } from "@/constants/metadata";
 import type { Metadata } from "next";
 

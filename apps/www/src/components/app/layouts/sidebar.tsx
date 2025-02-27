@@ -13,16 +13,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../ui/dropdown-menu";
 import { menuItems } from "@/constants/nav";
 import { useOrganizationContext } from "@/contexts/use-organization-context";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
 import { createOrganization } from "@/api/organizations/create-organization";
 import { toast } from "sonner";
 import { OrganizationResponse } from "@/types/responses";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../ui/skeleton";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
@@ -49,6 +49,11 @@ export const Sidebar = () => {
   const currentSection = pathname.split("/")[2] || "home";
   const selectedMenuData = menuItems.find((item) => {
     if (currentSection === "home") return item.label === "Home";
+    
+    if (item.path && item.path.includes(`/${currentSection}/`)) {
+      return true;
+    }
+    
     return item.children?.some((child) =>
       child?.path?.includes(`/${currentSection}/`)
     );
@@ -118,13 +123,13 @@ export const Sidebar = () => {
       }}
     >
       <div className="h-screen border-r border-zinc-800 bg-zinc-950 text-zinc-300 flex flex-col w-64">
-        <div className="pt-3 pb-1 flex px-2 overflow-hidden">
-          {isLoadingOrganization || organizations === undefined ? (
-            <div className="flex items-center h-9 gap-x-2 px-2 py-1">
-              <Skeleton className="w-6 h-6 flex-shrink-0 bg-zinc-800 rounded" />
-              <Skeleton className="h-6 bg-zinc-800 rounded w-20" />
-            </div>
-          ) : organizations && organizations.length > 0 ? (
+        <div
+          className={cn(
+            "flex px-2 overflow-hidden",
+            organizations && organizations.length > 0 ? "pt-3 pb-1" : "pt-1.5"
+          )}
+        >
+          {organizations && organizations.length > 0 && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild={true}>
                 <Button className="flex items-center gap-x-2 px-2 py-1 rounded-md hover:bg-zinc-800/50 transition-colors [&_svg]:size-4 [&_svg]:text-zinc-400">
@@ -174,16 +179,6 @@ export const Sidebar = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <Button
-              className="flex items-center h-8 gap-x-2 pl-2 pr-4 py-1 rounded-md hover:bg-zinc-800/50 transition-colors [&_svg]:size-4 [&_svg]:text-zinc-400"
-              onClick={() => setIsCreateOrgModalOpen(true)}
-            >
-              <Plus />
-              <span className="text-sm font-medium text-zinc-200">
-                Create Organization
-              </span>
-            </Button>
           )}
         </div>
 

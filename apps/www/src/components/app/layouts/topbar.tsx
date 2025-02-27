@@ -1,7 +1,7 @@
 "use client";
 
 import { getIdentity } from "@/api/identity.ts/get-identity";
-import { menuItems } from "@/constants/nav";
+import { additionalItems, menuItems } from "@/constants/nav";
 import { useAuthContext } from "@/contexts/use-auth-context";
 import { useOrganizationContext } from "@/contexts/use-organization-context";
 import { MessageCircleMore, FileText } from "lucide-react";
@@ -18,12 +18,37 @@ export const Topbar = () => {
 
   // Get the current section from the path (e.g. /dashboard/messages/sent -> messages)
   const currentSection = pathname.split("/")[2] || "home";
-  const selectedMenuData = menuItems.find((item) => {
-    if (currentSection === "home") return item.label === "Home";
-    return item.children?.some((child) =>
-      child?.path?.includes(`/${currentSection}/`)
+
+  const getPageTitle = () => {
+    // Handle root dashboard
+    if (currentSection === "home") {
+      return "Home";
+    }
+
+    // Check for direct matches in menuItems first (for items without children)
+    const directMenuItem = menuItems.find((item) =>
+      item.path?.includes(`/${currentSection}/`)
     );
-  });
+    if (directMenuItem) {
+      return directMenuItem.label;
+    }
+
+    // Check for matches in menuItems children
+    const matchingMenuItem = menuItems.find((item) =>
+      item.children?.some((child) =>
+        child?.path?.includes(`/${currentSection}/`)
+      )
+    );
+
+    // Check for matches in additionalItems
+    const matchingAdditionalItem = additionalItems.find((item) =>
+      item.path?.includes(`/${currentSection}/`)
+    );
+
+    return matchingMenuItem?.label || matchingAdditionalItem?.label || "Home";
+  };
+
+  const pageTitle = getPageTitle();
 
   useEffect(() => {
     if (!user || !selectedOrganization) return;
@@ -56,7 +81,7 @@ export const Topbar = () => {
       <div className="h-14 bg-zinc-950 border-b border-zinc-800 flex items-center px-4">
         <div className="h-full w-full flex items-center">
           <h2 className="font-semibold text-zinc-400 line-clamp-1">
-            {selectedMenuData?.label || "Home"}
+            {pageTitle}
           </h2>
         </div>
         <div className="flex items-center justify-end">

@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 
 interface MenuItem {
-  icon: React.FC<{ className?: string }>;
   label: string;
+  icon?: React.FC<{ className?: string }>;
   children?: MenuChildItem[];
   path?: string;
 }
@@ -23,6 +23,13 @@ export interface SettingsLink {
   href: string;
   label: string;
 }
+
+export const additionalItems: MenuItem[] = [
+  {
+    path: "/dashboard/account/settings",
+    label: "Account Settings",
+  },
+];
 
 export const settingsLinks: SettingsLink[] = [
   {

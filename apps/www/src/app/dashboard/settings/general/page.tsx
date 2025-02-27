@@ -138,45 +138,48 @@ export default function GeneralSettingsPage() {
           <CardDescription>Manage your organization details</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="org-name" className="text-sm font-medium">
-              Organization name
-            </label>
-            <div className="flex flex-col gap-2">
-              {isLoading ? (
-                <Skeleton className="h-8 w-full" />
-              ) : (
-                <Input
-                  id="org-name"
-                  value={orgName}
-                  onChange={(e) => {
-                    setOrgName(e.target.value);
-                    if (!isEditing) setIsEditing(true);
-                  }}
-                  placeholder="Enter organization name"
-                  disabled={!canEditName || isUpdating}
-                />
-              )}
-              {!isLoading && !canEditName && (
-                <p className="text-xs text-zinc-500">
-                  Only organization owners and administrators can edit the name
-                </p>
-              )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-400 mb-2">
+                Organization ID
+              </label>
+              <div className="w-full">
+                {isLoading ? (
+                  <Skeleton className="h-8 w-full" />
+                ) : (
+                  <CopyField
+                    value={selectedOrganization?.id || "Not available"}
+                  />
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400 mb-2">
-              Organization ID
-            </label>
-            <div className="max-w-md">
-              {isLoading ? (
-                <Skeleton className="h-8 w-full" />
-              ) : (
-                <CopyField
-                  value={selectedOrganization?.id || "Not available"}
-                />
-              )}
+            <div className="space-y-2">
+              <label htmlFor="org-name" className="text-sm font-medium">
+                Organization name
+              </label>
+              <div className="flex flex-col gap-2">
+                {isLoading ? (
+                  <Skeleton className="h-8 w-full" />
+                ) : (
+                  <Input
+                    id="org-name"
+                    value={orgName}
+                    onChange={(e) => {
+                      setOrgName(e.target.value);
+                      if (!isEditing) setIsEditing(true);
+                    }}
+                    placeholder="Enter organization name"
+                    disabled={!canEditName || isUpdating}
+                  />
+                )}
+                {!isLoading && !canEditName && (
+                  <p className="text-xs text-zinc-500">
+                    Only organization owners and administrators can edit the
+                    name
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -206,83 +209,68 @@ export default function GeneralSettingsPage() {
 
       {!isLoading && isOwner && (
         <>
-          <Separator />
-
-          {/* Danger Zone - Only shown to owners */}
           <Card className="border-red-700">
             <CardHeader>
               <CardTitle className="text-red-500">Danger Zone</CardTitle>
               <CardDescription>
-                Irreversible actions that affect your organization
+                Once you delete an organization, there is no recovery option.
+                Make sure you back up your data before proceeding.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <h3 className="text-lg font-medium">Delete Organization</h3>
-                <p className="text-sm text-zinc-400">
-                  Once you delete an organization, there is no going back.
-                  Please be certain.
-                </p>
-
-                <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="destructive"
-                      className="mt-2"
-                      disabled={!isOwner}
-                    >
-                      Delete Organization
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your organization, all your data, and remove your
-                        access to all services.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (confirmationText === orgName) {
-                          handleDeleteOrganization();
-                        }
-                      }}
-                    >
-                      <div className="py-4">
-                        <p className="text-sm text-zinc-400 mb-2">
-                          Please type{" "}
-                          <span className="font-bold">{orgName}</span> to
-                          confirm:
-                        </p>
-                        <Input
-                          ref={confirmDeleteNameRef}
-                          type="text"
-                          value={confirmationText}
-                          onChange={(e) => setConfirmationText(e.target.value)}
-                          placeholder={orgName}
-                          className="w-full"
-                        />
-                      </div>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel disabled={isDeleting} type="button">
-                          Cancel
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          type="submit"
-                          disabled={isDeleting || confirmationText !== orgName}
-                        >
-                          {isDeleting ? "Deleting..." : "Delete Organization"}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </form>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
+              <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" disabled={!isOwner}>
+                    Delete Organization
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your organization, all your data, and remove your access
+                      to all services.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (confirmationText === orgName) {
+                        handleDeleteOrganization();
+                      }
+                    }}
+                  >
+                    <div className="py-4">
+                      <p className="text-sm text-zinc-400 mb-2">
+                        Please type <span className="font-bold">{orgName}</span>{" "}
+                        to confirm:
+                      </p>
+                      <Input
+                        ref={confirmDeleteNameRef}
+                        type="text"
+                        value={confirmationText}
+                        onChange={(e) => setConfirmationText(e.target.value)}
+                        placeholder={orgName}
+                        className="w-full"
+                      />
+                    </div>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel disabled={isDeleting} type="button">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        type="submit"
+                        disabled={isDeleting || confirmationText !== orgName}
+                      >
+                        {isDeleting ? "Deleting..." : "Delete Organization"}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </form>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardContent>
           </Card>
         </>

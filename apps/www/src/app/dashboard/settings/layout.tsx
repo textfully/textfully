@@ -26,8 +26,7 @@ export default function SettingsLayout({
   };
 
   return (
-    <div className="flex flex-col space-y-6">
-      <h1 className="text-2xl font-bold">Organization Settings</h1>
+    <div className="container p-2 space-y-6">
       <div className="overflow-hidden">
         <Tabs
           value={activeTab}
@@ -44,7 +43,7 @@ export default function SettingsLayout({
         </Tabs>
       </div>
 
-      <div className="pt-2">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }
