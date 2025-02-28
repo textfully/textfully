@@ -2,6 +2,16 @@ import { MessageService, OrganizationRole } from "./enums";
 
 import { MessageStatus } from "./enums";
 
+export interface UserResponse {
+  id: string;
+  full_name: string;
+  email: string;
+  avatar_url: string | null;
+  phone: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
 export interface CreateAPIKeyResponse {
   api_key: string;
   created_at: string | null;
@@ -64,8 +74,8 @@ export interface InviteMemberResponse {
   organization_id: string;
   email: string;
   role: string;
-  expires_at: string;
-  created_at: string;
+  created_at: string | null;
+  expires_at: string | null;
 }
 
 export interface ContactResponse {

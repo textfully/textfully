@@ -29,8 +29,12 @@ import { CopyField } from "@/components/app/copy-button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function GeneralSettingsPage() {
-  const { selectedOrganization, setSelectedOrganization, fetchOrganizations } =
-    useOrganizationContext();
+  const {
+    selectedOrganization,
+    setSelectedOrganization,
+    fetchOrganizations,
+    isLoadingOrganization,
+  } = useOrganizationContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const [confirmationText, setConfirmationText] = useState("");
   const [orgName, setOrgName] = useState(selectedOrganization?.name || "");
@@ -39,9 +43,7 @@ export default function GeneralSettingsPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const confirmDeleteNameRef = useRef<HTMLInputElement>(null);
-
-  const isLoading = !selectedOrganization;
+  const confirmDeleteInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (selectedOrganization) {
@@ -53,7 +55,7 @@ export default function GeneralSettingsPage() {
   useEffect(() => {
     if (isAlertOpen) {
       setTimeout(() => {
-        confirmDeleteNameRef.current?.focus();
+        confirmDeleteInputRef.current?.focus();
       }, 100);
     }
   }, [isAlertOpen]);
@@ -138,7 +140,7 @@ export default function GeneralSettingsPage() {
                 Organization ID
               </label>
               <div className="w-full">
-                {isLoading ? (
+                {isLoadingOrganization ? (
                   <Skeleton className="h-8 w-full" />
                 ) : (
                   <CopyField
@@ -153,7 +155,7 @@ export default function GeneralSettingsPage() {
                 Organization name
               </label>
               <div className="flex flex-col gap-2">
-                {isLoading ? (
+                {isLoadingOrganization ? (
                   <Skeleton className="h-8 w-full" />
                 ) : (
                   <Input
@@ -163,21 +165,23 @@ export default function GeneralSettingsPage() {
                       setOrgName(e.target.value);
                       if (!isEditing) setIsEditing(true);
                     }}
-                    placeholder="Enter organization name"
+                    placeholder="Acme Corporation"
                     disabled={!canEditName || isUpdating}
                   />
                 )}
-                {!isLoading && !canEditName && (
-                  <p className="text-xs text-zinc-500">
-                    Only organization owners and administrators can edit the
-                    name
-                  </p>
-                )}
+                {!isLoadingOrganization &&
+                  selectedOrganization &&
+                  !canEditName && (
+                    <p className="text-xs text-zinc-500">
+                      Only organization owners and administrators can edit the
+                      name
+                    </p>
+                  )}
               </div>
             </div>
           </div>
 
-          {!isLoading && canEditName && (
+          {!isLoadingOrganization && selectedOrganization && canEditName && (
             <div className="flex gap-2 justify-end mt-4">
               <Button
                 variant="surface"
@@ -201,7 +205,7 @@ export default function GeneralSettingsPage() {
         </CardContent>
       </Card>
 
-      {!isLoading && isOwner && (
+      {!isLoadingOrganization && selectedOrganization && isOwner && (
         <>
           <Card className="border-red-700">
             <CardHeader>
@@ -243,7 +247,7 @@ export default function GeneralSettingsPage() {
                         to confirm:
                       </p>
                       <Input
-                        ref={confirmDeleteNameRef}
+                        ref={confirmDeleteInputRef}
                         type="text"
                         value={confirmationText}
                         onChange={(e) => setConfirmationText(e.target.value)}

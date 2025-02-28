@@ -5,10 +5,16 @@ import constate from "constate";
 import { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { logError } from "@/lib/logger";
+import { UserResponse } from "@/types/responses";
+import { fetchUserById } from "@/api/users/fetch-user";
 
 const useAuth = () => {
-  const [user, setUser] = useState<User | null | undefined>();
+  const [user, setUser] = useState<User | null | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState<UserResponse | null | undefined>(
+    undefined
+  );
+  const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
 
   const supabase = createClient();
 
@@ -30,7 +36,24 @@ const useAuth = () => {
     if (error) {
       logError("Error fetching user:", error);
     }
-    setUser(data.user || null);
+
+    if (data.user) {
+      setIsLoadingUserInfo(true);
+      try {
+        setUser(data.user);
+        const userInfo = await fetchUserById(data.user.id);
+        setUserInfo(userInfo);
+      } catch (error) {
+        logError(`Error fetching user:`, error);
+        setUser(null);
+        setUserInfo(null);
+      } finally {
+        setIsLoadingUserInfo(false);
+      }
+    } else {
+      setUser(null);
+      setUserInfo(null);
+    }
   };
 
   const signOut = async () => {
@@ -39,6 +62,7 @@ const useAuth = () => {
       logError("Error signing out:", error);
     } else {
       setUser(null);
+      setUserInfo(null);
       window.location.href = "/login";
     }
   };
@@ -124,6 +148,8 @@ const useAuth = () => {
   return {
     user,
     loading,
+    userInfo,
+    isLoadingUserInfo,
     signOut,
     signInWithPassword,
     signInWithOAuth,
