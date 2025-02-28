@@ -28,50 +28,246 @@ export default function PricingPage() {
 
   interface VolumeMark {
     value: number;
-    label: string;
+    contactLabel: string;
+    messageLabel: string;
     price: string;
   }
 
   const volumeMarks: VolumeMark[] = [
-    { value: 0, label: "Up to 500 contacts", price: "$25" }, // $25
-    { value: 2.5, label: "Up to 625 contacts", price: "$49" },
-    { value: 5, label: "Up to 750 contacts", price: "$49" },
-    { value: 7.5, label: "Up to 875 contacts", price: "$49" },
-    { value: 10, label: "Up to 1,000 contacts", price: "$49" },
-    { value: 12.5, label: "Up to 1,125 contacts", price: "$49" },
-    { value: 15, label: "Up to 1,250 contacts", price: "$49" },
-    { value: 17.5, label: "Up to 1,375 contacts", price: "$49" },
-    { value: 20, label: "Up to 1,500 contacts", price: "$49" }, // $49
-    { value: 22.5, label: "Up to 2,000 contacts", price: "$99" },
-    { value: 25, label: "Up to 2,500 contacts", price: "$99" },
-    { value: 27.5, label: "Up to 3,000 contacts", price: "$99" },
-    { value: 30, label: "Up to 3,500 contacts", price: "$99" },
-    { value: 32.5, label: "Up to 4,000 contacts", price: "$99" },
-    { value: 35, label: "Up to 4,500 contacts", price: "$99" },
-    { value: 37.5, label: "Up to 4,750 contacts", price: "$99" },
-    { value: 40, label: "Up to 5,000 contacts", price: "$99" },
-    { value: 42.5, label: "Up to 8,000 contacts", price: "$199" },
-    { value: 45, label: "Up to 11,000 contacts", price: "$199" },
-    { value: 47.5, label: "Up to 14,000 contacts", price: "$199" },
-    { value: 50, label: "Up to 17,000 contacts", price: "$199" },
-    { value: 52.5, label: "Up to 20,000 contacts", price: "$199" },
-    { value: 55, label: "Up to 25,000 contacts", price: "$299" }, // $199
-    { value: 57.5, label: "Up to 28,000 contacts", price: "$299" },
-    { value: 60, label: "Up to 31,000 contacts", price: "$299" },
-    { value: 62.5, label: "Up to 34,000 contacts", price: "$299" },
-    { value: 65, label: "Up to 36,000 contacts", price: "$299" },
-    { value: 67.5, label: "Up to 38,000 contacts", price: "$299" },
-    { value: 70, label: "Up to 40,000 contacts", price: "$299" }, // $299
-    { value: 72.5, label: "Up to 44,000 contacts", price: "$399" },
-    { value: 75, label: "Up to 48,000 contacts", price: "$399" },
-    { value: 77.5, label: "Up to 52,000 contacts", price: "$399" },
-    { value: 80, label: "Up to 56,000 contacts", price: "$399" },
-    { value: 82.5, label: "Up to 60,000 contacts", price: "$399" },
-    { value: 85, label: "Up to 64,000 contacts", price: "$399" },
-    { value: 87.5, label: "Up to 68,000 contacts", price: "$399" },
-    { value: 90, label: "Up to 72,000 contacts", price: "$399" },
-    { value: 92.5, label: "Up to 76,000 contacts", price: "$399" },
-    { value: 95, label: "Up to 80,000 contacts", price: "$399" }, // $399
+    {
+      value: 0,
+      contactLabel: "Up to 500 contacts",
+      messageLabel: "5k messages included",
+      price: "$25",
+    },
+    {
+      value: 2.5,
+      contactLabel: "Up to 625 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 5,
+      contactLabel: "Up to 750 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 7.5,
+      contactLabel: "Up to 875 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 10,
+      contactLabel: "Up to 1,000 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 12.5,
+      contactLabel: "Up to 1,125 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 15,
+      contactLabel: "Up to 1,250 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 17.5,
+      contactLabel: "Up to 1,375 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 20,
+      contactLabel: "Up to 1,500 contacts",
+      messageLabel: "25k messages included",
+      price: "$49",
+    },
+    {
+      value: 22.5,
+      contactLabel: "Up to 2,000 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 25,
+      contactLabel: "Up to 2,500 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 27.5,
+      contactLabel: "Up to 3,000 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 30,
+      contactLabel: "Up to 3,500 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 32.5,
+      contactLabel: "Up to 4,000 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 35,
+      contactLabel: "Up to 4,500 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 37.5,
+      contactLabel: "Up to 4,750 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 40,
+      contactLabel: "Up to 5,000 contacts",
+      messageLabel: "50k messages included",
+      price: "$99",
+    },
+    {
+      value: 42.5,
+      contactLabel: "Up to 8,000 contacts",
+      messageLabel: "100k messages included",
+      price: "$199",
+    },
+    {
+      value: 45,
+      contactLabel: "Up to 11,000 contacts",
+      messageLabel: "100k messages included",
+      price: "$199",
+    },
+    {
+      value: 47.5,
+      contactLabel: "Up to 14,000 contacts",
+      messageLabel: "100k messages included",
+      price: "$199",
+    },
+    {
+      value: 50,
+      contactLabel: "Up to 17,000 contacts",
+      messageLabel: "100k messages included",
+      price: "$199",
+    },
+    {
+      value: 52.5,
+      contactLabel: "Up to 20,000 contacts",
+      messageLabel: "100k messages included",
+      price: "$199",
+    },
+    {
+      value: 55,
+      contactLabel: "Up to 25,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 57.5,
+      contactLabel: "Up to 28,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 60,
+      contactLabel: "Up to 31,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 62.5,
+      contactLabel: "Up to 34,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 65,
+      contactLabel: "Up to 36,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 67.5,
+      contactLabel: "Up to 38,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 70,
+      contactLabel: "Up to 40,000 contacts",
+      messageLabel: "150k messages included",
+      price: "$299",
+    },
+    {
+      value: 72.5,
+      contactLabel: "Up to 44,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 75,
+      contactLabel: "Up to 48,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 77.5,
+      contactLabel: "Up to 52,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 80,
+      contactLabel: "Up to 56,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 82.5,
+      contactLabel: "Up to 60,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 85,
+      contactLabel: "Up to 64,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 87.5,
+      contactLabel: "Up to 68,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 90,
+      contactLabel: "Up to 72,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 92.5,
+      contactLabel: "Up to 76,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
+    {
+      value: 95,
+      contactLabel: "Up to 80,000 contacts",
+      messageLabel: "200k messages included",
+      price: "$399",
+    },
   ];
 
   interface Plan {
@@ -92,10 +288,10 @@ export default function PricingPage() {
       features: [
         { name: "1 contact only", included: true },
         { name: "SMS/MMS only", included: true },
-        { name: "100 messages per day", included: true },
+        { name: "500 messages included", included: true },
         { name: "Textfully phone number", included: true },
         { name: "Community support", included: true },
-        { name: "No data retention", included: false },
+        { name: "No integrations", included: false },
       ],
       cta: { label: "Start for free", type: "signup" },
       type: "surface",
@@ -106,9 +302,9 @@ export default function PricingPage() {
       label: "Most Popular",
       priceSuffix: "/ month",
       features: [
-        { name: "Up to 100 contacts", included: true },
+        { name: "Up to 50 contacts", included: true },
         { name: "SMS/MMS only", included: true },
-        { name: "Unlimited messages", included: true },
+        { name: "1k messages included", included: true },
         { name: "Custom phone numbers", included: true, badge: "Add-on" },
         { name: "Basic email support", included: true },
         { name: "3-day data retention", included: true },
@@ -122,9 +318,9 @@ export default function PricingPage() {
       label: "Best Value",
       priceSuffix: "/ month",
       features: [
-        { name: "Up to 1,000 contacts", included: true },
+        { name: "Up to 100 contacts", included: true },
         { name: "SMS/MMS & iMessage", included: true },
-        { name: "Unlimited messages", included: true },
+        { name: "5k messages included", included: true },
         { name: "Custom phone numbers", included: true, badge: "Add-on" },
         { name: "Priority email support", included: true },
         { name: "7-day data retention", included: true },
@@ -149,9 +345,14 @@ export default function PricingPage() {
     },
   ];
 
-  const getCurrentVolumeLabel = () => {
+  const getCurrentVolumeContactLabel = () => {
     const mark = volumeMarks.find((mark) => mark.value === sliderValue);
-    return mark ? mark.label : volumeMarks[0].label;
+    return mark ? mark.contactLabel : volumeMarks[0].contactLabel;
+  };
+
+  const getCurrentVolumeMessageLabel = () => {
+    const mark = volumeMarks.find((mark) => mark.value === sliderValue);
+    return mark ? mark.messageLabel : volumeMarks[0].messageLabel;
   };
 
   const getCurrentVolumePrice = () => {
@@ -290,8 +491,10 @@ export default function PricingPage() {
                               }
                             >
                               {index === 0 && plan.type === "highlighted"
-                                ? getCurrentVolumeLabel()
-                                : feature.name}
+                                ? getCurrentVolumeContactLabel()
+                                : index === 2 && plan.type === "highlighted"
+                                  ? getCurrentVolumeMessageLabel()
+                                  : feature.name}
                               {feature.badge && (
                                 <span className="ml-2 px-1.5 py-0.5 text-xs bg-zinc-300 text-zinc-900 font-medium rounded-md">
                                   {feature.badge}
