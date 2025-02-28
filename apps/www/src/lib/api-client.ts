@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
 import { getData } from "./storage";
-import { createRedirectLink } from "./utils";
 
 export async function getAuthToken(): Promise<string | null> {
   const supabase = createClient();
@@ -21,13 +20,6 @@ export async function makeApiRequest<T>(
   options: RequestOptions = {}
 ): Promise<T> {
   const token = await getAuthToken();
-
-  if (!token) {
-    if (window.location.pathname.startsWith("/dashboard")) {
-      const currentPath = window.location.pathname;
-      window.location.href = createRedirectLink("/login", currentPath);
-    }
-  }
 
   const {
     headers = {},

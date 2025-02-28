@@ -1,23 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/assets/logo";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useAuthContext } from "@/contexts/use-auth-context";
 
 export default function VerifyPage() {
-  const { user, loading } = useAuthContext();
-
   const [error, setError] = useState<string | null>(null);
 
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const token = searchParams.get("token");
+  const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type");
   const redirectTo = searchParams.get("redirect_to");
 
@@ -27,7 +25,7 @@ export default function VerifyPage() {
   const handleVerify = () => {
     setError(null);
 
-    if (!token) {
+    if (!tokenHash) {
       setError("Invalid verification link");
       return;
     }
@@ -36,7 +34,7 @@ export default function VerifyPage() {
       const url = new URL(
         "https://cvmdumivffqwpeltefws.supabase.co/auth/v1/verify"
       );
-      url.searchParams.append("token", token);
+      url.searchParams.append("token", tokenHash);
       if (type) {
         url.searchParams.append("type", type);
       }
@@ -53,26 +51,15 @@ export default function VerifyPage() {
 
   useEffect(() => {
     if (errorParam === "access_denied" && errorCode === "otp_expired") {
-      setTimeout(() => {
-        if (type === "email") {
-          router.replace("/signup");
-        } else if (type === "recovery") {
-          router.replace("/forgot-password");
-        } else {
-          router.replace("/login");
-        }
-        toast.error("Email link has expired", {
-          description: "Please try again",
-        });
-      }, 500);
+      toast.error("Email link has expired", {
+        description: "Please try again",
+      });
+      const nextSearchParams = new URLSearchParams(searchParams.toString());
+      nextSearchParams.delete("error");
+      nextSearchParams.delete("error_code");
+      router.replace(`${pathname}?${nextSearchParams}`);
     }
-  }, [errorParam, errorCode, router, type]);
-
-  useEffect(() => {
-    if (!loading && user) {
-      redirect("/dashboard");
-    }
-  }, [user, loading]);
+  }, [errorParam, errorCode, router, pathname, searchParams]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
@@ -95,9 +82,15 @@ export default function VerifyPage() {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold mb-2">Verify Your Email</h1>
+            <h1 className="text-2xl font-bold mb-2">
+              {type === "recovery"
+                ? "Reset Your Password"
+                : "Verify Your Email"}
+            </h1>
             <p className="text-zinc-400">
-              Click the button below to verify your email address and continue.
+              {type === "recovery"
+                ? "Click the button below to continue to reset your password."
+                : "Click the button below to verify your email address."}
             </p>
           </div>
 
@@ -129,7 +122,9 @@ export default function VerifyPage() {
               className="w-full [&_svg]:size-4"
               onClick={handleVerify}
             >
-              Verify Email
+              {type === "recovery"
+                ? "Continue"
+                : "Verify Email"}
               <ArrowRight />
             </Button>
           )}

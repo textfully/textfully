@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
@@ -28,10 +28,6 @@ const resetPasswordSchema = z.object({
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
-const searchParams = new URLSearchParams(
-  typeof window !== "undefined" ? window.location.search : ""
-);
-
 export default function ResetPasswordPage() {
   const { updatePassword, user, loading } = useAuthContext();
   const [email, setEmail] = useState("");
@@ -40,11 +36,8 @@ export default function ResetPasswordPage() {
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const passwordRef = useRef<HTMLInputElement>(null);
-  
-  const router = useRouter();
 
-  const errorParam = searchParams.get("error");
-  const errorCode = searchParams.get("error_code");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,7 +66,9 @@ export default function ResetPasswordPage() {
         setPasswordError(error.message);
       } else {
         router.replace("/login");
-        toast.success("The password was successfully updated");
+        setTimeout(() => {
+          toast.success("The password was successfully updated");
+        }, 500);
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -83,23 +78,10 @@ export default function ResetPasswordPage() {
   };
 
   useEffect(() => {
-    if (!loading && !user) {
-      redirect("/login");
-    } else if (!loading && user) {
+    if (!loading && user) {
       setEmail(user.email || "");
     }
   }, [user, loading]);
-
-  useEffect(() => {
-    if (errorParam === "access_denied" && errorCode === "otp_expired") {
-      setTimeout(() => {
-        router.replace("/reset-password");
-        toast.error("Email link has expired", {
-          description: "Please try again",
-        });
-      }, 500);
-    }
-  }, [errorParam, errorCode]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">

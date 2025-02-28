@@ -100,7 +100,7 @@ const features: Feature[] = [
     description:
       "Get an API key and send your first text message in 30 seconds.",
     cta: "Try now",
-    link: "/dashboard",
+    link: "/dashboard/api/keys",
   },
   {
     title: "Native iMessage Support",
@@ -113,7 +113,7 @@ const features: Feature[] = [
     description:
       "Start building for free and scale as you grow. No hidden fees. Cancel anytime.",
     cta: "Get started",
-    link: "/dashboard",
+    link: "/signup",
   },
   {
     title: "Built for Developers",
@@ -127,7 +127,7 @@ const features: Feature[] = [
     description:
       "Get your business A2P 10DLC registration approved in days, not weeks.",
     cta: "Sign up",
-    link: "/dashboard",
+    link: "/signup",
   },
   {
     title: "All Your Messaging Needs",
@@ -145,7 +145,7 @@ interface CTA {
 
 const ctas: CTA[] = [
   { name: "View Docs", link: "/docs" },
-  { name: "Get Started", link: "/dashboard" },
+  { name: "Get Started", link: "/signup" },
 ];
 
 export default function HomePage() {

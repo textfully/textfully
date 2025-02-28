@@ -1,10 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { redirect } from "next/navigation";
-import { useAuthContext } from "@/contexts/use-auth-context";
-import { createRedirectLink, cn } from "@/lib/utils";
 import { useOrganizationContext } from "@/contexts/use-organization-context";
 import {
   Card,
@@ -12,11 +8,9 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -76,7 +70,7 @@ export default function GeneralSettingsPage() {
       toast.success("The organization was successfully deleted");
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 500);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to delete organization"

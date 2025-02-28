@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { redirect } from "next/navigation";
 import { useAuthContext } from "@/contexts/use-auth-context";
-import { cn, createRedirectLink } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,

@@ -12,7 +12,7 @@ import GitHub from "@/assets/icons/socials/github";
 import { useAuthContext } from "@/contexts/use-auth-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { redirect, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const signupSchema = z
   .object({
@@ -34,7 +34,7 @@ const signupSchema = z
 type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
-  const { signUp, signInWithOAuth, user, loading } = useAuthContext();
+  const { signUp, signInWithOAuth } = useAuthContext();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -54,6 +54,12 @@ export default function SignupPage() {
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const errorParam = searchParams.get("error");
+  const errorCode = searchParams.get("error_code");
+  const redirectTo = searchParams.get("redirectTo");
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,11 +110,22 @@ export default function SignupPage() {
         }
       } else {
         if (data && data.user) {
-          if (data.user.identities && data.user.identities?.length > 0) {
-            router.replace("/login");
-            toast.success("Please check your email to verify your account");
+          const nextSearchParams = searchParams.toString();
+          if (nextSearchParams) {
+            router.replace(`/login?${nextSearchParams}`);
           } else {
-            toast.error("Email address already in use. Please log in instead.");
+            router.replace("/login");
+          }
+          if (data.user.identities && data.user.identities?.length > 0) {
+            setTimeout(() => {
+              toast.success("Please check your email to verify your account");
+            }, 500);
+          } else {
+            setTimeout(() => {
+              toast.error(
+                "Email address already in use. Please log in instead."
+              );
+            }, 500);
           }
         } else {
           toast.error("Something went wrong. Please try again.");
@@ -123,7 +140,7 @@ export default function SignupPage() {
 
   const handleGitHubSignIn = async () => {
     try {
-      const { error } = await signInWithOAuth("github");
+      const { error } = await signInWithOAuth("github", redirectTo);
       if (error) {
         toast.error(error.message);
       }
@@ -134,7 +151,7 @@ export default function SignupPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { error } = await signInWithOAuth("google");
+      const { error } = await signInWithOAuth("google", redirectTo);
       if (error) {
         toast.error(error.message);
       }
@@ -144,10 +161,20 @@ export default function SignupPage() {
   };
 
   useEffect(() => {
-    if (!loading && user) {
-      redirect("/dashboard");
+    if (errorParam === "access_denied" && errorCode === "otp_expired") {
+      const nextSearchParams = new URLSearchParams(searchParams.toString());
+      nextSearchParams.delete("error");
+      nextSearchParams.delete("error_code");
+      nextSearchParams.delete("error_description");
+      nextSearchParams.delete("type");
+      router.replace(`${pathname}?${nextSearchParams}`);
+      setTimeout(() => {
+        toast.error("Email link has expired", {
+          description: "Please try again",
+        });
+      }, 500);
     }
-  }, [user, loading]);
+  }, [errorParam, errorCode, router, pathname, searchParams]);
 
   return (
     <div className="bg-zinc-950 min-h-screen text-white">

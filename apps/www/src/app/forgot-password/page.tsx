@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-import { ArrowRight, ChevronLeft, Lock } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ArrowRight, ChevronLeft } from "lucide-react";
 import Logo from "@/assets/logo";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -22,14 +22,20 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
-  const { resetPasswordForEmail, user, loading } = useAuthContext();
+  const { resetPasswordForEmail } = useAuthContext();
 
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
 
   const emailRef = useRef<HTMLInputElement>(null);
+
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const errorParam = searchParams.get("error");
+  const errorCode = searchParams.get("error_code");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,10 +76,20 @@ export default function ForgotPasswordPage() {
   };
 
   useEffect(() => {
-    if (!loading && user) {
-      redirect("/dashboard");
+    if (errorParam === "access_denied" && errorCode === "otp_expired") {
+      const nextSearchParams = new URLSearchParams(searchParams.toString());
+      nextSearchParams.delete("error");
+      nextSearchParams.delete("error_code");
+      nextSearchParams.delete("error_description");
+      nextSearchParams.delete("type");
+      router.replace(`${pathname}?${nextSearchParams}`);
+      setTimeout(() => {
+        toast.error("Email link has expired", {
+          description: "Please try again",
+        });
+      }, 500);
     }
-  }, [user, loading]);
+  }, [errorParam, errorCode, router, pathname, searchParams]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">

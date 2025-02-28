@@ -82,7 +82,7 @@ export const NavBar = ({
                 </Link>
               )}
 
-              <Link href="/dashboard">
+              <Link href={user ? "/dashboard" : "/signup"}>
                 <div className="shared small sent px-3 py-1.5 flex gap-x-1.5 items-center">
                   <div
                     style={{

@@ -150,7 +150,7 @@ export default function MembersSettingsPage() {
       toast.success("You successfully left the organization");
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 500);
     } catch (error) {
       toast.error("Failed to leave organization. Please try again.");
     } finally {

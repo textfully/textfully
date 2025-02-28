@@ -39,6 +39,7 @@ const useAuth = () => {
       logError("Error signing out:", error);
     } else {
       setUser(null);
+      window.location.href = "/login";
     }
   };
 
@@ -55,13 +56,18 @@ const useAuth = () => {
     }
   };
 
-  const signInWithOAuth = async (provider: "github" | "google") => {
+  const signInWithOAuth = async (
+    provider: "github" | "google",
+    redirectTo?: string | null
+  ) => {
     try {
+      const callbackUrl = redirectTo
+        ? `${window.location.origin}/auth/callback?redirectTo=${redirectTo}`
+        : `${window.location.origin}/auth/callback`;
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
+        options: { redirectTo: callbackUrl },
       });
 
       return { data, error };
@@ -90,9 +96,11 @@ const useAuth = () => {
   };
 
   const resetPasswordForEmail = async (email: string) => {
+    const callbackUrl = `${window.location.origin}/auth/callback?redirectTo=/reset-password`;
+
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: callbackUrl,
       });
 
       return { data, error };

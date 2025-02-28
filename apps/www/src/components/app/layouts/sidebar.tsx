@@ -13,16 +13,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { MENU_ITEMS } from "@/constants/nav";
 import { useOrganizationContext } from "@/contexts/use-organization-context";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
-import { Button } from "../../ui/button";
-import { Input } from "../../ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { createOrganization } from "@/api/organizations/create-organization";
 import { toast } from "sonner";
 import { OrganizationResponse } from "@/types/responses";
-import { Skeleton } from "../../ui/skeleton";
 
 export const Sidebar = () => {
   const { user, loading, signOut } = useAuthContext();
@@ -40,7 +44,6 @@ export const Sidebar = () => {
     fetchOrganizations,
     selectedOrganization,
     setSelectedOrganization,
-    isLoadingOrganization,
   } = useOrganizationContext();
 
   const pathname = usePathname();
@@ -49,23 +52,17 @@ export const Sidebar = () => {
   const currentSection = pathname.split("/")[2] || "home";
   const selectedMenuData = MENU_ITEMS.find((item) => {
     if (currentSection === "home") return item.label === "Home";
-    
+
     if (item.path && item.path.includes(`/${currentSection}/`)) {
       return true;
     }
-    
+
     return item.children?.some((child) =>
       child?.path?.includes(`/${currentSection}/`)
     );
   });
 
   const isHome = currentSection === "home";
-
-  const handleSignOut = async () => {
-    signOut().then(() => {
-      router.push("/login");
-    });
-  };
 
   const handleCreateOrganization = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,7 +86,7 @@ export const Sidebar = () => {
       toast.success("The organization was successfully created");
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 500);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to create organization"
@@ -268,7 +265,7 @@ export const Sidebar = () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild={true}>
-                  <button onClick={handleSignOut} className="w-full text-left">
+                  <button onClick={signOut} className="w-full text-left">
                     Sign out
                   </button>
                 </DropdownMenuItem>
@@ -345,33 +342,33 @@ export const Sidebar = () => {
             </div>
 
             <nav className="px-2 py-4 w-64 space-y-2">
-              {MENU_ITEMS
-                .find((item) => item.label === hoveredItem)
-                ?.children?.map((child, index) => (
-                  <Link
-                    key={index}
-                    href={child.path ?? "/dashboard"}
-                    {...(!child.path.startsWith("/dashboard")
-                      ? {
-                          rel: "noopener noreferrer",
-                          target: "_blank",
-                        }
-                      : {})}
-                    className={cn(
-                      "w-full h-8 flex items-center px-3 text-sm rounded-md",
-                      pathname === child.path
-                        ? "bg-zinc-800"
-                        : "hover:bg-zinc-900"
+              {MENU_ITEMS.find(
+                (item) => item.label === hoveredItem
+              )?.children?.map((child, index) => (
+                <Link
+                  key={index}
+                  href={child.path ?? "/dashboard"}
+                  {...(!child.path.startsWith("/dashboard")
+                    ? {
+                        rel: "noopener noreferrer",
+                        target: "_blank",
+                      }
+                    : {})}
+                  className={cn(
+                    "w-full h-8 flex items-center px-3 text-sm rounded-md",
+                    pathname === child.path
+                      ? "bg-zinc-800"
+                      : "hover:bg-zinc-900"
+                  )}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span>{child.label}</span>
+                    {!child.path.startsWith("/dashboard") && (
+                      <ArrowUpRight className="w-4 h-4 text-zinc-400" />
                     )}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <span>{child.label}</span>
-                      {!child.path.startsWith("/dashboard") && (
-                        <ArrowUpRight className="w-4 h-4 text-zinc-400" />
-                      )}
-                    </div>
-                  </Link>
-                ))}
+                  </div>
+                </Link>
+              ))}
             </nav>
           </>
         )}

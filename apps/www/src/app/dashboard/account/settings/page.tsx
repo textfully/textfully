@@ -83,12 +83,9 @@ export default function AccountSettingsPage() {
           <CardDescription>Irreversible account actions</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button variant="destructive" disabled>
+          <Button variant="destructive" onClick={handleDeleteAccount}>
             Delete Account
           </Button>
-          <p className="text-xs text-zinc-500 mt-2">
-            Account deletion coming soon
-          </p>
         </CardContent>
       </Card>
     </div>

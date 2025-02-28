@@ -5,9 +5,8 @@ const PUBLIC_ROUTES = [
   "/login",
   "/signup",
   "/forgot-password",
-  "/reset-password",
   "/auth/verify",
-  "/auth/callback",
+  "/auth/auth-code-error",
 ];
 
 export async function updateSession(request: NextRequest) {
@@ -24,12 +23,10 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
-          supabaseResponse = NextResponse.next({
-            request,
-          });
+          supabaseResponse = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           );
@@ -49,17 +46,81 @@ export async function updateSession(request: NextRequest) {
   const isPublicRoute = PUBLIC_ROUTES.some((route) =>
     request.nextUrl.pathname.startsWith(route)
   );
+
+  const isAuthRoute =
+    request.nextUrl.pathname.startsWith("/auth/verify") ||
+    request.nextUrl.pathname.startsWith("/reset-password");
+
+  if (request.nextUrl.pathname.startsWith("/auth/auth-code-error")) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/login";
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (request.nextUrl.pathname.startsWith("/reset-password")) {
+    if (!user) {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = "/forgot-password";
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
+
+  if (isAuthRoute) {
+    const errorParam = request.nextUrl.searchParams.get("error");
+    const errorCode = request.nextUrl.searchParams.get("error_code");
+    const typeParam = request.nextUrl.searchParams.get("type");
+
+    if (errorParam === "access_denied" && errorCode === "otp_expired") {
+      const redirectUrl = request.nextUrl.clone();
+
+      if (request.nextUrl.pathname.startsWith("/auth/verify")) {
+        redirectUrl.pathname =
+          typeParam === "email"
+            ? "/signup"
+            : typeParam === "recovery"
+              ? "/forgot-password"
+              : "/login";
+      } else if (request.nextUrl.pathname.startsWith("/reset-password")) {
+        redirectUrl.pathname = "/forgot-password";
+      }
+
+      // Preserve error parameters for client-side toast
+      redirectUrl.searchParams.set("error", errorParam);
+      redirectUrl.searchParams.set("error_code", errorCode);
+      if (typeParam) {
+        redirectUrl.searchParams.set("type", typeParam);
+      }
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
+
   const isHomePage = request.nextUrl.pathname === "/";
 
   // Redirect to dashboard if user is signed in and trying to access public routes (except auth callback)
-  if (user && isPublicRoute && !request.nextUrl.pathname.startsWith("/auth")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+  if (user && isPublicRoute) {
+    const redirectTo = request.nextUrl.searchParams.get("redirectTo");
+    const decodedRedirectTo = redirectTo
+      ? decodeURIComponent(redirectTo)
+      : null;
+    if (decodedRedirectTo?.startsWith("/")) {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = decodedRedirectTo;
+      redirectUrl.searchParams.delete("redirectTo");
+      return NextResponse.redirect(redirectUrl);
+    } else {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
   }
 
   // Redirect to login if user is not signed in and trying to access protected routes
-  if (!user && !isPublicRoute && !isHomePage) {
+  if (
+    !user &&
+    !isPublicRoute &&
+    !isHomePage &&
+    !request.nextUrl.pathname.startsWith("/auth/callback")
+  ) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/login";
     // Add the original URL as a search parameter to redirect back after login

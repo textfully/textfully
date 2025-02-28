@@ -8,11 +8,11 @@ import GitHub from "@/assets/icons/socials/github";
 import Google from "@/assets/icons/socials/google";
 import { z } from "zod";
 import { toast } from "sonner";
-import { cn, createRedirectLink } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/contexts/use-auth-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -22,8 +22,7 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { signInWithPassword, signInWithOAuth, user, loading } =
-    useAuthContext();
+  const { signInWithPassword, signInWithOAuth } = useAuthContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +32,14 @@ export default function LoginPage() {
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const errorParam = searchParams.get("error");
+  const errorCode = searchParams.get("error_code");
+  const redirectTo = searchParams.get("redirectTo");
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,6 +75,10 @@ export default function LoginPage() {
         } else {
           toast.error(error.message);
         }
+      } else {
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -78,8 +89,10 @@ export default function LoginPage() {
 
   const handleGitHubSignIn = async () => {
     try {
-      const { error } = await signInWithOAuth("github");
-      if (error) throw error;
+      const { error } = await signInWithOAuth("github", redirectTo);
+      if (error) {
+        toast.error(error.message);
+      }
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -87,18 +100,30 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { error } = await signInWithOAuth("google");
-      if (error) throw error;
+      const { error } = await signInWithOAuth("google", redirectTo);
+      if (error) {
+        toast.error(error.message);
+      }
     } catch (error: any) {
       toast.error(error.message);
     }
   };
 
   useEffect(() => {
-    if (!loading && user) {
-      redirect("/dashboard");
+    if (errorParam === "access_denied" && errorCode === "otp_expired") {
+      const nextSearchParams = new URLSearchParams(searchParams.toString());
+      nextSearchParams.delete("error");
+      nextSearchParams.delete("error_code");
+      nextSearchParams.delete("error_description");
+      nextSearchParams.delete("type");
+      router.replace(`${pathname}?${nextSearchParams}`);
+      setTimeout(() => {
+        toast.error("Email link has expired", {
+          description: "Please try again",
+        });
+      }, 500);
     }
-  }, [user, loading]);
+  }, [errorParam, errorCode, router, pathname, searchParams]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
@@ -236,11 +261,19 @@ export default function LoginPage() {
 
         <p className="mt-8 text-center text-xs text-zinc-400">
           By continuing, you agree to our{" "}
-          <Link href="/terms" className="text-zinc-200 hover:brightness-110" tabIndex={10}>
+          <Link
+            href="/terms"
+            className="text-zinc-200 hover:brightness-110"
+            tabIndex={10}
+          >
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="text-zinc-200 hover:brightness-110" tabIndex={11}>
+          <Link
+            href="/privacy"
+            className="text-zinc-200 hover:brightness-110"
+            tabIndex={11}
+          >
             Privacy Policy
           </Link>
         </p>

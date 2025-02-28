@@ -6,15 +6,13 @@ import { checkHealth } from "@/api/health/check-health";
 import { MaintenancePage } from "../pages/maintenance-page";
 import { Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
-import { createRedirectLink } from "@/lib/utils";
-import { redirect } from "next/navigation";
 
 interface PageLayoutProps {
   children: React.ReactNode;
 }
 
 export const PageLayout = ({ children }: PageLayoutProps) => {
-  const { user, loading } = useAuthContext();
+  const { loading } = useAuthContext();
   const [isHealthy, setIsHealthy] = useState(true);
 
   useEffect(() => {
@@ -29,10 +27,6 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
 
     checkServerHealth();
   }, []);
-
-  if (!user && !loading) {
-    redirect(createRedirectLink("/login", window.location.pathname));
-  }
 
   if (!isHealthy) {
     return <MaintenancePage />;
