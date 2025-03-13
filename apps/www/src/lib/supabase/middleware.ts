@@ -96,7 +96,7 @@ export async function updateSession(request: NextRequest) {
 
   const isHomePage = request.nextUrl.pathname === "/";
 
-  // Redirect to dashboard if user is signed in and trying to access public routes (except auth callback)
+  // Redirect to dashboard if user is signed in and on the auth pages
   if (user && isPublicRoute) {
     const redirectTo = request.nextUrl.searchParams.get("redirectTo");
     const decodedRedirectTo = redirectTo
@@ -114,10 +114,10 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
-  // Redirect to login if user is not signed in and trying to access protected routes
+  // Redirect to login if user is not signed in and trying to access dashboard
   if (
     !user &&
-    !isPublicRoute &&
+    request.nextUrl.pathname.startsWith("/dashboard") &&
     !isHomePage &&
     !request.nextUrl.pathname.startsWith("/auth/callback")
   ) {

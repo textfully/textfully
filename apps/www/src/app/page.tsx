@@ -280,6 +280,7 @@ export default function HomePage() {
             const isEven = index % 2 === 0;
             return (
               <div
+                key={card.title}
                 className={cn(
                   "w-full max-w-md flex flex-col relative",
                   isEven ? "mr-auto" : "ml-auto"
@@ -300,7 +301,6 @@ export default function HomePage() {
                   ></div>
                 </div>
                 <div
-                  key={card.title}
                   className={cn(
                     "shared bg-white/5 flex w-full flex-col rounded-xl px-6 py-3.5 pt-[18px]",
                     isEven ? "received" : "sent"
