@@ -15,8 +15,8 @@ const Python = () => {
           y2="78.201%"
           id="a"
         >
-          <stop stop-color="#387EB8" offset="0%" />
-          <stop stop-color="#366994" offset="100%" />
+          <stop stopColor="#387EB8" offset="0%" />
+          <stop stopColor="#366994" offset="100%" />
         </linearGradient>
         <linearGradient
           x1="19.128%"
@@ -25,8 +25,8 @@ const Python = () => {
           y2="88.429%"
           id="b"
         >
-          <stop stop-color="#FFE052" offset="0%" />
-          <stop stop-color="#FFC331" offset="100%" />
+          <stop stopColor="#FFE052" offset="0%" />
+          <stop stopColor="#FFC331" offset="100%" />
         </linearGradient>
       </defs>
       <path
